@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:slms/views/login/login_screen.dart';
+import 'package:slms/views/auth/login/login_screen.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -14,12 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      
       home: LoginScreen(),
       theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(
-        ),
-        primaryColor: Color(0xff156EF6)),
+          textTheme: GoogleFonts.poppinsTextTheme(),
+          primaryColor: Color(0xff156EF6)),
     );
   }
 }
