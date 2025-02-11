@@ -16,17 +16,19 @@ class _DashbordGraphState extends State<DashbordGraph> {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.70,
+    return 
+
+    AspectRatio(
+      aspectRatio: 1.60,
       child: Padding(
-        padding: const EdgeInsets.only(
-          right: 18,
-          left: 12,
-          top: 24,
-          bottom: 12,
+          padding: const EdgeInsets.only(
+            right: 10,
+            left: 10,
+            top: 24,
+            bottom: 12,
+          ),
+          child: LineChart(mainData()),
         ),
-        child: LineChart(mainData()),
-      ),
     );
   }
 
@@ -38,16 +40,16 @@ class _DashbordGraphState extends State<DashbordGraph> {
     switch (value.toInt()) {
       case 1:
         return SideTitleWidget(
-            meta: meta, child: const Text('Week 1', style: style));
+            meta: meta, child: const Text('1', style: style));
       case 2:
         return SideTitleWidget(
-            meta: meta, child: const Text('Week 2', style: style));
+            meta: meta, child: const Text(' 2', style: style));
       case 3:
         return SideTitleWidget(
-            meta: meta, child: const Text('Week 3', style: style));
+            meta: meta, child: const Text(' 3', style: style));
       case 4:
         return SideTitleWidget(
-            meta: meta, child: const Text('Week 4', style: style));
+            meta: meta, child: const Text(' 4', style: style));
       default:
         return Container();
     }
@@ -108,8 +110,10 @@ class _DashbordGraphState extends State<DashbordGraph> {
         ),
       ),
       borderData: FlBorderData(
+        
         show: true,
         border: Border.all(
+          
             width: 0.5, color: const Color.fromARGB(255, 36, 82, 119)),
       ),
       minX: 1,
@@ -134,11 +138,11 @@ class _DashbordGraphState extends State<DashbordGraph> {
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: true,
+            // show: true,
             gradient: LinearGradient(
               colors: gradientColors
                   // ignore: deprecated_member_use
-                  .map((color) => color.withOpacity(0.3)) // Fixed opacity
+                  .map((color) => color.withOpacity(0.3)) 
                   .toList(),
             ),
           ),

@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/home/dashbord.dart';
 import 'package:slms/views/home/home_widgets.dart';
@@ -16,8 +14,8 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: Colors.white,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.message)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications_active)),
+          IconButton(onPressed: () {}, icon: Icon(Iconsax.message)),
+          IconButton(onPressed: () {}, icon: Icon(Iconsax.notification)),
           CircleAvatar(
             child: Icon(Icons.person),
           ),
@@ -30,11 +28,10 @@ class HomeScreen extends StatelessWidget {
       ),
       backgroundColor: ColorConstents.bagroundColor,
       body: RefreshIndicator(
-        onRefresh: ()async {
-        },
+        onRefresh: () async {},
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,26 +46,8 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   spacing: 10,
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                            )),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                            )),
-                      ),
-                    ),
+                    attendaceContainer(),
+                    attendaceContainer(),
                   ],
                 ),
                 SizedBox(
@@ -77,28 +56,14 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   spacing: 10,
                   children: [
-                    Expanded(
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                            )),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey.shade400,
-                            )),
-                      ),
-                    ),
+                    attendaceContainer(),
+                    attendaceContainer(),
                   ],
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                textStyled(text: 'Total Score', fontSize: 19),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -109,36 +74,34 @@ class HomeScreen extends StatelessWidget {
                           text: 'You Scored 527. out of 640',
                           fontweight: FontWeight.bold,
                         ),
-                        textStyled(text: 'You Acquired 82% of Total Score'),
+                        textStyled(text: 'You Acquired 82% of Total Score'),
                       ],
                     ),
-                    CirculePercentange(),
+                    circulePercentange(),
                   ],
                 ),
-                Divider(),
-                 Row(
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Divider(),
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         textStyled(
-                          text: 'Highest Total score  in a Review: 37 out of 40',
-                          fontweight: FontWeight.bold
-                        ),
+                            text:
+                                'Highest Total score  in a Review: 37 out of 40',
+                            fontweight: FontWeight.bold),
                         textStyled(text: 'You Acquired 93% of Total Score'),
                       ],
                     ),
-                    CircularPercentIndicator(
-                      radius: 30.0,
-                      lineWidth: 10.0,
-                      percent: 0.93,
-                      center: textStyled(text: '93%'),
-                      progressColor: Colors.blue,
-                      backgroundColor: Colors.grey.shade300,
-                      circularStrokeCap: CircularStrokeCap.round,
-                    ),
+                    circulePercentange(),
                   ],
+                ),
+                SizedBox(
+                  height: 30,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -235,6 +198,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }
