@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:slms/view_model/datecontroller.dart';
+import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/views/home/home_screen.dart';
 
@@ -12,12 +15,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
-      theme: ThemeData(
-          textTheme: GoogleFonts.poppinsTextTheme(),
-          primaryColor: Color(0xff156EF6)),
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => DateProvider(),
+        )
+      ],
+      child: MaterialApp(
+        home: AttendancePage(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textTheme: GoogleFonts.poppinsTextTheme(),
+            primaryColor: Color(0xff156EF6)),
+      ),
     );
   }
 }
