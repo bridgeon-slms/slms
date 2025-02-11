@@ -42,6 +42,7 @@ GestureDetector cd({required BuildContext context}) {
   return GestureDetector(
     onTap: () {
       showMaterialModalBottomSheet(
+        backgroundColor: ColorConstents.bagroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(30),
