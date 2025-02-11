@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                                   builder: (context) => ForgetPasswordPage()));
                         },
                         child: textStyled(
-                            text: 'Forget Password', color: Colors.grey))),
+                            text: 'Forget Password', color: ColorConstents.primeryColor))),
                 containerBtn(text: 'Login'),
               ],
             ),

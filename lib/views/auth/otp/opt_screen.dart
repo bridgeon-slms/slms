@@ -42,8 +42,7 @@ class OptScreen extends StatelessWidget {
                   disabledColor: Colors.grey.shade400,
                   fieldHeight: 58,
                   fieldWidth: 48,
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(8),
+
                 ),
               ),
               containerBtn(text: 'Verify'),
