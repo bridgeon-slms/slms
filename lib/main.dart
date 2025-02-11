@@ -7,6 +7,9 @@ import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
+import 'package:slms/views/home/home_screen.dart';
+import 'package:slms/views/ProfilePage/profilepage.dart';
+import 'package:slms/views/auth/login/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +31,6 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: ProfilePage(),
         home: BottomBar(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
