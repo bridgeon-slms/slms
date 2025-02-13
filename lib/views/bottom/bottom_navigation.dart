@@ -8,15 +8,14 @@ import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dar
 import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/views/payments/payment_screen.dart';
+import 'package:slms/views/reviews/reviews.dart';
 
 class BottomBar extends StatelessWidget {
   List<Widget> bottomBarPages = [
     HomeScreen(),
     AttendancePage(),
+    Reviewspage(),
     PaymentScreen(),
-    ProfilePage()
-    
-
   ];
   BottomBar({super.key});
 
