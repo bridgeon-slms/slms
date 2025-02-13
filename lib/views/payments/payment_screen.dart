@@ -76,9 +76,11 @@ class PaymentScreen extends StatelessWidget {
               ),
               SizedBox(height: 20,),
                Container(
+              
                 width: double.infinity,
                   height: 400,
                   decoration: BoxDecoration(
+            
                     borderRadius: BorderRadius.circular(8),
                     color: ColorConstents.bagroundColor,
                     boxShadow: [
