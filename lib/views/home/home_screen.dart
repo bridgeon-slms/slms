@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:slms/utils/color/color.dart';
-import 'package:slms/views/home/dashbord.dart';
+import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/widget/widget.dart';
 
@@ -17,9 +17,15 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Iconsax.message)),
           IconButton(onPressed: () {}, icon: Icon(Iconsax.notification)),
-          CircleAvatar(
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage()));
+            },
+            child:  CircleAvatar(
             child: Icon(Icons.person),
           ),
+          ),
+         
           SizedBox(
             width: 20,
           ),
@@ -39,66 +45,66 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.blue),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Iconsax.clock,color: ColorConstents.primeryColor),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                textStyled(text: 'Next Review'),
-                                textStyled(
-                                    text: '14 FEB 2025',
-                                    fontSize: 18,
-                                    fontweight: FontWeight.bold),
-                              ],
-                            ),
-                            SizedBox(width: 15,),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Expanded(
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     height: 60,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(8),
+                    //       border: Border.all(color: Colors.blue),
+                    //     ),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         Icon(Iconsax.clock,color: ColorConstents.primeryColor),
+                    //         Column(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //           children: [
+                    //             textStyled(text: 'Next Review'),
+                    //             textStyled(
+                    //                 text: '14 FEB 2025',
+                    //                 fontSize: 18,
+                    //                 fontweight: FontWeight.bold),
+                    //           ],
+                    //         ),
+                    //         SizedBox(width: 15,),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
 
-                    SizedBox(
-                      width: 20,
-                    ),
-                   Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.blue),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(Iconsax.clock,color: ColorConstents.primeryColor),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                textStyled(text: 'Next Review'),
-                                textStyled(
-                                    text: '14 FEB 2025',
-                                    fontSize: 18,
-                                    fontweight: FontWeight.bold),
-                              ],
-                            ),
-                            SizedBox(width: 15,),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   width: 20,
+                    // ),
+                  //  Expanded(
+                  //     child: Container(
+                  //       width: double.infinity,
+                  //       height: 60,
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //         border: Border.all(color: Colors.blue),
+                  //       ),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Icon(Iconsax.notification,color: ColorConstents.primeryColor),
+                  //           Column(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //             children: [
+                  //               textStyled(text: 'Current Week'),
+                  //               textStyled(
+                  //                   text: '17',
+                  //                   fontSize: 18,
+                  //                   fontweight: FontWeight.bold),
+                  //             ],
+                  //           ),
+                  //           SizedBox(width: 15,),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
                   ],
                 ),
               
