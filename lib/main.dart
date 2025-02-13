@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: LoginScreen(),
+        home:LoginScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),
