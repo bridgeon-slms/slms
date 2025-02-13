@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.white,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Iconsax.message)),
@@ -23,7 +24,8 @@ class HomeScreen extends StatelessWidget {
             width: 20,
           ),
         ],
-        title: textStyled(text: 'Hi,', fontweight: FontWeight.w400),
+        title: textStyled(
+            text: 'Hi,Name', fontweight: FontWeight.w400, fontSize: 16),
         backgroundColor: ColorConstents.bagroundColor,
       ),
       backgroundColor: ColorConstents.bagroundColor,
@@ -35,14 +37,75 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.clock,color: ColorConstents.primeryColor),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                textStyled(text: 'Next Review'),
+                                textStyled(
+                                    text: '14 FEB 2025',
+                                    fontSize: 18,
+                                    fontweight: FontWeight.bold),
+                              ],
+                            ),
+                            SizedBox(width: 15,),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 20,
+                    ),
+                   Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.clock,color: ColorConstents.primeryColor),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                textStyled(text: 'Next Review'),
+                                textStyled(
+                                    text: '14 FEB 2025',
+                                    fontSize: 18,
+                                    fontweight: FontWeight.bold),
+                              ],
+                            ),
+                            SizedBox(width: 15,),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                DashbordGraph(),
+              
+                Padding(
+                  padding: const EdgeInsets.only(top: 20,bottom: 20),
+                  child: leaderBoard(context),
+                ),
                 Row(
                   spacing: 10,
                   children: [
@@ -198,4 +261,8 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+
 }
+
+

@@ -3,6 +3,7 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
 import 'package:slms/views/auth/forget/forget_password.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
+import 'package:slms/views/bottom/bottom_navigation.dart';
 import 'package:slms/widget/widget.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,7 +19,7 @@ class LoginScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +69,11 @@ class LoginScreen extends StatelessWidget {
                         },
                         child: textStyled(
                             text: 'Forget Password', color: ColorConstents.primeryColor))),
-                containerBtn(text: 'Login'),
+                GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomBar()));
+    },
+                  child: containerBtn(text: 'Login')),
               ],
             ),
           ),
