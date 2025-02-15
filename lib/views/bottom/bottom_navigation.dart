@@ -5,11 +5,11 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/views/payments/payment_screen.dart';
 import 'package:slms/views/reviews/reviews.dart';
 
+// ignore: must_be_immutable
 class BottomBar extends StatelessWidget {
   List<Widget> bottomBarPages = [
     HomeScreen(),

@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:slms/views/home/home_screen.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart';
+import 'package:slms/view_model/home/leaderboard_controller.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/home/home_screen.dart';
-import 'package:slms/views/bottom/bottom_navigation.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart';
-import 'package:slms/views/auth/login/login_screen.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart';
-import 'package:slms/views/bottom/bottom_navigation.dart';
-import 'package:slms/views/reviews/reviews.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,15 +20,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => BottomBarController(),
+        ChangeNotifierProvider(create: (context) => LeaderboardController(),),
+        ChangeNotifierProvider(create: (context) => AuthenticationController()),
+        ChangeNotifierProvider(create: (context) => BottomBarController(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => DateProvider(),
+        ChangeNotifierProvider(create: (context) => DateProvider(),
         )
       ],
       child: MaterialApp(
-        home: BottomBar(),
+        home: HomeScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),
