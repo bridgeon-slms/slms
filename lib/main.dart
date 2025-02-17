@@ -10,6 +10,7 @@ import 'package:slms/views/home/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MyApp());
 }
 
@@ -24,7 +25,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AuthenticationController()),
         ChangeNotifierProvider(create: (context) => BottomBarController(),
         ),
-        ChangeNotifierProvider(create: (context) => DateProvider(),
+        ChangeNotifierProvider(
+          create: (context) => DateProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => Attendencecontroller(),
         )
       ],
       child: MaterialApp(
