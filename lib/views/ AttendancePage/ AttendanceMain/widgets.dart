@@ -3,9 +3,12 @@ import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/AttendanceModel/AttendanceModels/model.dart';
+import 'package:slms/AttendanceModel/logModel/logmodel.dart';
 import 'package:slms/AttendendsServices/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/widget/widget.dart';
+
+int last = 0;
 
 Widget attenceBar({required BuildContext context}) {
   return Consumer<Attendencecontroller>(
@@ -34,6 +37,8 @@ Widget attenceBar({required BuildContext context}) {
                       itemCount: value.attendenceList.length,
                       itemBuilder: (context, index) {
                         return cd(
+                          index: index,
+                          // date: value.attendenceLogList[index],
                           list: value.attendenceList[index],
                           context: context,
                         );
@@ -50,10 +55,11 @@ Widget attenceBar({required BuildContext context}) {
   );
 }
 
-GestureDetector cd({
-  required BuildContext context,
-  required Data list,
-}) {
+GestureDetector cd(
+    {required BuildContext context,
+    required Data list,
+    AttendanceLogs? date,
+    required int index}) {
   return GestureDetector(
     onTap: () {
       showMaterialModalBottomSheet(
@@ -74,88 +80,123 @@ GestureDetector cd({
             child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 30),
               child: Consumer<Attendencecontroller>(
-                builder: (context, value, child) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    textStyled(
-                      text: 'Attendance Report',
-                      fontweight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    Gap(20),
-                    cardCheakinOut(
-                        name: 'CheckIn',
-                        date: list.date != null
-                            ? value.cheackinTake(list.checkIn)
-                            : 'no date'),
-                    Gap(10),
-                    cardCheakinOut(
-                        name: 'CheckOut',
-                        date: list.date != null
-                            ? value.cheackOut(list.checkOut)
-                            : 'no date'),
-                    Gap(10),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: cardCheakinOut(
-                              name: 'Work Time',
-                              date: list.workTime != null
-                                  ? value.workTimeTotelInHour(list.workTime)
-                                  : 'no data'),
-                        ),
-                        Expanded(
-                          child: cardCheakinOut(
-                              name: 'Total',
-                              date: list.totalTime != null
-                                  ? value.workTimeTotelInHour(list.totalTime)
-                                  : 'no data'),
-                        ),
-                      ],
-                    ),
-                    Gap(20),
-                    textStyled(
-                      text: 'Attendance Details',
-                      fontweight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                    Gap(10),
-                    Expanded(
-                      child: GridView.builder(
-                        itemCount: 5,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          childAspectRatio: 3.6,
-                        ),
-                        itemBuilder: (context, index) {
-                          return Container(
-                            height: 30,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: colorForAttentends[
-                                    index % colorForAttentends.length],
-                                width: 1,
-                              ),
-                            ),
-                            child: Center(
-                              child: textStyled(
-                                text: textForAttends[
-                                    index % textForAttends.length],
-                                fontweight: FontWeight.w900,
-                                color: colorForAttentends[
-                                    index % colorForAttentends.length],
-                              ),
-                            ),
-                          );
-                        },
+                builder: (context, checkvalue, child) {
+                  String targetDate =
+                      checkvalue.changeDateForListing(list.date).toString();
+
+                  List<AttendanceLogs> filteredLogs = checkvalue
+                      .attendenceLogList
+                      .where((log) =>
+                          checkvalue
+                              .changeDateForListing(log.logDate)
+                              .toString() ==
+                          targetDate)
+                      .toList();
+
+                  int inCount =
+                      filteredLogs.where((log) => log.direction == 'in').length;
+                  int outCount = filteredLogs
+                      .where((log) => log.direction == 'out')
+                      .length;
+
+                  filteredLogs.sort((a, b) {
+                    if (a.logDate != null && b.logDate != null) {
+                      return a.logDate!.compareTo(b.logDate!);
+                    }
+                    return 0;
+                  });
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      textStyled(
+                        text: 'Attendance Report  ',
+                        fontweight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                    ),
-                  ],
-                ),
+                      Gap(20),
+                      cardCheakinOut(
+                          name: 'CheckIn',
+                          date: list.date != null
+                              ? checkvalue.cheackinTake(list.checkIn)
+                              : 'no date'),
+                      Gap(10),
+                      cardCheakinOut(
+                          name: 'CheckOut',
+                          date: list.date != null
+                              ? checkvalue.cheackOut(list.checkOut)
+                              : 'no date'),
+                      Gap(10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: cardCheakinOut(
+                                name: 'Work Time',
+                                date: list.workTime != null
+                                    ? checkvalue
+                                        .workTimeTotelInHour(list.workTime)
+                                    : 'no data'),
+                          ),
+                          Expanded(
+                            child: cardCheakinOut(
+                                name: 'Total',
+                                date: list.totalTime != null
+                                    ? checkvalue
+                                        .workTimeTotelInHour(list.totalTime)
+                                    : 'no data'),
+                          ),
+                        ],
+                      ),
+                      Gap(20),
+                      textStyled(
+                        text: "Attendance Details",
+                        fontweight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      Gap(10),
+                      Expanded(
+                        child: GridView.builder(
+                          itemCount: filteredLogs.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            childAspectRatio: 3.0,
+                          ),
+                          itemBuilder: (context, index) {
+                            var logEntry = filteredLogs[index];
+
+                            return Column(
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: logEntry.direction == 'in'
+                                        ? const Color.fromARGB(
+                                            255, 101, 209, 104)
+                                        : const Color.fromARGB(
+                                            255, 226, 79, 68),
+                                  ),
+                                  child: Center(
+                                    child: textStyled(
+                                      text:
+                                          '${logEntry.direction}- ${checkvalue.cheackinTake(logEntry.logDate.toString())}',
+                                      fontweight: FontWeight.w900,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           );
