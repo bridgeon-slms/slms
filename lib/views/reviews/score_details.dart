@@ -32,6 +32,7 @@ class ScoreDetailsPAge extends StatelessWidget {
                           textStyled(text: 'Review Updation')
                       ],
                     ),
+
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(

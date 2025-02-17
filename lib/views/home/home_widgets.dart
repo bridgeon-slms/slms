@@ -67,7 +67,7 @@ class attendaceContainer extends StatelessWidget {
   }
 }
 
-Container leaderBoardWidget(BuildContext context,LeaderBoardModel dataModel ) {
+Container leaderBoardWidget(BuildContext context, ) {
 
   return Container(
     width: double.infinity,
@@ -138,7 +138,7 @@ Container leaderBoardWidget(BuildContext context,LeaderBoardModel dataModel ) {
               right: 0,
               top: 30,
               child: CircleAvatar(
-                   backgroundImage: NetworkImage('${dataModel.leaderboard?.first.studentId?.image}'),
+                  //  backgroundImage: NetworkImage('${dataModel.leaderboard?.first.studentId?.image}'),
                         radius: 35,
                         backgroundColor: Colors.blue,
                       ),

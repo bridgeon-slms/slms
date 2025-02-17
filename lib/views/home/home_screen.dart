@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Icon(Icons.person),
             ),
           ),
+         
           SizedBox(
             width: 20,
           ),
@@ -131,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Consumer<LeaderboardController>(
                       builder: (context, value, child) {
                         final data = value.leaderboardData;
-                       return   leaderBoardWidget(context,data[0]);
+                       return   leaderBoardWidget(context);
                       }
                           ),
                           
