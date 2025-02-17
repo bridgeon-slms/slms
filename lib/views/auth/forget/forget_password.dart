@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
+import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/views/auth/otp/opt_screen.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
 
@@ -9,6 +11,7 @@ class ForgetPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      final authController = Provider.of<AuthenticationController>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -20,12 +23,14 @@ class ForgetPasswordPage extends StatelessWidget {
           child: Column(
             spacing: 20,
             children: [
-              SizedBox(height: 70,),
+              SizedBox(
+                height: 70,
+              ),
               Row(
                 children: [
                   Image.asset(
                     ImageConstents.bridgeonLogo,
-                    width:50,
+                    width: 50,
                   ),
                   SizedBox(
                     width: 10,
@@ -47,13 +52,17 @@ class ForgetPasswordPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30,),
-              costumTextfeild(hintText: 'Email'),
+              SizedBox(
+                height: 30,
+              ),
+              costumTextfeild(
+                  hintText: 'Email', ),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OptScreen()));
-                },
-                child: containerBtn(text: 'Send OTP')),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => OptScreen()));
+                  },
+                  child: containerBtn(text: 'Send OTP')),
             ],
           ),
         ),

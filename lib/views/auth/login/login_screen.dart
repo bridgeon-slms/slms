@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
+import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/views/auth/forget/forget_password.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
-import 'package:slms/views/bottom/bottom_navigation.dart';
+import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/widget/widget.dart';
 
+// ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +61,9 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                costumTextfeild(hintText: 'Email'),
-                costumTextfeild(hintText: 'Password'),
+                costumTextfeild(hintText: 'Email', controller: emailController),
+                costumTextfeild(
+                    hintText: 'Password', controller: passwordController),
                 Align(
                     alignment: Alignment.bottomRight,
                     child: GestureDetector(
@@ -68,12 +74,19 @@ class LoginScreen extends StatelessWidget {
                                   builder: (context) => ForgetPasswordPage()));
                         },
                         child: textStyled(
-                            text: 'Forget Password', color: ColorConstents.primeryColor))),
+                            text: 'Forget Password',
+                            color: ColorConstents.primeryColor))),
                 GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomBar()));
-    },
-                  child: containerBtn(text: 'Login')),
+                    onTap: () {
+                      context.read<AuthenticationController>().userLogin(
+                          email: emailController.text,
+                          password: passwordController.text).then((value){
+                            if(value != null){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                            }
+                          });
+                    },
+                    child: containerBtn(text: 'Login',))
               ],
             ),
           ),
