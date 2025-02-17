@@ -27,22 +27,74 @@ class AttendancePage extends StatelessWidget {
                     fontSize: 18),
                 Gap(20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    dateContainer(ontap: () async {
-                      DateTime? selectedStartDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100));
-                    }),
                     Gap(10),
                     dateContainer(
                       ontap: () async {
-                        DateTime? selectedStartDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100));
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              title: Column(
+                                children: [
+                                  Text(
+                                    "Select The Date",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  Divider(thickness: 1),
+                                ],
+                              ),
+                              content: SizedBox(
+                                width: 320,
+                                height: 350,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      filterDateButton("Show all",
+                                          Icons.calendar_today, () {}),
+                                      filterDateButton("Last 7 days",
+                                          Icons.date_range, () {}),
+                                      filterDateButton("Last 30 days",
+                                          Icons.event_note, () {}),
+                                      filterDateButton(
+                                          "Today", Icons.today, () {}),
+                                      filterDateButton(
+                                          "Yesterday", Icons.history, () {}),
+                                      filterDateButton(
+                                          "This Week", Icons.view_week, () {}),
+                                      filterDateButton(
+                                          "Last Week", Icons.arrow_back, () {}),
+                                      filterDateButton("This Month",
+                                          Icons.calendar_month, () {}),
+                                      filterDateButton("Last Month",
+                                          Icons.calendar_view_month, () {}),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text(
+                                    "CLOSE",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                     )
                   ],
@@ -53,8 +105,12 @@ class AttendancePage extends StatelessWidget {
                   unselectedLabelColor: Colors.grey,
                   indicatorColor: ColorConstents.primeryColor,
                   tabs: [
-                    Tab(text: "Present"),
-                    Tab(text: "Absent"),
+                    Tab(
+                      icon: Icon(Icons.list),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.incomplete_circle),
+                    ),
                   ],
                 ),
                 Gap(20),
@@ -76,32 +132,60 @@ class AttendancePage extends StatelessWidget {
     );
   }
 
-  Expanded dateContainer({VoidCallback? ontap}) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: ontap,
-        child: Card(
-          elevation: 2,
-          color: ColorConstents.primeryColor,
-          child: SizedBox(
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                textStyled(
-                    text: 'Select Date',
-                    fontweight: FontWeight.bold,
-                    color: Colors.white),
-                Gap(5),
-                Icon(
-                  Icons.calendar_month,
-                  color: Colors.white,
-                )
-              ],
-            ),
+  GestureDetector dateContainer({VoidCallback? ontap}) {
+    return GestureDetector(
+      onTap: ontap,
+      child: Card(
+        elevation: 2,
+        color: ColorConstents.primeryColor,
+        child: SizedBox(
+          height: 50,
+          width: 200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              textStyled(
+                  text: 'Select Date',
+                  fontweight: FontWeight.bold,
+                  color: Colors.white),
+              Gap(5),
+              Icon(
+                Icons.calendar_month,
+                color: Colors.white,
+              )
+            ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+    child: ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: Colors.blue.shade600,
+        elevation: 3, // Adds a slight shadow effect
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 22, color: Colors.white),
+          SizedBox(width: 12),
+          Text(
+            text,
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+        ],
+      ),
+    ),
+  );
 }

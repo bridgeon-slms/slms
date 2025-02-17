@@ -105,7 +105,7 @@ GestureDetector cd({required BuildContext context}) {
                             border: Border.all(
                                 color: colorForAttentends[
                                     index % colorForAttentends.length],
-                                width: 3),
+                                width: 1),
                           ),
                           child: Center(
                             child: textStyled(

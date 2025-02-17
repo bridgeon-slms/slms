@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/home/dashbord.dart';
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/widget/widget.dart';
@@ -12,18 +13,26 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         surfaceTintColor: Colors.white,
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Iconsax.message)),
           IconButton(onPressed: () {}, icon: Icon(Iconsax.notification)),
-          CircleAvatar(
-            child: Icon(Icons.person),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProfilePage()));
+            },
+            child: CircleAvatar(
+              child: Icon(Icons.person),
+            ),
           ),
           SizedBox(
             width: 20,
           ),
         ],
-        title: textStyled(text: 'Hi,', fontweight: FontWeight.w400),
+        title: textStyled(
+            text: 'Hi,Name', fontweight: FontWeight.w400, fontSize: 16),
         backgroundColor: ColorConstents.bagroundColor,
       ),
       backgroundColor: ColorConstents.bagroundColor,
@@ -35,14 +44,79 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.clock,
+                                color: ColorConstents.primeryColor),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                textStyled(text: 'Next Review'),
+                                textStyled(
+                                    text: '14 FEB 2025',
+                                    fontSize: 18,
+                                    fontweight: FontWeight.bold),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.clock,
+                                color: ColorConstents.primeryColor),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                textStyled(text: 'Next Review'),
+                                textStyled(
+                                    text: '14 FEB 2025',
+                                    fontSize: 18,
+                                    fontweight: FontWeight.bold),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                DashbordGraph(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: leaderBoard(context),
+                ),
                 Row(
                   spacing: 10,
                   children: [

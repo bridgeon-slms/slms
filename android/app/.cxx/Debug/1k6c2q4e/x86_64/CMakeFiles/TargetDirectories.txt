@@ -1,0 +1,2 @@
+/home/rinshid/Desktop/bridgeon/slms/android/app/.cxx/Debug/1k6c2q4e/x86_64/CMakeFiles/edit_cache.dir
+/home/rinshid/Desktop/bridgeon/slms/android/app/.cxx/Debug/1k6c2q4e/x86_64/CMakeFiles/rebuild_cache.dir
