@@ -25,6 +25,15 @@ class Attendencecontroller extends ChangeNotifier {
     }
   }
 
+  /// date piker
+
+  DateTime selectedDate = DateTime.now();
+
+  void setDate(DateTime date) {
+    selectedDate = date;
+    notifyListeners();
+  }
+
 // Date changing funtionsss ..............................
 
 // for getting the datas form the api of attendence and adding to list

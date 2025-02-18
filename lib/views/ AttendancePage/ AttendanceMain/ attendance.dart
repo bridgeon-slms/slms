@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,6 @@ class _AttendancePageState extends State<AttendancePage> {
         .getAllDataFromAttendence();
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendenceLog();
-
-    Provider.of<Attendencecontroller>(context, listen: false).last30Days();
   }
 
   @override
@@ -57,6 +56,38 @@ class _AttendancePageState extends State<AttendancePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
+                        dateContainer(
+                          ontap: () async {
+                            final date = await showDatePickerDialog(
+                              selectableDayPredicate: (DateTime date) => true,
+                              context: context,
+                              initialDate: DateTime(2022, 10, 10),
+                              minDate: DateTime(2020, 10, 10),
+                              maxDate: DateTime(2024, 10, 30),
+                              width: 300,
+                              height: 300,
+                              currentDate: DateTime(2022, 10, 15),
+                              selectedDate: DateTime(2022, 10, 16),
+                              currentDateDecoration: const BoxDecoration(),
+                              currentDateTextStyle: const TextStyle(),
+                              daysOfTheWeekTextStyle: const TextStyle(),
+                              // disbaledCellsDecoration: const BoxDecoration(),
+                              disabledCellsTextStyle: const TextStyle(),
+                              enabledCellsDecoration: const BoxDecoration(),
+                              enabledCellsTextStyle: const TextStyle(),
+                              initialPickerType: PickerType.days,
+                              selectedCellDecoration: const BoxDecoration(),
+                              selectedCellTextStyle: const TextStyle(),
+                              leadingDateTextStyle: const TextStyle(),
+                              slidersColor: Colors.lightBlue,
+                              highlightColor: Colors.redAccent,
+                              slidersSize: 20,
+                              splashColor: Colors.lightBlueAccent,
+                              splashRadius: 40,
+                              centerLeadingDate: true,
+                            );
+                          },
+                        ),
                         Gap(10),
                         dateContainer(
                           ontap: () async {
@@ -64,6 +95,7 @@ class _AttendancePageState extends State<AttendancePage> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  backgroundColor: ColorConstents.bagroundColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16),
                                   ),
@@ -92,14 +124,6 @@ class _AttendancePageState extends State<AttendancePage> {
                                               Icons.date_range, () {}),
                                           filterDateButton("Last 30 days",
                                               Icons.event_note, () {}),
-                                          filterDateButton(
-                                              "Today", Icons.today, () {}),
-                                          filterDateButton("Yesterday",
-                                              Icons.history, () {}),
-                                          filterDateButton("This Week",
-                                              Icons.view_week, () {}),
-                                          filterDateButton("Last Week",
-                                              Icons.arrow_back, () {}),
                                           filterDateButton("This Month",
                                               Icons.calendar_month, () {}),
                                           filterDateButton("Last Month",
@@ -163,28 +187,30 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
-  GestureDetector dateContainer({VoidCallback? ontap}) {
-    return GestureDetector(
-      onTap: ontap,
-      child: Card(
-        elevation: 2,
-        color: ColorConstents.primeryColor,
-        child: SizedBox(
-          height: 50,
-          width: 200,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              textStyled(
-                  text: 'Select Date',
-                  fontweight: FontWeight.bold,
-                  color: Colors.white),
-              Gap(5),
-              Icon(
-                Icons.calendar_month,
-                color: Colors.white,
-              )
-            ],
+  Expanded dateContainer({VoidCallback? ontap}) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: ontap,
+        child: Card(
+          elevation: 2,
+          color: ColorConstents.primeryColor,
+          child: SizedBox(
+            height: 50,
+            // width: 200,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                textStyled(
+                    text: 'Select Date',
+                    fontweight: FontWeight.bold,
+                    color: Colors.white),
+                Gap(5),
+                Icon(
+                  Icons.calendar_month,
+                  color: Colors.white,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -198,22 +224,26 @@ Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
     child: ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
+        minimumSize: Size(double.infinity, 50),
+        backgroundColor: Colors.white,
         padding: EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.blue.shade600,
+          ),
           borderRadius: BorderRadius.circular(12),
         ),
-        backgroundColor: Colors.blue.shade600,
-        elevation: 3, // Adds a slight shadow effect
+        elevation: 2,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 22, color: Colors.white),
+          Icon(icon, size: 22, color: Colors.blue),
           SizedBox(width: 12),
           Text(
             text,
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.blue),
           ),
         ],
       ),
