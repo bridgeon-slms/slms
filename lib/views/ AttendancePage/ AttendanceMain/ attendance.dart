@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,8 @@ class _AttendancePageState extends State<AttendancePage> {
         .getAllDataFromAttendence();
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendenceLog();
+
+    Provider.of<Attendencecontroller>(context, listen: false).last30Days();
   }
 
   @override
