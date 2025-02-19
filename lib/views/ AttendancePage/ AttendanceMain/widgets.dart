@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendanceModel/AttendanceModels/model.dart';
-import 'package:slms/AttendanceModel/logModel/logmodel.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
+import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/widget/widget.dart';
 
@@ -231,15 +231,15 @@ GestureDetector cd(
                     : list.status == 2
                         ? containerForAttendts(
                             color: Colors.yellow, text: 'Late')
-                        : list.status == 3
+                        : list.status == 5
                             ? containerForAttendts(
                                 color: Colors.orange, text: 'Half Day')
-                            : list.status == 4
+                            : list.status == 3
                                 ? containerForAttendts(
                                     color:
                                         const Color.fromARGB(255, 231, 103, 94),
                                     text: 'Excused')
-                                : list.status == 5
+                                : list.status == 4
                                     ? containerForAttendts(
                                         color: Colors.red, text: 'Unexcused')
                                     : containerForAttendts(

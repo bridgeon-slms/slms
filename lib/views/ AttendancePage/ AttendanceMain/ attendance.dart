@@ -1,10 +1,10 @@
 import 'dart:developer';
-
-import 'package:date_picker_plus/date_picker_plus.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceReport/chartpage.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
@@ -22,8 +22,13 @@ class _AttendancePageState extends State<AttendancePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    DateTime time = DateTime.now();
+    String startDate = DateFormat('yyyy-MM-dd').format(time);
+    DateTime yesterday = time.subtract(Duration(days: 5));
+    String endate = DateFormat('yyyy-MM-dd').format(yesterday);
+
     Provider.of<Attendencecontroller>(context, listen: false)
-        .getAllDataFromAttendence();
+        .getAllDataFromAttendence(endate, startDate);
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendenceLog();
   }
@@ -56,99 +61,260 @@ class _AttendancePageState extends State<AttendancePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        dateContainer(
-                          ontap: () async {
-                            final date = await showDatePickerDialog(
-                              selectableDayPredicate: (DateTime date) => true,
-                              context: context,
-                              initialDate: DateTime(2022, 10, 10),
-                              minDate: DateTime(2020, 10, 10),
-                              maxDate: DateTime(2024, 10, 30),
-                              width: 300,
-                              height: 300,
-                              currentDate: DateTime(2022, 10, 15),
-                              selectedDate: DateTime(2022, 10, 16),
-                              currentDateDecoration: const BoxDecoration(),
-                              currentDateTextStyle: const TextStyle(),
-                              daysOfTheWeekTextStyle: const TextStyle(),
-                              // disbaledCellsDecoration: const BoxDecoration(),
-                              disabledCellsTextStyle: const TextStyle(),
-                              enabledCellsDecoration: const BoxDecoration(),
-                              enabledCellsTextStyle: const TextStyle(),
-                              initialPickerType: PickerType.days,
-                              selectedCellDecoration: const BoxDecoration(),
-                              selectedCellTextStyle: const TextStyle(),
-                              leadingDateTextStyle: const TextStyle(),
-                              slidersColor: Colors.lightBlue,
-                              highlightColor: Colors.redAccent,
-                              slidersSize: 20,
-                              splashColor: Colors.lightBlueAccent,
-                              splashRadius: 40,
-                              centerLeadingDate: true,
-                            );
-                          },
+                        Consumer<Attendencecontroller>(
+                          builder: (context, value, child) => dateContainer(
+                            ontap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  String? formattedStartDate;
+                                  String? formattedEndDate;
+                                  return AlertDialog(
+                                    backgroundColor:
+                                        ColorConstents.bagroundColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    title: Column(
+                                      children: [
+                                        Text(
+                                          "Select The Date",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        Divider(thickness: 1),
+                                      ],
+                                    ),
+                                    content: SizedBox(
+                                      width: 320,
+                                      height: 350,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            CalendarDatePicker2(
+                                              config: CalendarDatePicker2Config(
+                                                calendarType:
+                                                    CalendarDatePicker2Type
+                                                        .range,
+                                              ),
+                                              value: datas.selectedDates,
+                                              onValueChanged: (dates) {
+                                                datas.updateDates(dates);
+
+                                                if (dates.isNotEmpty) {
+                                                  DateTime startDate =
+                                                      dates.first;
+                                                  DateTime? endDate =
+                                                      dates.length > 1
+                                                          ? dates.last
+                                                          : null;
+
+                                                  formattedStartDate =
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(startDate);
+                                                  formattedEndDate = endDate !=
+                                                          null
+                                                      ? DateFormat('yyyy-MM-dd')
+                                                          .format(endDate)
+                                                      : null;
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text(
+                                          "CLOSE",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          value.getAllDataFromAttendence(
+                                              formattedStartDate,
+                                              formattedEndDate);
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "Ok",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         ),
                         Gap(10),
-                        dateContainer(
-                          ontap: () async {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  backgroundColor: ColorConstents.bagroundColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  title: Column(
-                                    children: [
-                                      Text(
-                                        "Select The Date",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: Colors.black87,
+                        Consumer<Attendencecontroller>(
+                          builder: (context, value, child) => dateContainer(
+                            ontap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor:
+                                        ColorConstents.bagroundColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    title: Column(
+                                      children: [
+                                        Text(
+                                          "Select The Date",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        Divider(thickness: 1),
+                                      ],
+                                    ),
+                                    content: SizedBox(
+                                      width: 320,
+                                      height: 350,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            filterDateButton("Show all",
+                                                Icons.calendar_today, () {
+                                              DateTime time = DateTime.now();
+                                              String startDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(time);
+                                              var a = value.getLast
+                                                  .map((e) => e.date)
+                                                  .toList();
+                                              var last = a.last;
+                                              DateTime newCheckInTime =
+                                                  DateTime.parse(
+                                                          last.toString())
+                                                      .toUtc();
+
+                                              var endDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(newCheckInTime);
+                                              log(startDate);
+                                              log(endDate);
+
+                                              value.getAllDataFromAttendence(
+                                                  endDate, startDate);
+                                              // ser
+                                            }),
+                                            filterDateButton(
+                                                "Last 7 days", Icons.date_range,
+                                                () {
+                                              DateTime time = DateTime.now();
+                                              String startDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(time);
+                                              DateTime yesterday = time
+                                                  .subtract(Duration(days: 7));
+                                              String endate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(yesterday);
+
+                                              value.getAllDataFromAttendence(
+                                                  endate, startDate);
+                                            }),
+                                            filterDateButton("Last 30 days",
+                                                Icons.event_note, () {
+                                              DateTime time = DateTime.now();
+                                              String startDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(time);
+                                              DateTime yesterday = time
+                                                  .subtract(Duration(days: 30));
+                                              String endate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(yesterday);
+
+                                              value.getAllDataFromAttendence(
+                                                  endate, startDate);
+                                            }),
+                                            filterDateButton("This Month",
+                                                Icons.calendar_month, () {
+                                              DateTime now = DateTime.now();
+
+                                              DateTime firstDayOfMonth =
+                                                  DateTime(
+                                                      now.year, now.month, 1);
+
+                                              DateTime lastDayOfMonth =
+                                                  DateTime(now.year,
+                                                      now.month + 1, 0);
+
+                                              String startDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(firstDayOfMonth);
+                                              String endDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(lastDayOfMonth);
+
+                                              value.getAllDataFromAttendence(
+                                                  startDate, endDate);
+                                            }),
+                                            filterDateButton("Last Month",
+                                                Icons.calendar_view_month, () {
+                                              DateTime now = DateTime.now();
+
+                                              DateTime firstDayOfMonth =
+                                                  DateTime(now.year,
+                                                      now.month - 1, 1);
+
+                                              DateTime lastDayOfMonth =
+                                                  DateTime(
+                                                      now.year, now.month, 0);
+
+                                              String startDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(firstDayOfMonth);
+                                              String endDate =
+                                                  DateFormat('yyyy-MM-dd')
+                                                      .format(lastDayOfMonth);
+
+                                              value.getAllDataFromAttendence(
+                                                  startDate, endDate);
+                                            }),
+                                          ],
                                         ),
                                       ),
-                                      Divider(thickness: 1),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(),
+                                        child: Text(
+                                          "CLOSE",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                  content: SizedBox(
-                                    width: 320,
-                                    height: 350,
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          filterDateButton("Show all",
-                                              Icons.calendar_today, () {}),
-                                          filterDateButton("Last 7 days",
-                                              Icons.date_range, () {}),
-                                          filterDateButton("Last 30 days",
-                                              Icons.event_note, () {}),
-                                          filterDateButton("This Month",
-                                              Icons.calendar_month, () {}),
-                                          filterDateButton("Last Month",
-                                              Icons.calendar_view_month, () {}),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(context).pop(),
-                                      child: Text(
-                                        "CLOSE",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
+                                  );
+                                },
+                              );
+                            },
+                          ),
                         )
                       ],
                     ),
