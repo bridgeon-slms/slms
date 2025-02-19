@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/controller/profilecontroller/profilecontroller.dart';
 import 'package:slms/utils/color/color.dart';
+
+import 'package:slms/views/ProfilePage/profilepage.dart';
+import 'package:slms/views/home/dashbord.dart';
+
 import 'package:slms/view_model/home/leaderboard_controller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart';
+
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/widget/widget.dart';
 
@@ -22,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<HomeController>(context, listen: false).getLeaderBoardData();
       Provider.of<HomeController>(context, listen: false).getLeetcodeData();
     });
+    Provider.of<Profilecontroller>(context, listen: false).getAllProfileData();
   }
 
   @override
@@ -43,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircleAvatar(
                     child: Icon(Icons.person),
                   ),
-                ),
+      
                 SizedBox(
                   width: 20,
                 ),

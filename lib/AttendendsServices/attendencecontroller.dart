@@ -1,16 +1,19 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:slms/AttendanceModel/AttendanceModels/model.dart';
 import 'package:slms/AttendanceModel/logModel/logmodel.dart';
 import 'package:slms/AttendendsServices/attendanceservices.dart';
+import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
 
 class Attendencecontroller extends ChangeNotifier {
   Attendanceservices ser = Attendanceservices();
   List<Data> attendenceList = [];
-  List<DataLog> attendenceLogList = [];
+  List<AttendanceLogs> attendenceLogList = [];
 
 // for getting the datas form the api of attendence and adding to list
+
   getAllDataFromAttendence() async {
     try {
       attendenceList = await ser.getAllAttendenceDatas();
@@ -21,6 +24,9 @@ class Attendencecontroller extends ChangeNotifier {
       log('errro found in attentence provider or functios $e');
     }
   }
+
+// Date changing funtionsss ..............................
+
 // for getting the datas form the api of attendence and adding to list
 
   getAllDataFromAttendenceLog() async {
@@ -64,16 +70,66 @@ class Attendencecontroller extends ChangeNotifier {
     int totelWorkTime = 555;
     int time = totalTime ~/ 60;
     int minits = totalTime % 60;
-    log('${time}H ${minits}M ');
 
     return '${time}H ${minits}M ';
   }
 
-  // String totelTimeInHour(totalTime) {
-  //   int time = totalTime ~/ 60;
-  //   int minits = totalTime % 60;
-  //   log('${time}H ${minits}M ');
+  /// filter functions ....................................................................................................
 
-  //   return '${time}H ${minits}M ';
-  // }
+//last montg sorted
+  completeDate() {
+    var a = attendenceLogList.map((e) => e.createdAt).toList();
+    var adds = [];
+
+    for (var i in a) {
+      adds.add(changeDateForListing(i));
+    }
+
+    Set dob = adds.toSet();
+
+    log(dob.toString());
+  }
+
+  //first 7 days
+  void last7Days() {
+    var a = attendenceLogList.map((e) => e.createdAt).toList();
+    var adds = [];
+
+    for (var i in a) {
+      adds.add(changeDateForListing(i));
+    }
+    List dob = adds.toSet().toList();
+
+    List last7 = [];
+
+    for (int i = 0; i < dob.length; i++) {
+      last7.add(dob[i]);
+      if (i == 7) {
+        break;
+      }
+    }
+
+    log(last7.toString());
+  }
+
+  void last30Days() {
+    var a = attendenceLogList.map((e) => e.createdAt).toList();
+    var adds = [];
+
+    for (var i in a) {
+      adds.add(changeDateForListing(i));
+    }
+    List dob = adds.toSet().toList();
+
+    List last30 = [];
+
+    for (int i = 0; i < dob.length; i++) {
+      last30.add(dob[i]);
+      if (i == 29) {
+        break;
+      }
+    }
+
+    log(last30.length.toString());
+  }
 }

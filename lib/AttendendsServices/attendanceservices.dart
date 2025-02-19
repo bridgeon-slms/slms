@@ -7,7 +7,7 @@ import 'package:slms/AttendanceModel/logModel/logmodel.dart';
 class Attendanceservices {
   Dio dio = Dio();
   var token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1ZDQzNTFhMzdlN2EwMzBkOTMxMmIiLCJpYXQiOjE3Mzk2MjM0NjAsImV4cCI6MTczOTYyNzA2MH0.hnJdhsb7HCtkr9gqs52xr3SUmHchDppOyYxrmptGDUI';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1ZDQzNTFhMzdlN2EwMzBkOTMxMmIiLCJpYXQiOjE3Mzk4MDAwNjgsImV4cCI6MTczOTgwMzY2OH0.qRCajP1-XnaM2X2aM_3w7bB8xfrODHppTPJ2yujMBME';
   final attndenceBaseUrl =
       'https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=2025-02-09T08:34:07.154Z&toDate=2025-02-15T08:34:07.154Z';
 
@@ -40,7 +40,7 @@ class Attendanceservices {
   final logUrl =
       'https://www.lms-api.bridgeon.in/api/admin/attendanceLog/student/profile';
 
-  Future<List<DataLog>> attendentanceLog() async {
+  Future<List<AttendanceLogs>> attendentanceLog() async {
     try {
       final response = await dio.get(logUrl,
           options: Options(headers: {
@@ -52,7 +52,7 @@ class Attendanceservices {
         log('succes to fetch items from attendence log ${response.data['message']}');
         List<dynamic> data = response.data['data']['attendanceLogs'];
         // log(response.data.toString());
-        return data.map((e) => DataLog.fromJson(e)).toList();
+        return data.map((e) => AttendanceLogs.fromJson(e)).toList();
       }
     } catch (e) {
       if (e is DioException) {
