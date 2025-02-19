@@ -6,11 +6,13 @@ import 'package:slms/services/profileservices/profileservices.dart';
 
 class Profilecontroller extends ChangeNotifier {
   ProfileServices services = ProfileServices();
-  List<StudentModel> profileList = [];
+  List<ProfileModel> profileList = [];
 
   getAllProfileData() async {
     try {
-      profileList = await services.getAllProfileDatas();
+      final data = await services.getAllProfileDatas();
+      profileList = [data];
+
       log('success to get data from profile api   ${profileList.length}');
       notifyListeners();
     } catch (e) {

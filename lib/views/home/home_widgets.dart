@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:slms/model/dashboard.dart';
 import 'package:slms/widget/widget.dart';
 
 CircularPercentIndicator circulePercentange() {
@@ -66,7 +67,8 @@ class attendaceContainer extends StatelessWidget {
   }
 }
 
-Container leaderBoard(BuildContext context) {
+Container leaderBoardWidget(BuildContext context, ) {
+
   return Container(
     width: double.infinity,
     height: 250,
@@ -136,7 +138,7 @@ Container leaderBoard(BuildContext context) {
               right: 0,
               top: 30,
               child: CircleAvatar(
-                
+                  //  backgroundImage: NetworkImage('${dataModel.leaderboard?.first.studentId?.image}'),
                         radius: 35,
                         backgroundColor: Colors.blue,
                       ),

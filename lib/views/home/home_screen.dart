@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+import 'package:slms/controller/profilecontroller/profilecontroller.dart';
 import 'package:slms/utils/color/color.dart';
+
 import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/home/dashbord.dart';
+
+import 'package:slms/view_model/home/leaderboard_controller.dart';
+import 'package:slms/views/ProfilePage/profilepage.dart';
+
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/widget/widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<LeaderboardController>(context, listen: false)
+        .getLeaderBoardData();
+    Provider.of<Profilecontroller>(context, listen: false).getAllProfileData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +40,8 @@ class HomeScreen extends StatelessWidget {
           IconButton(onPressed: () {}, icon: Icon(Iconsax.notification)),
           GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ProfilePage()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (cont) => ProfilePage()));
             },
             child: CircleAvatar(
               child: Icon(Icons.person),
@@ -113,10 +133,19 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: leaderBoard(context),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20, bottom: 20),
+
+                //   child: leaderBoard(context),
+
+                //   child: Consumer<LeaderboardController>(
+                //       builder: (context, value, child) {
+                //         final data = value.leaderboardData;
+                //        return   leaderBoardWidget(context);
+                //       }
+                //           ),
+
+                // ),
                 Row(
                   spacing: 10,
                   children: [

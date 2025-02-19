@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/reviews/reviewchart.dart';
+import 'package:slms/views/reviews/score_details.dart';
 import 'package:slms/widget/widget.dart';
 
 class Reviewspage extends StatelessWidget {
@@ -57,7 +58,12 @@ class Reviewspage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScoreDetailsPAge()));
+                    },
                     label: Row(
                       children: [
                         Text('More Details'),

@@ -1,453 +1,520 @@
-// import 'dart:convert';
+// // {
+// //     "data": {
+// //         "guardian": {
+// //             "name": "Yousuf ",
+// //             "relationship": "Father",
+// //             "phone": "9846346920"
+// //         },
+// //         "socialLinks": {
+// //             "linkedIn": "muhammed-sinan-019712300",
+// //             "github": "sinanex",
+// //             "leetCode": "Sinaannnnm"
+// //         },
+// //         "name": "Muhammed Sinan UP",
+// //         "address": "urothuparambil house veemboor mariyad po 676122 manjeri, Malappuram ",
+// //         "phone": "8089309204",
+// //         "email": "ms4730435@gmail.com",
+// //         "course": {
+// //             "name": "Flutter"
+// //         },
+// //         "batch": {
+// //             "name": "C34"
+// //         },
+// //         "image": "https://bridgeon-lms.s3.ap-south-1.amazonaws.com/lms/GgyTyqxYdcg8qwmrAPBEA_Screenshot_20240729-145052 - sinan.jpg",
+// //         "imageLowRes": "https://bridgeon-lms.s3.ap-south-1.amazonaws.com/lms/thumbnails/GgyTyqxYdcg8qwmrAPBEA_Screenshot_20240729-145052 - sinan.jpg",
+// //         "document": [
+// //             {
+// //                 "url": "https://bridgeon-lms.s3.ap-south-1.amazonaws.com/lms/c_i33_qZK4M0uNr4W4YpY_sinan.pdf",
+// //                 "fileName": "sinan.pdf",
+// //                 "originalName": "sinan.pdf",
+// //             }
+// //         ],
+// //         "mentor": {
+// //             "name": "SHIBIL HAROON"
+// //         },
+// //         "advisor": {
+// //             "email": "rinshaparappara123@gmail.com",
+// //             "name": "FATHIMA RINSHA"
+// //         },
+// //         "joiningDate": "2024-07-27T18:30:00.000Z",
+// //         "qualification": {
+// //             "name": "Plus two"
+// //         },
+// //         "branch": {
+// //             "name": "Kakkanchery"
+// //         },
+// //         "space": {
+// //             "name": "Neo Space 2"
+// //         },
+// //         "week": 17,
+// //         "courseType": "Offline",
+// //         "institution": {
+// //             "name": "GVHSS, Pullanur"
+// //         },
+// //         "passOutYear": "2024",
+// //         "agreementSigned": true,
+// //         "district": "Malappuram",
+// //         "admissionDate": "2024-07-28T00:00:00.000Z",
+// //     }
+// // }
 
-// class StudentModel {
-//   final String? id;
-//   final String? name;
-//   final String? email;
-//   final String? phone;
-//   final Guardian? guardian;
-//   final List<SocialLink>? socialLinks;
-//   final List<Course>? courses;
-//   final Advisor? advisor;
-//   final List<FeeStructure>? feeStructures;
-//   final List<Document>? documents;
-//   final List<WorkShift>? workShifts;
+// class ProfileModel {
+//   Guardian guardian;
+//   String name;
+//   SocialLinks socialLinks;
+//   String address;
+//   String phone;
+//   String email;
+//   Course course;
+//   Batch batch;
+//   String image;
+//   String imageLowRes;
+//   List<Document> documents;
+//   Mentor mentor;
+//   Advisor advisor;
+//   String? joiningDate;
+//   Qualification qualification;
+//   Branch branch;
+//   Space space;
+//   int? week;
+//   String? courseType;
+//   String? passOutYear;
+//   String? agreementSigned;
+//   String? district;
+//   bool? admissionDate;
+//   Institution institution;
 
-//   StudentModel({
-//     this.id,
-//     this.name,
-//     this.email,
-//     this.phone,
-//     this.guardian,
-//     this.socialLinks,
-//     this.courses,
-//     this.advisor,
-//     this.feeStructures,
-//     this.documents,
-//     this.workShifts,
-//   });
+//   ProfileModel(
+//       {required this.guardian,
+//       required this.name,
+//       required this.socialLinks,
+//       required this.address,
+//       required this.phone,
+//       required this.email,
+//       required this.course,
+//       required this.batch,
+//       required this.image,
+//       required this.imageLowRes,
+//       required this.documents,
+//       required this.mentor,
+//       required this.advisor,
+//       required this.joiningDate,
+//       required this.qualification,
+//       required this.branch,
+//       required this.space,
+//       required this.week,
+//       required this.courseType,
+//       required this.institution,
+//       required this.passOutYear,
+//       required this.agreementSigned,
+//       required this.district,
+//       required this.admissionDate});
 
-//   factory StudentModel.fromJson(Map<String, dynamic> json) {
-//     return StudentModel(
-//       id: json['id'] as String?,
-//       name: json['name'] as String?,
-//       email: json['email'] as String?,
-//       phone: json['phone'] as String?,
-//       guardian:
-//           json['guardian'] != null ? Guardian.fromJson(json['guardian']) : null,
-//       socialLinks: (json['socialLinks'] as List?)
-//           ?.map((e) => SocialLink.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//       courses: (json['courses'] as List?)
-//           ?.map((e) => Course.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//       advisor:
-//           json['advisor'] != null ? Advisor.fromJson(json['advisor']) : null,
-//       feeStructures: (json['feeStructures'] as List?)
-//           ?.map((e) => FeeStructure.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//       documents: (json['documents'] as List?)
-//           ?.map((e) => Document.fromJson(e as Map<String, dynamic>))
-//           .toList(),
-//       workShifts: (json['workShifts'] as List?)
-//           ?.map((e) => WorkShift.fromJson(e as Map<String, dynamic>))
-//           .toList(),
+//   factory ProfileModel.fromJson(Map<String, dynamic> json) {
+//     return ProfileModel(
+//       name: json['name'] ?? 'No Name',
+//       guardian: Guardian.fromJson(json['guardian'] ?? {}),
+//       socialLinks: SocialLinks.fromJson(json['socialLinks'] ?? {}),
+//       address: json['address'] ?? 'No Address',
+//       phone: json['phone'] ?? 'No Phone',
+//       email: json['email'] ?? 'No Email',
+//       course: Course.fromJson(json['course'] ?? {}),
+//       batch: Batch.fromJson(json['batch'] ?? {}),
+//       image: json['image'] ?? 'No Image',
+//       imageLowRes: json['imageLowRes'] ?? 'No ImageLowRes',
+//       documents: (json['document'] as List?)
+//               ?.map((doc) => Document.fromJson(doc))
+//               .toList() ??
+//           [],
+//       mentor: Mentor.fromJson(json['mentor'] ?? {}),
+//       advisor: Advisor.fromJson(json['advisor'] ?? {}),
+//       joiningDate: json['joiningDate'] ?? ' No joiningDate',
+//       qualification: Qualification.fromJson(json['qualification'] ?? {}),
+//       branch: Branch.fromJson(json['branch'] ?? {}),
+//       space: Space.fromJson(json['space'] ?? {}),
+//       week: json['week'] ?? 'No Week',
+//       courseType: json['courseType'] ?? 'No courseType',
+//       institution: Institution.fromJson(json['institution'] ?? {}),
+//       passOutYear: json['passOutYear'] ?? 'No passOutYear',
+//       agreementSigned: json['agreementSigned'] ?? 'No agreementSigned',
+//       district: json['district'] ?? 'No district',
+//       admissionDate: json['admissionDate'] ?? 'No admissionDate',
 //     );
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'email': email,
-//       'phone': phone,
-//       'guardian': guardian?.toJson(),
-//       'socialLinks': socialLinks?.map((e) => e.toJson()).toList(),
-//       'courses': courses?.map((e) => e.toJson()).toList(),
-//       'advisor': advisor?.toJson(),
-//       'feeStructures': feeStructures?.map((e) => e.toJson()).toList(),
-//       'documents': documents?.map((e) => e.toJson()).toList(),
-//       'workShifts': workShifts?.map((e) => e.toJson()).toList(),
-//     };
-//   }
-
-//   StudentModel copyWith({
-//     String? id,
-//     String? name,
-//     String? email,
-//     String? phone,
-//     Guardian? guardian,
-//     List<SocialLink>? socialLinks,
-//     List<Course>? courses,
-//     Advisor? advisor,
-//     List<FeeStructure>? feeStructures,
-//     List<Document>? documents,
-//     List<WorkShift>? workShifts,
-//   }) {
-//     return StudentModel(
-//       id: id ?? this.id,
-//       name: name ?? this.name,
-//       email: email ?? this.email,
-//       phone: phone ?? this.phone,
-//       guardian: guardian ?? this.guardian,
-//       socialLinks: socialLinks ?? this.socialLinks,
-//       courses: courses ?? this.courses,
-//       advisor: advisor ?? this.advisor,
-//       feeStructures: feeStructures ?? this.feeStructures,
-//       documents: documents ?? this.documents,
-//       workShifts: workShifts ?? this.workShifts,
-//     );
-//   }
-
-//   @override
-//   String toString() {
-//     return 'StudentModel(id: $id, name: $name, email: $email, phone: $phone, guardian: $guardian, socialLinks: $socialLinks, courses: $courses, advisor: $advisor, feeStructures: $feeStructures, documents: $documents, workShifts: $workShifts)';
 //   }
 // }
 
 // class Guardian {
-//   final String? name;
-//   final String? contact;
+//   String name;
+//   String relationship;
+//   String phone;
 
-//   Guardian({this.name, this.contact});
+//   Guardian({
+//     required this.name,
+//     required this.phone,
+//     required this.relationship,
+//   });
 
-//   factory Guardian.fromJson(Map<String, dynamic> json) => Guardian(
-//         name: json['name'] as String?,
-//         contact: json['contact'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'name': name,
-//         'contact': contact,
-//       };
+//   factory Guardian.fromJson(Map<String, dynamic> json) {
+//     return Guardian(
+//       name: json['name'] ?? 'Unknown',
+//       phone: json['phone'] ?? 'No Phone',
+//       relationship: json['relationship'] ?? 'No Relationship',
+//     );
+//   }
 // }
 
-// class SocialLink {
-//   final String? platform;
-//   final String? url;
+// class SocialLinks {
+//   String linkedIn;
+//   String github;
+//   String leetCode;
 
-//   SocialLink({this.platform, this.url});
+//   SocialLinks({
+//     required this.linkedIn,
+//     required this.github,
+//     required this.leetCode,
+//   });
 
-//   factory SocialLink.fromJson(Map<String, dynamic> json) => SocialLink(
-//         platform: json['platform'] as String?,
-//         url: json['url'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'platform': platform,
-//         'url': url,
-//       };
+//   factory SocialLinks.fromJson(Map<String, dynamic> json) {
+//     return SocialLinks(
+//       linkedIn: json['linkedIn'] ?? 'No LinkedIn',
+//       github: json['github'] ?? 'No GitHub',
+//       leetCode: json['leetCode'] ?? 'No LeetCode',
+//     );
+//   }
 // }
 
 // class Course {
-//   final String? title;
-//   final String? code;
+//   String name;
 
-//   Course({this.title, this.code});
+//   Course({required this.name});
 
-//   factory Course.fromJson(Map<String, dynamic> json) => Course(
-//         title: json['title'] as String?,
-//         code: json['code'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'title': title,
-//         'code': code,
-//       };
+//   factory Course.fromJson(Map<String, dynamic> json) {
+//     return Course(name: json['name'] ?? 'Unknown');
+//   }
 // }
 
-// class Advisor {
-//   final String? name;
+// class Batch {
+//   String name;
 
-//   Advisor({this.name});
+//   Batch({required this.name});
 
-//   factory Advisor.fromJson(Map<String, dynamic> json) => Advisor(
-//         name: json['name'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'name': name,
-//       };
-// }
-
-// class FeeStructure {
-//   final double? amount;
-//   final String? type;
-
-//   FeeStructure({this.amount, this.type});
-
-//   factory FeeStructure.fromJson(Map<String, dynamic> json) => FeeStructure(
-//         amount: (json['amount'] as num?)?.toDouble(),
-//         type: json['type'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'amount': amount,
-//         'type': type,
-//       };
+//   factory Batch.fromJson(Map<String, dynamic> json) {
+//     return Batch(name: json['name'] ?? 'Unknown');
+//   }
 // }
 
 // class Document {
-//   final String? title;
-//   final String? url;
+//   String url;
+//   String fileName;
+//   String originalName;
 
-//   Document({this.title, this.url});
+//   Document({
+//     required this.url,
+//     required this.fileName,
+//     required this.originalName,
+//   });
 
-//   factory Document.fromJson(Map<String, dynamic> json) => Document(
-//         title: json['title'] as String?,
-//         url: json['url'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'title': title,
-//         'url': url,
-//       };
+//   factory Document.fromJson(Map<String, dynamic> json) {
+//     return Document(
+//       url: json['url'] ?? 'No URL',
+//       fileName: json['fileName'] ?? 'No FileName',
+//       originalName: json['originalName'] ?? 'No OriginalName',
+//     );
+//   }
 // }
 
-// class WorkShift {
-//   final String? shift;
-//   final String? timing;
+// class Mentor {
+//   String? name;
 
-//   WorkShift({this.shift, this.timing});
+//   Mentor({required this.name});
 
-//   factory WorkShift.fromJson(Map<String, dynamic> json) => WorkShift(
-//         shift: json['shift'] as String?,
-//         timing: json['timing'] as String?,
-//       );
-
-//   Map<String, dynamic> toJson() => {
-//         'shift': shift,
-//         'timing': timing,
-//       };
+//   factory Mentor.fromJson(Map<String, dynamic> json) {
+//     return Mentor(name: json['name']);
+//   }
 // }
 
-import 'dart:convert';
+// class Advisor {
+//   String? email;
+//   String? name;
 
-class StudentModel {
-  final String? id;
-  final String? name;
-  final String? email;
-  final String? phone;
-  final Guardian? guardian;
-  final List<SocialLink>? socialLinks;
-  final List<Course>? courses;
-  final Advisor? advisor;
-  final List<FeeStructure>? feeStructures;
-  final List<Document>? documents;
-  final List<WorkShift>? workShifts;
+//   Advisor({
+//     required this.email,
+//     required this.name,
+//   });
 
-  const StudentModel({
-    this.id,
-    this.name,
-    this.email,
-    this.phone,
-    this.guardian,
-    this.socialLinks,
-    this.courses,
-    this.advisor,
-    this.feeStructures,
-    this.documents,
-    this.workShifts,
+//   factory Advisor.fromJson(Map<String, dynamic> json) {
+//     return Advisor(email: json['email'], name: json['name']);
+//   }
+// }
+
+// class Qualification {
+//   String? name;
+
+//   Qualification({required this.name});
+
+//   factory Qualification.fromJson(Map<String, dynamic> json) {
+//     return Qualification(name: json['name']);
+//   }
+// }
+
+// class Branch {
+//   String? name;
+
+//   Branch({required this.name});
+
+//   factory Branch.fromJson(Map<String, dynamic> json) {
+//     return Branch(name: json['name']);
+//   }
+// }
+
+// class Space {
+//   String? name;
+
+//   Space({required this.name});
+
+//   factory Space.fromJson(Map<String, dynamic> json) {
+//     return Space(name: json['name']);
+//   }
+// }
+
+// class Institution {
+//   String? name;
+
+//   Institution({required this.name});
+
+//   factory Institution.fromJson(Map<String, dynamic> json) {
+//     return Institution(name: json['name']);
+//   }
+// }
+
+class ProfileModel {
+  Guardian guardian;
+  String name;
+  SocialLinks socialLinks;
+  String address;
+  String phone;
+  String email;
+  Course course;
+  Batch batch;
+  String image;
+  String imageLowRes;
+  List<Document> documents;
+  Mentor mentor;
+  Advisor advisor;
+  String? joiningDate;
+  Qualification qualification;
+  Branch branch;
+  Space space;
+  int week; // Ensuring it defaults to an integer
+  String? courseType;
+  String? passOutYear;
+  bool agreementSigned; // Ensuring it defaults to a boolean
+  String district;
+  String admissionDate; // Changed to String as 'No admissionDate' is passed
+  Institution institution;
+
+  ProfileModel({
+    required this.guardian,
+    required this.name,
+    required this.socialLinks,
+    required this.address,
+    required this.phone,
+    required this.email,
+    required this.course,
+    required this.batch,
+    required this.image,
+    required this.imageLowRes,
+    required this.documents,
+    required this.mentor,
+    required this.advisor,
+    required this.joiningDate,
+    required this.qualification,
+    required this.branch,
+    required this.space,
+    required this.week,
+    required this.courseType,
+    required this.passOutYear,
+    required this.agreementSigned,
+    required this.district,
+    required this.admissionDate,
+    required this.institution,
   });
 
-  factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
-        id: json['id'] as String?,
-        name: json['name'] as String?,
-        email: json['email'] as String?,
-        phone: json['phone'] as String?,
-        guardian: json['guardian'] != null
-            ? Guardian.fromJson(json['guardian'])
-            : null,
-        socialLinks: (json['socialLinks'] as List?)
-            ?.map((e) => SocialLink.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        courses: (json['courses'] as List?)
-            ?.map((e) => Course.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        advisor:
-            json['advisor'] != null ? Advisor.fromJson(json['advisor']) : null,
-        feeStructures: (json['feeStructures'] as List?)
-            ?.map((e) => FeeStructure.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        documents: (json['documents'] as List?)
-            ?.map((e) => Document.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        workShifts: (json['workShifts'] as List?)
-            ?.map((e) => WorkShift.fromJson(e as Map<String, dynamic>))
-            .toList(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'guardian': guardian?.toJson(),
-        'socialLinks': socialLinks?.map((e) => e.toJson()).toList(),
-        'courses': courses?.map((e) => e.toJson()).toList(),
-        'advisor': advisor?.toJson(),
-        'feeStructures': feeStructures?.map((e) => e.toJson()).toList(),
-        'documents': documents?.map((e) => e.toJson()).toList(),
-        'workShifts': workShifts?.map((e) => e.toJson()).toList(),
-      };
-
-  StudentModel copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? phone,
-    Guardian? guardian,
-    List<SocialLink>? socialLinks,
-    List<Course>? courses,
-    Advisor? advisor,
-    List<FeeStructure>? feeStructures,
-    List<Document>? documents,
-    List<WorkShift>? workShifts,
-  }) =>
-      StudentModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        phone: phone ?? this.phone,
-        guardian: guardian ?? this.guardian,
-        socialLinks: socialLinks ?? this.socialLinks,
-        courses: courses ?? this.courses,
-        advisor: advisor ?? this.advisor,
-        feeStructures: feeStructures ?? this.feeStructures,
-        documents: documents ?? this.documents,
-        workShifts: workShifts ?? this.workShifts,
-      );
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StudentModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          name == other.name &&
-          email == other.email &&
-          phone == other.phone;
-
-  @override
-  int get hashCode =>
-      id.hashCode ^ name.hashCode ^ email.hashCode ^ phone.hashCode;
-
-  @override
-  String toString() => jsonEncode(toJson());
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    return ProfileModel(
+      name: json['name'] ?? 'No Name',
+      guardian: Guardian.fromJson(json['guardian'] ?? {}),
+      socialLinks: SocialLinks.fromJson(json['socialLinks'] ?? {}),
+      address: json['address'] ?? 'No Address',
+      phone: json['phone'] ?? 'No Phone',
+      email: json['email'] ?? 'No Email',
+      course: Course.fromJson(json['course'] ?? {}),
+      batch: Batch.fromJson(json['batch'] ?? {}),
+      image: json['image'] ?? 'No Image',
+      imageLowRes: json['imageLowRes'] ?? 'No ImageLowRes',
+      documents: (json['document'] as List?)
+              ?.map((doc) => Document.fromJson(doc))
+              .toList() ??
+          [],
+      mentor: Mentor.fromJson(json['mentor'] ?? {}),
+      advisor: Advisor.fromJson(json['advisor'] ?? {}),
+      joiningDate: json['joiningDate'] ?? 'No joiningDate',
+      qualification: Qualification.fromJson(json['qualification'] ?? {}),
+      branch: Branch.fromJson(json['branch'] ?? {}),
+      space: Space.fromJson(json['space'] ?? {}),
+      week: json['week'] != null ? json['week'] as int : 0,
+      courseType: json['courseType'] ?? 'No courseType',
+      institution: Institution.fromJson(json['institution'] ?? {}),
+      passOutYear: json['passOutYear'] ?? 'No passOutYear',
+      agreementSigned: json['agreementSigned'] != null
+          ? json['agreementSigned'] as bool
+          : false,
+      district: json['district'] ?? 'No district',
+      admissionDate: json['admissionDate'] ?? 'No admissionDate',
+    );
+  }
 }
 
 class Guardian {
-  final String? name;
-  final String? contact;
+  String name;
+  String relationship;
+  String phone;
 
-  const Guardian({this.name, this.contact});
+  Guardian({
+    required this.name,
+    required this.phone,
+    required this.relationship,
+  });
 
-  factory Guardian.fromJson(Map<String, dynamic> json) => Guardian(
-        name: json['name'] as String?,
-        contact: json['contact'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'contact': contact,
-      };
+  factory Guardian.fromJson(Map<String, dynamic> json) {
+    return Guardian(
+      name: json['name'] ?? 'Unknown',
+      phone: json['phone'] ?? 'No Phone',
+      relationship: json['relationship'] ?? 'No Relationship',
+    );
+  }
 }
 
-class SocialLink {
-  final String? platform;
-  final String? url;
+class SocialLinks {
+  String linkedIn;
+  String github;
+  String leetCode;
 
-  const SocialLink({this.platform, this.url});
+  SocialLinks({
+    required this.linkedIn,
+    required this.github,
+    required this.leetCode,
+  });
 
-  factory SocialLink.fromJson(Map<String, dynamic> json) => SocialLink(
-        platform: json['platform'] as String?,
-        url: json['url'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'platform': platform,
-        'url': url,
-      };
+  factory SocialLinks.fromJson(Map<String, dynamic> json) {
+    return SocialLinks(
+      linkedIn: json['linkedIn'] ?? 'No LinkedIn',
+      github: json['github'] ?? 'No GitHub',
+      leetCode: json['leetCode'] ?? 'No LeetCode',
+    );
+  }
 }
 
 class Course {
-  final String? title;
-  final String? code;
+  String name;
 
-  const Course({this.title, this.code});
+  Course({required this.name});
 
-  factory Course.fromJson(Map<String, dynamic> json) => Course(
-        title: json['title'] as String?,
-        code: json['code'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'code': code,
-      };
+  factory Course.fromJson(Map<String, dynamic> json) {
+    return Course(name: json['name'] ?? 'Unknown');
+  }
 }
 
-class Advisor {
-  final String? name;
+class Batch {
+  String name;
 
-  const Advisor({this.name});
+  Batch({required this.name});
 
-  factory Advisor.fromJson(Map<String, dynamic> json) => Advisor(
-        name: json['name'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-      };
-}
-
-class FeeStructure {
-  final double? amount;
-  final String? type;
-
-  const FeeStructure({this.amount, this.type});
-
-  factory FeeStructure.fromJson(Map<String, dynamic> json) => FeeStructure(
-        amount: (json['amount'] as num?)?.toDouble(),
-        type: json['type'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'amount': amount,
-        'type': type,
-      };
+  factory Batch.fromJson(Map<String, dynamic> json) {
+    return Batch(name: json['name'] ?? 'Unknown');
+  }
 }
 
 class Document {
-  final String? title;
-  final String? url;
+  String url;
+  String fileName;
+  String originalName;
 
-  const Document({this.title, this.url});
+  Document({
+    required this.url,
+    required this.fileName,
+    required this.originalName,
+  });
 
-  factory Document.fromJson(Map<String, dynamic> json) => Document(
-        title: json['title'] as String?,
-        url: json['url'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'url': url,
-      };
+  factory Document.fromJson(Map<String, dynamic> json) {
+    return Document(
+      url: json['url'] ?? 'No URL',
+      fileName: json['fileName'] ?? 'No FileName',
+      originalName: json['originalName'] ?? 'No OriginalName',
+    );
+  }
 }
 
-class WorkShift {
-  final String? shift;
-  final String? timing;
+class Mentor {
+  String? name;
 
-  const WorkShift({this.shift, this.timing});
+  Mentor({required this.name});
 
-  factory WorkShift.fromJson(Map<String, dynamic> json) => WorkShift(
-        shift: json['shift'] as String?,
-        timing: json['timing'] as String?,
-      );
+  factory Mentor.fromJson(Map<String, dynamic> json) {
+    return Mentor(name: json['name']);
+  }
+}
 
-  Map<String, dynamic> toJson() => {
-        'shift': shift,
-        'timing': timing,
-      };
+class Advisor {
+  String? email;
+  String? name;
+
+  Advisor({
+    required this.email,
+    required this.name,
+  });
+
+  factory Advisor.fromJson(Map<String, dynamic> json) {
+    return Advisor(email: json['email'], name: json['name']);
+  }
+}
+
+class Qualification {
+  String? name;
+
+  Qualification({required this.name});
+
+  factory Qualification.fromJson(Map<String, dynamic> json) {
+    return Qualification(name: json['name']);
+  }
+}
+
+class Branch {
+  String? name;
+
+  Branch({required this.name});
+
+  factory Branch.fromJson(Map<String, dynamic> json) {
+    return Branch(name: json['name']);
+  }
+}
+
+class Space {
+  String? name;
+
+  Space({required this.name});
+
+  factory Space.fromJson(Map<String, dynamic> json) {
+    return Space(name: json['name']);
+  }
+}
+
+class Institution {
+  String? name;
+
+  Institution({required this.name});
+
+  factory Institution.fromJson(Map<String, dynamic> json) {
+    return Institution(name: json['name']);
+  }
 }
