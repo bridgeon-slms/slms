@@ -7,8 +7,7 @@ import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dart';
 import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/views/payments/payment_screen.dart';
-
-import 'package:slms/views/reviews/score_details.dart';
+import 'package:slms/views/reviews/reviews.dart';
 
 // ignore: must_be_immutable
 class BottomBar extends StatelessWidget {
@@ -16,6 +15,7 @@ class BottomBar extends StatelessWidget {
     HomeScreen(),
     AttendancePage(),
     ScoreDetailsPage(),
+
     PaymentScreen(),
   ];
   BottomBar({super.key});

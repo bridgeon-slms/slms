@@ -55,6 +55,9 @@ dependencies:
   outline_pie_chart: ^0.0.1
   slider_bar_chart: ^0.0.6
   flutter_sales_graph: ^0.0.2
+  cached_network_image: ^3.4.1
+  jwt_decoder: ^2.0.1
+
 
 dev_dependencies:
   flutter_test:

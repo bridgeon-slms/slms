@@ -78,15 +78,25 @@ class LoginScreen extends StatelessWidget {
                             color: ColorConstents.primeryColor))),
                 GestureDetector(
                     onTap: () {
-                      context.read<AuthenticationController>().userLogin(
-                          email: emailController.text,
-                          password: passwordController.text).then((value){
-                            if(value != null){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
-                            }
-                          });
+                      context
+                          .read<AuthenticationController>()
+                          .userlogin(
+                              email: emailController.text,
+                              password: passwordController.text)
+                          .then((value) {
+                        if (value == 'login success') {
+                          Navigator.push(
+                              // ignore: use_build_context_synchronously
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
+                        }
+                      });
                     },
-                    child: containerBtn(text: 'Login',))
+                    child: containerBtn(
+                      context: context,
+                      text: 'Login',
+                    ))
               ],
             ),
           ),
