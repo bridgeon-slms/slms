@@ -80,11 +80,9 @@ class _DashboardState extends State<Dashboard> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        const Text(
-                          "Attendance Summary",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
+                        const Text("Attendance Summary",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
                         const Gap(15),
                         PieChart(
                           dataMap: dataMap,

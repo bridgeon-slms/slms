@@ -1,107 +1,157 @@
 import 'package:flutter/material.dart';
-import 'package:slms/utils/color/color.dart';
-import 'package:slms/views/reviews/reviewchart.dart';
+import 'package:slms/views/reviews/samplebar.dart';
 import 'package:slms/views/reviews/score_details.dart';
-import 'package:slms/widget/widget.dart';
 
-class Reviewspage extends StatelessWidget {
-  const Reviewspage({super.key});
+class ReviewsPage extends StatelessWidget {
+  const ReviewsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorConstents.bagroundColor,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        surfaceTintColor: ColorConstents.bagroundColor,
-        backgroundColor: ColorConstents.bagroundColor,
-        title: textStyled(
-            text: 'Review Report', fontSize: 16, fontweight: FontWeight.bold),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Review Report',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list, color: Colors.black87),
+            onPressed: () {
+              // Add filter functionality
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            buildReviewContainer(
-              icon: Icons.person,
-              title: " Reviewer",
-              subtitle: "Assigned",
-            ),
-            const SizedBox(height: 15),
-            buildReviewContainer(
-              icon: Icons.lock_clock,
-              title: "Review Date",
-              subtitle: "Jan 25",
-            ),
-            const SizedBox(height: 30),
-            const Text('Reviews history',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 300,
-                child: Center(
-                  child: BarChartSample2(),
-                ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 1,
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildInfoCard(
+                    context: context,
+                    title: "Current Reviewer",
+                    content: "John Smith",
+                    icon: Icons.person,
+                    backgroundColor: Colors.blue.withOpacity(0.1),
+                    iconColor: Colors.blue,
+                  ),
+                  const SizedBox(height: 15),
+                  _buildInfoCard(
+                    context: context,
+                    title: "Next Review",
+                    content: "Jan 25, 2025",
+                    icon: Icons.calendar_today,
+                    backgroundColor: Colors.green.withOpacity(0.1),
+                    iconColor: Colors.green,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
-            ListTile(
-              title: Text('Score Details',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Performance Overview',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
             ),
-            const SizedBox(height: 10),
-            buildScoreSheet(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScoreDetailsPAge()));
-                    },
-                    label: Row(
-                      children: [
-                        Text('More Details'),
-                        Icon(Icons.arrow_forward)
-                      ],
-                    )),
-              ],
-            )
+            const SizedBox(height: 15),
+            SizedBox(
+              height: 300,
+              child: Samplebar(), // Your existing chart
+            ),
+            const SizedBox(height: 20),
+            _buildScoreCard(context),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ScoreDetailsPage()),
+          );
+        },
+        backgroundColor: Colors.blue,
+        label: const Text('View Details'),
+        icon: const Icon(Icons.arrow_forward),
       ),
     );
   }
 
-  Widget buildReviewContainer({
-    required IconData icon,
+  Widget _buildInfoCard({
+    required BuildContext context,
     required String title,
-    required String subtitle,
+    required String content,
+    required IconData icon,
+    required Color backgroundColor,
+    required Color iconColor,
   }) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: 1.5),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
       ),
       child: Row(
         children: [
-          Icon(icon, size: 30, color: Colors.blue),
-          const SizedBox(width: 15),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: iconColor, size: 24),
+          ),
+          const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold)),
-              Text(subtitle,
-                  style: const TextStyle(fontSize: 14, color: Colors.grey)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                content,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ],
@@ -109,73 +159,109 @@ class Reviewspage extends StatelessWidget {
     );
   }
 
-  Widget buildScoreSheet() {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Card(
+  Widget _buildScoreCard(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
         color: Colors.white,
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              const Text(
-                'Academic',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              DataTable(
-                columns: const [
-                  DataColumn(
-                      label: Text('Week',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13))),
-                  DataColumn(
-                      label: Text('Review',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13))),
-                  DataColumn(
-                      label: Text('Task',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13))),
-                  DataColumn(
-                      label: Text('Score',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13))),
-                ],
-                rows: const [
-                  DataRow(cells: [
-                    DataCell(Text('1')),
-                    DataCell(Text('8')),
-                    DataCell(Text('8')),
-                    DataCell(Text('16')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('2')),
-                    DataCell(Text('7.5')),
-                    DataCell(Text('7')),
-                    DataCell(Text('14.5')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('3')),
-                    DataCell(Text('7')),
-                    DataCell(Text('7')),
-                    DataCell(Text('14')),
-                  ]),
-                  DataRow(cells: [
-                    DataCell(Text('4')),
-                    DataCell(Text('6.5')),
-                    DataCell(Text('7',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.blue))),
-                    DataCell(Text('13.5')),
-                  ]),
-                ],
-              ),
-            ],
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 10,
           ),
-        ),
+        ],
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Academic Performance',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    'Current Week: 4',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columnSpacing: 30,
+              headingRowColor: MaterialStateProperty.all(Colors.grey[50]),
+              columns: const [
+                DataColumn(
+                  label: Text('Week',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                DataColumn(
+                  label: Text('Review',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                DataColumn(
+                  label: Text('Task',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                DataColumn(
+                  label: Text('Total Score',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+              ],
+              rows: [
+                _buildDataRow('1', '8.0', '8.0', '16.0'),
+                _buildDataRow('2', '7.5', '7.0', '14.5'),
+                _buildDataRow('3', '7.0', '7.0', '14.0'),
+                _buildDataRow('4', '6.5', '7.0', '13.5', isCurrentWeek: true),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  DataRow _buildDataRow(
+    String week,
+    String review,
+    String task,
+    String total, {
+    bool isCurrentWeek = false,
+  }) {
+    final TextStyle cellStyle = TextStyle(
+      color: isCurrentWeek ? Colors.blue : Colors.black87,
+      fontWeight: isCurrentWeek ? FontWeight.bold : FontWeight.normal,
+    );
+
+    return DataRow(
+      cells: [
+        DataCell(Text(week, style: cellStyle)),
+        DataCell(Text(review, style: cellStyle)),
+        DataCell(Text(task, style: cellStyle)),
+        DataCell(Text(total, style: cellStyle)),
+      ],
     );
   }
 }

@@ -53,6 +53,8 @@ dependencies:
   date_picker_plus: ^4.1.0
   calendar_date_picker2: ^1.1.9
   outline_pie_chart: ^0.0.1
+  slider_bar_chart: ^0.0.6
+  flutter_sales_graph: ^0.0.2
 
 dev_dependencies:
   flutter_test:

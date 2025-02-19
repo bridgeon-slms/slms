@@ -142,6 +142,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_sales_graph:
+    dependency: "direct main"
+    description:
+      name: flutter_sales_graph
+      sha256: dd1543ec8d6a43f1db28e12edfc1dc0aa777841571817726358b032d99439ff5
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -461,6 +469,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slider_bar_chart:
+    dependency: "direct main"
+    description:
+      name: slider_bar_chart
+      sha256: f3183a6e51356658f0fd4a32ef49981b71fa98204d39f19858f98142524d967f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   source_span:
     dependency: transitive
     description:
