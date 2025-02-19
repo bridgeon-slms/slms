@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/AttendendsServices/attendencecontroller.dart';
-import 'package:slms/controller/profilecontroller/profilecontroller.dart';
-import 'package:slms/services/profileservices/profileservices.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/view_model/datecontroller.dart';
@@ -11,7 +9,6 @@ import 'package:slms/view_model/home/leaderboard_controller.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
-import 'package:slms/views/bottom/bottom_navigation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,14 +28,19 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => AuthenticationController()),
         ChangeNotifierProvider(
-          create: (context) => BottomBarController(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => DateProvider(),
         ),
         ChangeNotifierProvider(create: (context) => Profilecontroller()),
         ChangeNotifierProvider(
           create: (context) => Attendencecontroller(),
+        
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BottomBarController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DateProvider(),
+        )
         ),
       ],
       child: MaterialApp(
