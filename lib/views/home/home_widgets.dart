@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:slms/model/dashboard.dart';
@@ -9,7 +11,7 @@ CircularPercentIndicator circulePercentange() {
     animationDuration: 1000,
     radius: 40.0,
     lineWidth: 10.0,
-    percent: 0.83,
+    percent: 0.43,
     center: textStyled(text: '83%'),
     progressColor: Colors.blue,
     backgroundColor: Colors.grey.shade300,
@@ -18,12 +20,11 @@ CircularPercentIndicator circulePercentange() {
 }
 
 class attendaceContainer extends StatelessWidget {
-
   // IconData icon;
   // String percetange;
   // String text;
-   
-   attendaceContainer({
+
+  attendaceContainer({
     // required this.percetange,
     // required this.text,
     // required this.icon,
@@ -67,8 +68,12 @@ class attendaceContainer extends StatelessWidget {
   }
 }
 
-Container leaderBoardWidget(BuildContext context, ) {
-
+Widget leaderBoardWidget(BuildContext context, List<LeaderboardData> data) {
+  if (data.isEmpty) {
+    return Center(
+      child: Text('no data available'),
+    );
+  }
   return Container(
     width: double.infinity,
     height: 250,
@@ -85,7 +90,6 @@ Container leaderBoardWidget(BuildContext context, ) {
     ),
     child: Stack(
       children: [
-
         Positioned(
           bottom: 10,
           left: 0,
@@ -112,37 +116,57 @@ Container leaderBoardWidget(BuildContext context, ) {
                     topRight: Radius.circular(10)),
                 color: Color(0XFF343C6A),
               ),
-              width: MediaQuery.of(context).size.width/3.3,
+              width: MediaQuery.of(context).size.width / 3.3,
               height: 180,
             ),
           ),
         ),
         Positioned(
-          left: MediaQuery.of(context).size.width/15,
+          left: MediaQuery.of(context).size.width / 15,
           top: 75,
-          child: CircleAvatar(
-            radius: 35,
-            backgroundColor: Colors.blue,
+          child: SizedBox(
+            width: 70,
+            height: 70,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.network(
+                  data[1].studentId?.image ?? '',
+                  fit: BoxFit.cover,
+                )),
           ),
         ),
-            Positioned(
-              top: 75,
-              right: MediaQuery.of(context).size.width/15,
-              child: CircleAvatar(
-                        radius: 35,
-                        backgroundColor: Colors.blue,
-                      ),
-            ),
-            Positioned(
-              left:0,
-              right: 0,
-              top: 30,
-              child: CircleAvatar(
-                  //  backgroundImage: NetworkImage('${dataModel.leaderboard?.first.studentId?.image}'),
-                        radius: 35,
-                        backgroundColor: Colors.blue,
-                      ),
-            ),
+        Positioned(
+          top: 75,
+          right: MediaQuery.of(context).size.width / 15,
+          child: SizedBox(
+            height: 70,
+            width: 70,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.network(
+                  data[2].studentId?.image ?? '',
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+        Positioned(
+          left: MediaQuery.of(context).size.width / 2.55,
+          top: 30,
+          child: SizedBox(
+            height: 70,
+            width: 70,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.network(
+                  data[0].studentId?.image ?? '',
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+        Positioned(
+            top: 130,
+            child: textStyled(
+                text: data[0].totalScore.toString(), color: Color(0XFFFFD701)))
       ],
     ),
   );
