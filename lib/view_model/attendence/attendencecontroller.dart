@@ -2,27 +2,71 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:slms/AttendanceModel/AttendanceModels/model.dart';
-import 'package:slms/AttendanceModel/logModel/logmodel.dart';
-import 'package:slms/AttendendsServices/attendanceservices.dart';
-import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
+import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
+import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
+import 'package:slms/services/AttendendsServices/attendanceservices.dart';
 
 class Attendencecontroller extends ChangeNotifier {
   Attendanceservices ser = Attendanceservices();
   List<Data> attendenceList = [];
   List<AttendanceLogs> attendenceLogList = [];
+  List<Data> getLast = [];
 
-// for getting the datas form the api of attendence and adding to list
+  List first5 = [];
+  List last7 = [];
+  List last30 = [];
 
-  getAllDataFromAttendence() async {
+// for the attendence date piker calander
+
+  List<DateTime?> _selectedDates = [];
+
+  List<DateTime?> get selectedDates => _selectedDates;
+
+  void updateDates(List<DateTime?> dates) {
+    _selectedDates = dates;
+    notifyListeners(); // Notify UI of changes
+  }
+
+// for getting the datas form the api of attendence and adding to
+  getAllDataFromAttendence(from, to) async {
     try {
-      attendenceList = await ser.getAllAttendenceDatas();
+      attendenceList = await ser.getAllAttendenceDatas(from, to);
+      getlast();
       log('succes to get data from attendence api');
-      log('length or attendence list is ---${attendenceList.length}---');
+
+      log('length or attendence list is ---${attendenceList.first.date?.length}---');
       notifyListeners();
     } catch (e) {
       log('errro found in attentence provider or functios $e');
     }
+  }
+
+  getlast() async {
+    try {
+      getLast = await ser.getLastDatas();
+
+      log('get last ---${getLast.first.date?.length}---');
+      notifyListeners();
+    } catch (e) {
+      log('errro found in attentence provider  getlast or functios $e');
+    }
+  }
+
+  last7atasFromTO() {
+    last7 = attendenceList.map((e) => e.date).take(7).toList();
+
+    log(' data first ${last7.length.toString()}');
+    log('firsttt ${changeDateForListing(last7.last)}');
+    notifyListeners();
+  }
+
+  /// date piker
+
+  DateTime selectedDate = DateTime.now();
+
+  void setDate(DateTime date) {
+    selectedDate = date;
+    notifyListeners();
   }
 
 // Date changing funtionsss ..............................
@@ -46,6 +90,8 @@ class Attendencecontroller extends ChangeNotifier {
     var inDate = DateFormat('dd-MM-yyyy').format(addedTime);
     return inDate;
   }
+
+  date() {}
 
 // to cheack or get the cheack in date for the bottomsheet
   String cheackinTake(cheackinDate) {
@@ -77,6 +123,40 @@ class Attendencecontroller extends ChangeNotifier {
   /// filter functions ....................................................................................................
 
 //last montg sorted
+
+  first5Datas() {
+    first5 = attendenceList
+        .map((e) => changeDateForListing(e.date))
+        .take(5)
+        .toList();
+
+    log('  first ${first5.length.toString()}');
+    log(first5.toString());
+    notifyListeners();
+  }
+
+  last7atas() {
+    last7 = attendenceList
+        .map((e) => changeDateForListing(e.date))
+        .take(7)
+        .toList();
+
+    log('  first ${first5.length.toString()}');
+    log(last7.toString());
+    notifyListeners();
+  }
+
+  last30Datas() {
+    last30 = attendenceList
+        .map((e) => changeDateForListing(e.date))
+        .take(30)
+        .toList();
+
+    log('  first ${first5.length.toString()}');
+    log(last30.toString());
+    notifyListeners();
+  }
+
   completeDate() {
     var a = attendenceLogList.map((e) => e.createdAt).toList();
     var adds = [];
@@ -131,5 +211,25 @@ class Attendencecontroller extends ChangeNotifier {
     }
 
     log(last30.length.toString());
+  }
+
+  lastMonthDatas() {
+    DateTime currentDate = DateTime.now();
+    DateTime firstOfLastMonth =
+        DateTime(currentDate.year, currentDate.month - 1, 1);
+    DateTime lastOfLastMonth = DateTime(currentDate.year, currentDate.month, 0);
+
+    var lastMonth = attendenceList
+        .where((e) {
+          DateTime attendanceDate = DateTime.parse(e.date!);
+          return attendanceDate.isAfter(firstOfLastMonth) &&
+              attendanceDate.isBefore(lastOfLastMonth.add(Duration(days: 1)));
+        })
+        .map((e) => changeDateForListing(e.date))
+        .toList();
+
+    log('Last month data count: ${lastMonth.length}');
+    log(lastMonth.toString());
+    notifyListeners();
   }
 }

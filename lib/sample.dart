@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/widget/widget.dart';
 
 class Sample extends StatefulWidget {

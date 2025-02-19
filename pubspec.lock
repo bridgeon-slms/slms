@@ -17,6 +17,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  calendar_date_picker2:
+    dependency: "direct main"
+    description:
+      name: calendar_date_picker2
+      sha256: "7b5f20f2a02768df70b3d1fb181c217ab9f8992f39fd6c3fc2ff95b0885820a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.9"
+
   cached_network_image:
     dependency: "direct main"
     description:
@@ -89,6 +98,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  date_picker_plus:
+    dependency: "direct main"
+    description:
+      name: date_picker_plus
+      sha256: "9b22c94f86c76b20ebe46fa3e54544266400556a8ec9ad5508868ef3180ee513"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.0"
   dio:
     dependency: "direct main"
     description:
@@ -174,6 +191,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_sales_graph:
+    dependency: "direct main"
+    description:
+      name: flutter_sales_graph
+      sha256: dd1543ec8d6a43f1db28e12edfc1dc0aa777841571817726358b032d99439ff5
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
+
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -296,6 +322,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+
   jwt_decoder:
     dependency: "direct main"
     description:
@@ -376,6 +403,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  outline_pie_chart:
+    dependency: "direct main"
+    description:
+      name: outline_pie_chart
+      sha256: "7b91ef85e085ace2b8ec1bd18f2179a13ee1921177d6a02ae1bf0ba852840010"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   octo_image:
     dependency: transitive
     description:
@@ -384,6 +419,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+
   path:
     dependency: transitive
     description:
@@ -509,6 +545,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  slider_bar_chart:
+    dependency: "direct main"
+    description:
+      name: slider_bar_chart
+      sha256: f3183a6e51356658f0fd4a32ef49981b71fa98204d39f19858f98142524d967f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   source_span:
     dependency: transitive
     description:

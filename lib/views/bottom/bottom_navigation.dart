@@ -14,7 +14,8 @@ class BottomBar extends StatelessWidget {
   List<Widget> bottomBarPages = [
     HomeScreen(),
     AttendancePage(),
-    Reviewspage(),
+    ScoreDetailsPage(),
+
     PaymentScreen(),
   ];
   BottomBar({super.key});
