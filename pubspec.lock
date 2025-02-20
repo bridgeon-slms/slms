@@ -536,6 +536,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.2"
+  score_progress_pretty_display:
+    dependency: "direct main"
+    description:
+      name: score_progress_pretty_display
+      sha256: "9173374d4fa4462c77b985009c4f9b8f6a3cd014faecd977b432afb7754686f5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

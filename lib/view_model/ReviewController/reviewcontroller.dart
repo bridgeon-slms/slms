@@ -7,6 +7,13 @@ import 'package:slms/services/ReviewModel/review.dart';
 class Reviewcontroller extends ChangeNotifier {
   ReviewServices ser = ReviewServices();
   List<ReviewData> reviewList = [];
+
+  bool textTrue = false;
+  void textVisible() {
+    textTrue = !textTrue;
+    notifyListeners();
+  }
+
   getAllDataFromReview() async {
     try {
       reviewList = await ser.getAllReviewDatas();

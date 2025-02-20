@@ -57,6 +57,7 @@ dependencies:
   flutter_sales_graph: ^0.0.2
   cached_network_image: ^3.4.1
   jwt_decoder: ^2.0.1
+  score_progress_pretty_display: ^1.0.5
 
 
 dev_dependencies:

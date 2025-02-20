@@ -17,7 +17,6 @@ class ReviewServices {
       if (response.statusCode == 200) {
         List<dynamic> data = await response.data['data'];
         log(response.data['message']);
-        log(data.toString());
         return data.map((e) => ReviewData.fromJson(e)).toList();
       } else {
         log('error found to fetch data');

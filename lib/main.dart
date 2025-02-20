@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/controller/profilecontroller/profilecontroller.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
@@ -25,18 +26,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          // ChangeNotifierProvider(
-          //   create: (context) => LeaderboardController(),
-          // ),
+          ChangeNotifierProvider(
+            create: (context) => HomeController(),
+          ),
           ChangeNotifierProvider(
               create: (context) => AuthenticationController()),
           ChangeNotifierProvider(create: (context) => BottomBarController()),
           ChangeNotifierProvider(create: (context) => DateProvider()),
           ChangeNotifierProvider(create: (context) => Attendencecontroller()),
           ChangeNotifierProvider(create: (context) => Reviewcontroller()),
+          ChangeNotifierProvider(create: (context) => Profilecontroller()),
         ],
         child: MaterialApp(
-            home: LoginScreen(),
+            home: ScoreDetailsPage(),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 textTheme: GoogleFonts.poppinsTextTheme(),
