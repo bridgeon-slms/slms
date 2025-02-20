@@ -5,7 +5,6 @@ import 'package:slms/controller/profilecontroller/profilecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 
 import 'package:slms/views/ProfilePage/profilepage.dart';
-import 'package:slms/views/home/dashbord.dart';
 
 import 'package:slms/view_model/home/leaderboard_controller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart';
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CircleAvatar(
                     child: Icon(Icons.person),
                   ),
-      
+                ),
                 SizedBox(
                   width: 20,
                 ),
