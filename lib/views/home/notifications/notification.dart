@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 
@@ -13,9 +14,9 @@ class _NotificationSState extends State<NotificationS> {
   @override
   void initState() {
     super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_){
-     context.read<HomeController>().getNotification();
-  });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeController>().getNotification();
+    });
   }
 
   @override
@@ -43,9 +44,17 @@ class _NotificationSState extends State<NotificationS> {
             itemCount: value.notificationResponse!.data.length,
             itemBuilder: (BuildContext context, int index) {
               final data = value.notificationResponse!.data[index];
+              DateTime utcDateTime =
+                  DateTime.parse(data.date.toString()).toUtc();
+              DateTime istDateTime =
+                  utcDateTime.add(Duration(hours: 5, minutes: 30));
+
+              String formattedDate =
+                  DateFormat('dd MMMM yyyy hh:mm a').format(istDateTime);
+
               return ListTile(
                 title: Text(data.message),
-                subtitle: Text(data.date.toString()), // Displaying date
+                subtitle: Text(formattedDate), // Displaying date
               );
             },
           );
