@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/services/AttendendsServices/attendencecontroller.dart';
 import 'package:slms/widget/widget.dart';
 
 class Sample extends StatefulWidget {
@@ -13,7 +13,6 @@ class Sample extends StatefulWidget {
 class _SampleState extends State<Sample> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendenceLog();

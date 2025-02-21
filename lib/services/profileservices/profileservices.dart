@@ -6,11 +6,14 @@ import 'package:slms/services/dio/dio_services.dart';
 
 class ProfileServices {
   FlutterSecureStorage storage = FlutterSecureStorage();
-  final String profileBaseUrl =
-      // 'https://www.lms-api.bridgeon.in/api/admin/students/profile/66a763cbe9c9452006a2e776';
-      'https://www.lms-api.bridgeon.in/api/admin/students/profile/66447749a62b60d2d9d360ee';
+  
+
 
   Future<ProfileModel> getAllProfileDatas() async {
+    final userId = await storage.read(key: 'userId');
+    log(userId.toString());
+      final String profileBaseUrl =
+      'https://www.lms-api.bridgeon.in/api/admin/students/profile/$userId';
     final dio = await DioClient.getDioInstance();
     try {
       final response = await dio.get(profileBaseUrl);

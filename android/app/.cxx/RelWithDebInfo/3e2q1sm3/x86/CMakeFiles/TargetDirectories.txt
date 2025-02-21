@@ -1,0 +1,2 @@
+/Users/mac/slms/android/app/.cxx/RelWithDebInfo/3e2q1sm3/x86/CMakeFiles/edit_cache.dir
+/Users/mac/slms/android/app/.cxx/RelWithDebInfo/3e2q1sm3/x86/CMakeFiles/rebuild_cache.dir

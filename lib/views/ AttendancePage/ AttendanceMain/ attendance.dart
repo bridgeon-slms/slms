@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/services/AttendendsServices/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceReport/chartpage.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';

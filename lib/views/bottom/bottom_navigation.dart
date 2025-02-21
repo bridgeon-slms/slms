@@ -18,11 +18,11 @@ class BottomBar extends StatelessWidget {
     PaymentScreen(),
   ];
   BottomBar({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final index =context.watch<BottomBarController>().currentIndex;
     return Scaffold(
-        body: bottomBarPages[context.watch<BottomBarController>().currentIndex],
+        body: bottomBarPages[index],
         bottomNavigationBar: SalomonBottomBar(
             currentIndex: context.read<BottomBarController>().currentIndex,
             onTap: (index) {

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/AttendanceModel/AttendanceModels/model.dart';
-import 'package:slms/AttendanceModel/logModel/logmodel.dart';
-import 'package:slms/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
+import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
+import 'package:slms/services/AttendendsServices/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/widget/widget.dart';
 
