@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/utils/common/scaffoldmessenger.dart';
 import 'package:slms/utils/image/image.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/views/auth/forget/forget_password.dart';
@@ -93,6 +94,9 @@ class LoginScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ReviewsPage()));
+                                  builder: (context) => BottomBar();
+                        }else{
+                         scaffoldmessenger(context, value??"",Colors.grey); 
                         }
                       });
                     },

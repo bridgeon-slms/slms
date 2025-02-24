@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/controller/profilecontroller/profilecontroller.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/widget/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 

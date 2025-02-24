@@ -162,7 +162,7 @@ class PaymentScreen extends StatelessWidget {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -1,44 +1,65 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:slms/utils/api/api.dart';
 
 class AuthServices {
-  FlutterSecureStorage storage = FlutterSecureStorage();
-
+  FlutterSecureStorage storage = const FlutterSecureStorage();
   Dio dio = Dio();
-  Future<String?> userLogin(String email, String password) async {
-    log(email);
+
+  Future<String> userLogin(String email, String password) async {
+    log('Login Attempt: $email');
+
     try {
-      final response = await dio
-          .post(ApiUrls.loginUrl, data: {'email': email, 'password': password});
+      final response = await dio.post(
+        ApiUrls.loginUrl,
+        data: {
+          'email': email,
+          'password': password,
+        },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ),
+      );
+
+      log('Response Status Code: ${response.statusCode}');
+      log('Response Data: ${response.data}');
+
       if (response.statusCode == 200) {
         final accessToken = response.data['data'];
-        await storage.write(key: 'token', value: accessToken);
-        // jwtDecoder.
-        if (accessToken != null) {
+        if (accessToken != null && accessToken.isNotEmpty) {
+          log('Access Token: $accessToken');
+          await storage.write(key: 'token', value: accessToken);
+
           final user = JwtDecoder.decode(accessToken);
-          final userId = user['userid'];
+          final userId = user['userId'];
+          log('User ID: $userId');
           await storage.write(key: 'userid', value: userId);
+
+          return 'login success';
+        } else {
+          log("Access token is null or empty!");
+          return 'Invalid token received';
         }
-        return 'login success';
-      } else if (response.statusCode == 500) {
-        log(response.data);
-        final message = response.data;
-        log(message.toString());
-        return message;
+      } else {
+        log('Invalid email or password');
+        return 'Invalid email or password';
       }
     } on DioException catch (e) {
-      log(e.message.toString());
-      if (e.type == DioExceptionType.connectionError) {
-        log("$e");
+      if (e.response != null) {
+        log('Dio Error: ${e.response?.statusCode}');
+        log('Error Response: ${e.response?.data}');
+      } else {
+        log('Dio Error: ${e.message}');
       }
+      return 'Login failed';
     }
-    return null;
   }
+
 
   Future<String?> verifyEmail(String email) async {
     try {

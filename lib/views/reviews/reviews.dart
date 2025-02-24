@@ -21,7 +21,6 @@ class ReviewsPage extends StatefulWidget {
 class _ReviewsPageState extends State<ReviewsPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<Reviewcontroller>(context, listen: false)
         .getAllDataFromReview();
@@ -32,6 +31,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(

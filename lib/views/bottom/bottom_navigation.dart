@@ -8,22 +8,21 @@ import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dar
 import 'package:slms/views/home/home_screen.dart';
 import 'package:slms/views/payments/payment_screen.dart';
 import 'package:slms/views/reviews/reviews.dart';
-import 'package:slms/views/reviews/score_details.dart';
 
 // ignore: must_be_immutable
 class BottomBar extends StatelessWidget {
   List<Widget> bottomBarPages = [
     HomeScreen(),
     AttendancePage(),
-    ScoreDetailsPage(),
+    ReviewsPage(),
     PaymentScreen(),
   ];
   BottomBar({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final index =context.watch<BottomBarController>().currentIndex;
     return Scaffold(
-        body: bottomBarPages[context.watch<BottomBarController>().currentIndex],
+        body: bottomBarPages[index],
         bottomNavigationBar: SalomonBottomBar(
             currentIndex: context.read<BottomBarController>().currentIndex,
             onTap: (index) {
