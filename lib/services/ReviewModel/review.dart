@@ -6,18 +6,18 @@ import 'package:slms/services/dio/dio_services.dart';
 
 class ReviewServices {
   Future<List<ReviewData>> getAllReviewDatas() async {
-    var attndenceBaseUrl =
+    var reviewUrl =
         'https://www.lms-api.bridgeon.in/api/admin/reviews/students/details/6655d4351a37e7a030d9312b?page=0&rowsPerPage=0&scheduled=false';
     final dio = await DioClient.getDioInstance();
     try {
       final response = await dio.get(
-        attndenceBaseUrl,
+        reviewUrl,
       );
 
       if (response.statusCode == 200) {
         List<dynamic> data = await response.data['data'];
         log(response.data['message']);
-        log(data.toString());
+
         return data.map((e) => ReviewData.fromJson(e)).toList();
       } else {
         log('error found to fetch data');
