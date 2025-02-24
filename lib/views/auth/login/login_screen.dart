@@ -8,7 +8,7 @@ import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/views/auth/forget/forget_password.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {

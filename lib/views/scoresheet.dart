@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class ScoresheetPage extends StatelessWidget {
   const ScoresheetPage({super.key});

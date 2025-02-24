@@ -7,7 +7,7 @@ import 'package:slms/services/AttendendsServices/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceReport/chartpage.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class AttendancePage extends StatefulWidget {
   const AttendancePage({super.key});

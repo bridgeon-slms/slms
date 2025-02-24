@@ -4,7 +4,7 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

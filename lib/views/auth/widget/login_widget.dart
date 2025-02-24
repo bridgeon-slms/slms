@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 TextFormField costumTextfeild(
     {String? hintText,

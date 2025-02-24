@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/views/reviews/reviewchart.dart';
 import 'package:slms/views/reviews/score_details.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class Reviewspage extends StatelessWidget {
   const Reviewspage({super.key});

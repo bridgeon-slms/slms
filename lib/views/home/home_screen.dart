@@ -8,7 +8,7 @@ import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart'; // Fixed import
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

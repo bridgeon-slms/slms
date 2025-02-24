@@ -7,7 +7,7 @@ import 'package:slms/helpers/helpers.dart';
 import 'package:slms/model/dashboard.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 CircularPercentIndicator circulePercentange(
   double percent,
