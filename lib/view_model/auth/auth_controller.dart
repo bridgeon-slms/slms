@@ -5,7 +5,7 @@ import 'package:slms/services/auth/auth_services.dart';
 
 class AuthenticationController extends ChangeNotifier {
   AuthServices authServices = AuthServices();
-
+  bool hidePassword = true;
   bool isLogging = false;
   Future<String?> userlogin(
       {required String email, required String password}) async {
@@ -13,12 +13,9 @@ class AuthenticationController extends ChangeNotifier {
     notifyListeners();
     try {
       final message = await authServices.userLogin(email, password);
-      if (message != null) {
-        log(message);
-        return message;
-      }
+      log(message);
+      return message;
     } catch (e) {
-      // log(e.toString());
       return "Something went wrong";
     } finally {
       isLogging = false;
@@ -58,5 +55,10 @@ class AuthenticationController extends ChangeNotifier {
       isLogging = false;
       notifyListeners();
     }
+  }
+
+  void hidePasswordFunction() {
+    hidePassword = !hidePassword;
+    notifyListeners();
   }
 }

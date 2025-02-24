@@ -3,22 +3,16 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
 import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
+import 'package:slms/services/dio/dio_services.dart';
 
 class Attendanceservices {
-  Dio dio = Dio();
-  var token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU1ZDQzNTFhMzdlN2EwMzBkOTMxMmIiLCJpYXQiOjE3Mzk4MDAwNjgsImV4cCI6MTczOTgwMzY2OH0.qRCajP1-XnaM2X2aM_3w7bB8xfrODHppTPJ2yujMBME';
-  final attndenceBaseUrl =
-      'https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=2025-02-09T08:34:07.154Z&toDate=2025-02-15T08:34:07.154Z';
+      
 
   Future<List<Data>> getAllAttendenceDatas() async {
+    final dio = await DioClient.getDioInstance();
     try {
-      final response = await dio.get(attndenceBaseUrl,
-          options: Options(headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          }));
-
+      final response = await dio.get('https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=2025-02-09T08:34:07.154Z&toDate=2025-02-15T08:34:07.154Z',
+      );
       if (response.statusCode == 200) {
         List<dynamic> data = await response.data['data'];
         log(response.data['message']);
@@ -41,12 +35,10 @@ class Attendanceservices {
       'https://www.lms-api.bridgeon.in/api/admin/attendanceLog/student/profile';
 
   Future<List<AttendanceLogs>> attendentanceLog() async {
+        final dio = await DioClient.getDioInstance();
     try {
       final response = await dio.get(logUrl,
-          options: Options(headers: {
-            'Authorization': 'Bearer $token',
-            'Content-Type': 'application/json',
-          }));
+      );
 
       if (response.statusCode == 200) {
         log('succes to fetch items from attendence log ${response.data['message']}');

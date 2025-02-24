@@ -133,7 +133,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         double academicMark =
                             (academic?.review ?? 0) + (academic?.task ?? 0);
                         double acadamicper = academicMark / 20;
-                      
                         acadamicper = acadamicper.clamp(0.0, 1.0);
                         log(others!.attendance.toString());
                         double othersMark =

@@ -25,7 +25,6 @@ class AuthServices {
           },
         ),
       );
-
       log('Response Status Code: ${response.statusCode}');
       log('Response Data: ${response.data}');
 
