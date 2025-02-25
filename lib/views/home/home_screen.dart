@@ -5,11 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
-
 import 'package:slms/views/ProfilePage/profilepage.dart';
-
-import 'package:slms/views/ProfilePage/profilepage.dart';
-
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
 import 'package:slms/widget/widget.dart';
@@ -21,34 +17,41 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+      
+  @override
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<HomeController>(context, listen: false).fetchAllData();
+      log('init state calling');
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    final homeController = context.watch<HomeController>();
-
-    return homeController.isLoading
+    super.build(context);
+    return context.read<HomeController>().isLoading
         ? Container(
-          color: Colors.white,
-          child: const Center(child: CircularProgressIndicator()))
+            color: Colors.white,
+            child: const Center(child: CircularProgressIndicator()))
         : Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
               surfaceTintColor: Colors.white,
               actions: [
-                IconButton(onPressed: () {
-   
-                }, icon: const Icon(Iconsax.message)),
+                IconButton(onPressed: () {}, icon: const Icon(Iconsax.message)),
                 IconButton(
                     onPressed: () {
-                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationS()));
-                    }, icon: const Icon(Iconsax.notification)),
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationS()));
+                    },
+                    icon: const Icon(Iconsax.notification)),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -69,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: ColorConstents.bagroundColor,
             body: RefreshIndicator(
               onRefresh: () async {
-                await homeController.fetchAllData();
+                await context.watch<HomeController>().fetchAllData();
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -80,8 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Padding(
                           padding: const EdgeInsets.only(top: 20, bottom: 20),
-                          child: leaderBoardWidget(
-                              context, homeController.leaderboardData)),
+                          child: leaderBoardWidget(context,
+                              context.watch<HomeController>().leaderboardData)),
                       Consumer<HomeController>(
                           builder: (context, provider, child) {
                         final acadamic = provider.score?.data.first.academic;
@@ -130,20 +133,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             value.score!.data.isEmpty) {
                           return SizedBox();
                         }
-                      
+
                         final academic = value.score?.data.first.academic;
                         final others = value.score?.data.first.others;
                         if (academic == null) {}
                         double academicMark =
                             (academic?.review ?? 0) + (academic?.task ?? 0);
                         double acadamicper = academicMark / 20;
-                      
+
                         acadamicper = acadamicper.clamp(0.0, 1.0);
                         log(others!.attendance.toString());
                         double othersMark =
                             (others.attendance) + (others.discipline);
                         double othersPercentage = othersMark / 20;
-                      
+
                         othersPercentage = othersPercentage.clamp(0.0, 1.0);
                         return Column(
                           children: [
@@ -151,8 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     textStyled(
                                       text: 'Acadamic',
@@ -163,16 +165,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 circulePercentange(acadamicper),
                               ],
                             ),
- Padding(
-   padding: const EdgeInsets.all(8.0),
-   child: Divider(),
- ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Divider(),
+                            ),
                             Row(
-                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     textStyled(
                                       text: 'Others',

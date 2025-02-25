@@ -7,9 +7,6 @@ import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/views/auth/forget/forget_password.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
-import 'package:slms/views/home/home_screen.dart';
-import 'package:slms/views/reviews/reviews.dart';
-import 'package:slms/views/reviews/score_details.dart';
 import 'package:slms/widget/widget.dart';
 
 // ignore: must_be_immutable
@@ -93,8 +90,9 @@ class LoginScreen extends StatelessWidget {
                               // ignore: use_build_context_synchronously
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ReviewsPage()));
-                                  builder: (context) => BottomBar();
+
+                                  builder: (context) => BottomBar()
+                              ));
                         }else{
                          scaffoldmessenger(context, value??"",Colors.grey); 
                         }

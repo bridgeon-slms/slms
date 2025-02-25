@@ -20,13 +20,12 @@ class AttendancePage extends StatefulWidget {
 class _AttendancePageState extends State<AttendancePage> {
   @override
   void initState() {
-    // TODO: implement initState
+    log('attendence init state calling');
     super.initState();
     DateTime time = DateTime.now();
     String startDate = DateFormat('yyyy-MM-dd').format(time);
     DateTime yesterday = time.subtract(Duration(days: 5));
     String endate = DateFormat('yyyy-MM-dd').format(yesterday);
-
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendence(endate, startDate);
     Provider.of<Attendencecontroller>(context, listen: false)

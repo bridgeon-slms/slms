@@ -75,7 +75,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                           title: "Current Week",
                           content: value.reviewList.isEmpty
                               ? 'Loading....'
-                              : value.reviewList.first.week.toString(),
+                              : "${value.reviewList.first.studentId?.week}",
                           icon: Icons.person,
                           backgroundColor: Colors.blue.withAlpha(80),
                           iconColor: Colors.blue,
@@ -95,14 +95,17 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     ]),
                     Gap(20),
                     fullScoreCard(
+                        context: context,
                         totel: value.markTotel.toInt().toDouble(),
                         text1:
-                            'You Scored ${value.totelScoreCheacker()} out of 760',
-                        text2: 'You Acquired 82% of Total Score'),
+                            'You Scored ${value.totelScoreCheacker()[0].toInt()} out of ${value.reviewList.length * 40}',
+                        text2: 'You Acquired of Total Score'),
                     fullScoreCard(
+                        context: context,
                         totel: 0,
-                        text1: 'Highest score scored in a Review: 37',
-                        text2: 'You Acquired 93% of Total Score')
+                        text1:
+                            'Highest score scored in a Review: ${value.totelScoreCheacker()[1].toInt()}',
+                        text2: 'You Acquired of Total Score')
                   ],
                 ),
               ),
@@ -199,7 +202,8 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 }
 
-Widget progressCircle(totel) {
+Widget progressCircle(BuildContext context, double totel) {
+  final totalScore = context.read<Reviewcontroller>().reviewList.length * 40;
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: Column(
@@ -207,22 +211,24 @@ Widget progressCircle(totel) {
         CircularPercentIndicator(
           radius: 30.0,
           lineWidth: 5.0,
-          percent: min(1.0, totel / 760),
+          percent: min(1.0, totel / totalScore),
           center: Text(
-            "${(((totel / 760) * 100) + 1).toInt()}%",
+            "${(((totel / totalScore) * 100)).toInt()}%",
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           progressColor: Colors.green,
           backgroundColor: Colors.grey[300]!,
           circularStrokeCap: CircularStrokeCap.round,
-        )
+        ),
       ],
     ),
   );
 }
-
 Widget fullScoreCard(
-    {required String text1, required String text2, required double totel}) {
+    {required String text1,
+    required String text2,
+    required double totel,
+    required BuildContext context}) {
   return Card(
     elevation: 2,
     color: Colors.white,
@@ -247,7 +253,11 @@ Widget fullScoreCard(
               Spacer(),
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: progressCircle(totel),
+                child: Column(
+                  children: [
+                    progressCircle(context, totel),
+                  ],
+                ),
               )
             ],
           ),
