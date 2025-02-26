@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
+import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart'; // Fixed import
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
@@ -63,9 +64,6 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
                 const SizedBox(width: 20),
               ],
-              title: textStyled(
-                  text: 'Hi, Name', fontweight: FontWeight.w400, fontSize: 16),
-              backgroundColor: ColorConstents.bagroundColor,
             ),
             backgroundColor: ColorConstents.bagroundColor,
             body: RefreshIndicator(
@@ -79,6 +77,27 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Consumer<Profilecontroller>(
+                        builder: (context, value, child) => Card(
+                          color: Colors.white,
+                          elevation: 2,
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                CircleAvatar(),
+                                textStyled(text: 'hello,  '),
+                                textStyled(
+                                    text: value.profileList[0].name,
+                                    fontweight: FontWeight.w400,
+                                    fontSize: 16),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
                       // Padding(
                       //     padding: const EdgeInsets.only(top: 20, bottom: 20),
                       //     child: leaderBoardWidget(context,
