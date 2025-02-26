@@ -12,6 +12,7 @@ import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dar
 import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
+import 'package:slms/views/courses/coursess/courses.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: LoginScreen(),
+        home: CoursesPage(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),
