@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/services/AttendendsServices/attendencecontroller.dart';
+import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/view_model/bottom_bar.dart';
@@ -23,7 +24,11 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => HomeController(),
+
+
         ),
+         ChangeNotifierProvider(
+          create: (context) => Reviewcontroller(),),
         ChangeNotifierProvider(create: (context) => AuthenticationController()),
         ChangeNotifierProvider(
           create: (context) => DateProvider(),

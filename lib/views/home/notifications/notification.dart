@@ -17,6 +17,7 @@ class _NotificationSState extends State<NotificationS> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeController>().getNotification();
     });
+
   }
 
   @override
@@ -55,8 +56,8 @@ class _NotificationSState extends State<NotificationS> {
               return ListTile(
                 title: Text(data.message),
                 subtitle: Text(formattedDate), // Displaying date
-              );
-            },
+
+          );},
           );
         },
       ),

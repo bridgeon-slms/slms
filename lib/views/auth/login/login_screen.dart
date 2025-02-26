@@ -10,6 +10,7 @@ import 'package:slms/views/auth/widget/login_widget.dart';
 import 'package:slms/views/bottom/bottom_navigation.dart';
 import 'package:slms/views/widget/widget.dart';
 
+
 // ignore: must_be_immutable
 class LoginScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
@@ -110,6 +111,7 @@ class LoginScreen extends StatelessWidget {
                                   context, value ?? "", Colors.grey);
                             }
                           });
+
                         }
                       },
                       child: containerBtn(

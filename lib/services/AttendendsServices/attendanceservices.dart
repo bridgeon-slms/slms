@@ -6,13 +6,15 @@ import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
 import 'package:slms/services/dio/dio_services.dart';
 
 class Attendanceservices {
-      
-
-  Future<List<Data>> getAllAttendenceDatas() async {
+  Future<List<Data>> getAllAttendenceDatas(from, to) async {
+    var attndenceBaseUrl =
+        'https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=$from&toDate=$to';
     final dio = await DioClient.getDioInstance();
     try {
-      final response = await dio.get('https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=2025-02-09T08:34:07.154Z&toDate=2025-02-15T08:34:07.154Z',
+      final response = await dio.get(
+        attndenceBaseUrl,
       );
+
       if (response.statusCode == 200) {
         List<dynamic> data = await response.data['data'];
         log(response.data['message']);
@@ -35,9 +37,10 @@ class Attendanceservices {
       'https://www.lms-api.bridgeon.in/api/admin/attendanceLog/student/profile';
 
   Future<List<AttendanceLogs>> attendentanceLog() async {
-        final dio = await DioClient.getDioInstance();
+    final dio = await DioClient.getDioInstance();
     try {
-      final response = await dio.get(logUrl,
+      final response = await dio.get(
+        logUrl,
       );
 
       if (response.statusCode == 200) {
@@ -52,6 +55,32 @@ class Attendanceservices {
         throw Exception(e);
       } else {
         log('error found $e');
+      }
+    }
+    return [];
+  }
+
+
+  Future<List<Data>> getLastDatas() async {
+    var attndenceBaseUrl =
+        'https://www.lms-api.bridgeon.in/api/admin/attendance/students/6655d4351a37e7a030d9312b/profile?fromDate=';
+    final dio = await DioClient.getDioInstance();
+    try {
+      final response = await dio.get(
+        attndenceBaseUrl,
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = await response.data['data'];
+        log(response.data['message']);
+        return data.map((e) => Data.fromJson(e)).toList();
+      } else {
+        log('error found to fetch data');
+      }
+    } catch (e) {
+      if (e is DioException) {
+        log('${e.message} ${e.response?.data}');
+        throw Exception(e);
       }
     }
     return [];

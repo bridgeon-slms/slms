@@ -8,8 +8,8 @@ class DioClient {
   static FlutterSecureStorage storage = FlutterSecureStorage();
   static final Dio dio = Dio(
     BaseOptions(
-      connectTimeout: Duration(seconds: 10),
-      receiveTimeout: Duration(seconds: 10),
+      connectTimeout: Duration(seconds: 20),
+      receiveTimeout: Duration(seconds: 20),
     ),
   );
   static Future<Dio> getDioInstance() async {
