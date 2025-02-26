@@ -10,6 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
 
+import 'package:slms/views/bottom/bottom_navigation.dart';
+import 'package:slms/views/courses/coursess/courses.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
@@ -24,11 +27,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => HomeController(),
-
-
         ),
-         ChangeNotifierProvider(
-          create: (context) => Reviewcontroller(),),
+        ChangeNotifierProvider(
+          create: (context) => Reviewcontroller(),
+        ),
         ChangeNotifierProvider(create: (context) => AuthenticationController()),
         ChangeNotifierProvider(
           create: (context) => DateProvider(),

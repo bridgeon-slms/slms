@@ -19,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
-      
   @override
   bool get wantKeepAlive => true;
   @override
@@ -29,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
       Provider.of<HomeController>(context, listen: false).fetchAllData();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -41,7 +41,6 @@ class _HomeScreenState extends State<HomeScreen>
               automaticallyImplyLeading: false,
               surfaceTintColor: Colors.white,
               actions: [
-
                 IconButton(onPressed: () {}, icon: const Icon(Iconsax.message)),
                 IconButton(
                     onPressed: () {
@@ -80,10 +79,10 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 20),
-                          child: leaderBoardWidget(context,
-                              context.watch<HomeController>().leaderboardData)),
+                      // Padding(
+                      //     padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      //     child: leaderBoardWidget(context,
+                      //         context.watch<HomeController>().leaderboardData)),
                       Consumer<HomeController>(
                           builder: (context, provider, child) {
                         final acadamic = provider.score?.data.first.academic;
@@ -131,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen>
                         if (value.score?.data == null ||
                             value.score!.data.isEmpty) {
                           return SizedBox();
-                            }
+                        }
                         final academic = value.score?.data.first.academic;
                         final others = value.score?.data.first.others;
                         if (academic == null) {}
@@ -150,7 +149,6 @@ class _HomeScreenState extends State<HomeScreen>
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
-
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     textStyled(
@@ -162,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen>
                                 circulePercentange(acadamicper),
                               ],
                             ),
-
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Divider(),
