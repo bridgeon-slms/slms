@@ -48,8 +48,17 @@ dependencies:
   url_launcher: ^6.3.1
   salomon_bottom_bar: ^3.3.2
   dio: ^5.8.0+1
-  flutter_secure_storage: ^9.2.4
+  
   intl: ^0.20.2
+  date_picker_plus: ^4.1.0
+  calendar_date_picker2: ^1.1.9
+  outline_pie_chart: ^0.0.1
+  slider_bar_chart: ^0.0.6
+  flutter_sales_graph: ^0.0.2
+  cached_network_image: ^3.4.1
+  jwt_decoder: ^2.0.1
+  score_progress_pretty_display: ^1.0.5
+  flutter_secure_storage: ^9.2.4
 
 
 dev_dependencies:
@@ -77,7 +86,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/image/
-    - assets/video/splashvideo.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-imagesR
