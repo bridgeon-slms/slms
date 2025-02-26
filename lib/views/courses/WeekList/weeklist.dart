@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slms/services/review.dart';
 import 'package:slms/views/courses/weeksub/weeksub.dart';
 
 class WeeklistPage extends StatefulWidget {
@@ -9,6 +10,12 @@ class WeeklistPage extends StatefulWidget {
 }
 
 class _WeeklistPageState extends State<WeeklistPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ReviewServices().getReviewCatogary();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +37,11 @@ class _WeeklistPageState extends State<WeeklistPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
+                 Row(
                   children: [
-                    Icon(Icons.arrow_back, color: Colors.white),
+                    IconButton(icon: Icon( Icons.arrow_back, color: Colors.white),onPressed: (){
+                      Navigator.pop(context);
+                    },),
                     SizedBox(width: 10),
                     Text("Course",
                         style: TextStyle(color: Colors.white, fontSize: 18)),

@@ -18,4 +18,7 @@ class ApiUrls {
       'https://www.lms-api.bridgeon.in/api/admin/due-lists/student/profile';
   static const messagesApi =
       'https://www.lms-api.bridgeon.in/api/admin/notifications/student/';
+
+      static const courseApi = 'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/';
+      
 }

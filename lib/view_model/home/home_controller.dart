@@ -13,12 +13,13 @@ class HomeController extends ChangeNotifier {
   LeetcodeModel? leetcodeModel;
   ReviewResponse? score;
   String? leetcodeId;
+  bool isError = false;
   FeesApiResponse? payments;
   bool isLoading = false;
 
   bool notificationLodding = false;
 
-   NotificationResponse? notificationResponse;
+  NotificationResponse? notificationResponse;
 
   Future<void> fetchAllData() async {
     isLoading = true;
@@ -39,6 +40,7 @@ class HomeController extends ChangeNotifier {
     } catch (e) {
       log('Error fetching data: $e');
     } finally {
+      isError = true;
       isLoading = false;
       notifyListeners();
     }
@@ -50,9 +52,9 @@ class HomeController extends ChangeNotifier {
     try {
       notificationResponse = await services.fetchNotification();
     } catch (e) {
-
-    }finally{
-       notificationLodding = false;
+      isError = true;
+    } finally {
+      notificationLodding = false;
     }
     notifyListeners();
   }

@@ -12,6 +12,7 @@ import 'package:slms/views/auth/login/login_screen.dart';
 
 import 'package:slms/views/bottom/bottom_navigation.dart';
 import 'package:slms/views/courses/coursess/courses.dart';
+import 'package:slms/views/splash/splash.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: LoginScreen(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),

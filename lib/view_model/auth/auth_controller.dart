@@ -37,7 +37,6 @@ class AuthenticationController extends ChangeNotifier {
       isLogging = false;
       notifyListeners();
     }
-
     return null;
   }
 

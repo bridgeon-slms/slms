@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
         ? Container(
             color: Colors.white,
             child: const Center(child: CircularProgressIndicator()))
-        : Scaffold(
+        :context.read<HomeController>().isError?  Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
               surfaceTintColor: Colors.white,
