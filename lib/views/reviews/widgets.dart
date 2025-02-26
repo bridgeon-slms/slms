@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/ReviewModel/review.dart';
 import 'package:slms/utils/color/color.dart';
@@ -139,3 +140,4 @@ Widget scoreRow(String label, int score, int total) {
     ],
   );
 }
+

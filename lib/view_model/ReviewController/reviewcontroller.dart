@@ -8,12 +8,14 @@ class Reviewcontroller extends ChangeNotifier {
   List<ReviewData> reviewList = [];
   bool isLoding = false;
   double markTotel = 0;
-    
+   String? reviewDate;
+
   bool textTrue = false;
   void textVisible() {
     textTrue = !textTrue;
     notifyListeners();
   }
+
   getAllDataFromReview() async {
     isLoding = false;
     try {
@@ -36,14 +38,15 @@ class Reviewcontroller extends ChangeNotifier {
     var task = reviewList.map((e) => e.academic?.task ?? 0).toList();
     var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
     var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
-      final maxReview =  review.reduce(max);
-      final maxTask =  review.reduce(max);
-      final maxDiciplne =  review.reduce(max);
-      final maxAttendace =  review.reduce(max);
 
-      final maximumMark = maxReview+maxTask+maxDiciplne+maxAttendace;
+//get maximum mark
+    final maxReview = review.reduce(max);
+    final maxTask = review.reduce(max);
+    final maxDiciplne = review.reduce(max);
+    final maxAttendace = review.reduce(max);
 
-   
+    final maximumMark = maxReview + maxTask + maxDiciplne + maxAttendace;
+
     if (review.isNotEmpty && task.isNotEmpty) {
       totel = review.reduce((b, c) => b + c).toDouble();
       totelTask = task.reduce((b, c) => b + c).toDouble();
@@ -52,6 +55,27 @@ class Reviewcontroller extends ChangeNotifier {
     }
     var sum = totelTask + totel + displine + accTotel;
     markTotel = sum;
-    return [sum,maximumMark];
+    return [sum, maximumMark];
   }
+
+  List<double> getTotalReviewMArk() {
+    var review = reviewList.map((e) => e.academic?.review ?? 0).toList();
+    var task = reviewList.map((e) => e.academic?.task ?? 0).toList();
+    var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
+    var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
+
+    List<double> totalReviewMArk = List.generate(
+      review.length,
+      (index) => task[index] + review[index] + acc[index] + dis[index].toDouble(),
+    );
+    return totalReviewMArk;
+  }
+
+  void getReviewDatw()async{
+   reviewDate = await  ser.getReviewDate();
+   
+   notifyListeners();
+
+  }
+  
 }

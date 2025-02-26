@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -22,8 +21,12 @@ class _ReviewsPageState extends State<ReviewsPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<Reviewcontroller>(context, listen: false)
-        .getAllDataFromReview();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<Reviewcontroller>(context, listen: false)
+          .getAllDataFromReview();
+      Provider.of<Reviewcontroller>(context, listen: false).getReviewDatw();
+    });
   }
 
   @override
@@ -86,7 +89,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         child: currntCard(
                           context: context,
                           title: "Next Review",
-                          content: "Jan 25, 2025",
+                          content:
+                              context.read<Reviewcontroller>().reviewDate ==
+                                      null
+                                  ? 'loading'
+                                  : context.read<Reviewcontroller>().reviewDate!,
                           icon: Icons.calendar_today,
                           backgroundColor: Colors.green.withAlpha(80),
                           iconColor: Colors.green,
@@ -95,16 +102,20 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     ]),
                     Gap(20),
                     fullScoreCard(
+                        totalScore:
+                            context.read<Reviewcontroller>().reviewList.length *
+                                40,
                         context: context,
                         totel: value.markTotel.toInt().toDouble(),
                         text1:
                             'You Scored ${value.totelScoreCheacker()[0].toInt()} out of ${value.reviewList.length * 40}',
                         text2: 'You Acquired of Total Score'),
                     fullScoreCard(
+                        totalScore: 40,
                         context: context,
-                        totel: 0,
+                        totel: value.totelScoreCheacker()[1].toDouble(),
                         text1:
-                            'Highest score scored in a Review: ${value.totelScoreCheacker()[1].toInt()}',
+                            'Highest score scored in a Review: ${value.totelScoreCheacker()[1].ceil()}',
                         text2: 'You Acquired of Total Score')
                   ],
                 ),
@@ -156,9 +167,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.grey.withOpacity(0.2)),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,
@@ -202,8 +215,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 }
 
-Widget progressCircle(BuildContext context, double totel) {
-  final totalScore = context.read<Reviewcontroller>().reviewList.length * 40;
+Widget progressCircle(BuildContext context, double totel, num totalScore) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: Column(
@@ -224,10 +236,12 @@ Widget progressCircle(BuildContext context, double totel) {
     ),
   );
 }
+
 Widget fullScoreCard(
     {required String text1,
     required String text2,
     required double totel,
+    required num totalScore,
     required BuildContext context}) {
   return Card(
     elevation: 2,
@@ -255,7 +269,7 @@ Widget fullScoreCard(
                 padding: const EdgeInsets.only(right: 10),
                 child: Column(
                   children: [
-                    progressCircle(context, totel),
+                    progressCircle(context, totel, totalScore),
                   ],
                 ),
               )
