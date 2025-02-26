@@ -1,2 +1,0 @@
-/home/rinshid/Desktop/slms/android/app/.cxx/Debug/694n5c4q/armeabi-v7a/CMakeFiles/edit_cache.dir
-/home/rinshid/Desktop/slms/android/app/.cxx/Debug/694n5c4q/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -1,33 +1,59 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:slms/model/ReviewModel/review.dart';
 import 'package:slms/services/dio/dio_services.dart';
 
 class ReviewServices {
+  static const FlutterSecureStorage storage = FlutterSecureStorage();
+
   Future<List<ReviewData>> getAllReviewDatas() async {
-    var reviewUrl =
-        'https://www.lms-api.bridgeon.in/api/admin/reviews/students/details/6655d4351a37e7a030d9312b?page=0&rowsPerPage=0&scheduled=false';
-    final dio = await DioClient.getDioInstance();
+    log('Fetching review data...');
+
     try {
-      final response = await dio.get(
-        reviewUrl,
-      );
+      final userid = await storage.read(key: 'userid');
+      if (userid == null) {
+        throw Exception("User ID not found in secure storage.");
+      }
+
+      var reviewUrl =
+          'https://www.lms-api.bridgeon.in/api/admin/reviews/students/details/$userid?page=0&rowsPerPage=0&scheduled=false';
+
+      final dio = await DioClient.getDioInstance();
+      final response = await dio.get(reviewUrl);
 
       if (response.statusCode == 200) {
-        List<dynamic> data = await response.data['data'];
-        log(response.data['message']);
-
-        return data.map((e) => ReviewData.fromJson(e)).toList();
+        List<dynamic> rawData = response.data['data'];
+        return rawData.map((e) => ReviewData.fromJson(e)).toList();
       } else {
-        log('error found to fetch data');
+        throw Exception("Unexpected response format");
       }
     } catch (e) {
       if (e is DioException) {
-        log('${e.message} ${e.response?.data}');
-        throw Exception(e);
+        // log('DioException: ${e.message} - ${e.response?.data}');
+      } else {
+        // log('Error: $e');
       }
+      rethrow;
     }
-    return [];
+  }
+
+  Future<String?> getReviewDate() async {
+
+    try {
+      final userid = await storage.read(key: 'userid');
+      var reviewUrl =
+          'https://www.lms-api.bridgeon.in/api/admin/reviews/students/details/$userid?page=0&rowsPerPage=0&scheduled=true';
+      final dio = await DioClient.getDioInstance();
+      final response = await dio.get(reviewUrl);
+      if (response.statusCode == 200) {
+        final date = response.data['data'][0]['reviewDate'];
+        log(date);
+        return date;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
   }
 }

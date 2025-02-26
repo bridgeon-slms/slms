@@ -6,7 +6,7 @@ import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
 import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 int last = 0;
 

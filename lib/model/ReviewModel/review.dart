@@ -2,7 +2,7 @@ class ReviewModel {
   String? status;
   String? message;
   List<ReviewData>? data;
-  int? dataLength;
+  num? dataLength;
 
   ReviewModel({this.status, this.message, this.data, this.dataLength});
 
@@ -35,7 +35,7 @@ class ReviewData {
   Others? others;
   String? sId;
   StudentId? studentId;
-  int? week;
+  num? week;
   String? reviewDate;
   ReviewerName? reviewerName;
   bool? isScheduled;
@@ -46,7 +46,7 @@ class ReviewData {
   String? createdBy;
   String? createdDate;
   String? updatedDate;
-  int? iV;
+  num? iV;
   String? updatedBy;
   String? feeRecordId;
 
@@ -131,8 +131,8 @@ class ReviewData {
 }
 
 class Academic {
-  double? review;
-  double? task;
+  num? review;
+  num? task;
 
   Academic({this.review, this.task});
 
@@ -150,8 +150,8 @@ class Academic {
 }
 
 class Others {
-  double? attendance;
-  double? discipline;
+  num? attendance;
+  num? discipline;
 
   Others({this.attendance, this.discipline});
 
@@ -186,7 +186,7 @@ class StudentId {
   String? branch;
   String? space;
   Null? company;
-  int? week;
+  num? week;
   String? courseType;
   bool? courseCompleted;
   String? remark;
@@ -199,7 +199,7 @@ class StudentId {
   List<Document>? document;
   String? createdDate;
   String? updatedDate;
-  int? iV;
+  num? iV;
   String? imageLowRes;
   String? updatedBy;
   String? institution;
@@ -211,7 +211,7 @@ class StudentId {
   Null? exitDate;
   bool? isScheduledAttendance;
   String? workShift;
-  int? externalId;
+  num? externalId;
   String? district;
   String? admissionDate;
   Null? refStaff;
@@ -456,7 +456,7 @@ class Document {
   String? url;
   String? fileName;
   String? originalName;
-  int? size;
+  num? size;
   String? mimeType;
   bool? isDeleted;
   String? sId;

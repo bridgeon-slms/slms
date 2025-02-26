@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/ReviewModel/review.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/views/reviews/score_details.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 Widget weekCard({required ReviewData data}) {
   return Card(
@@ -139,3 +140,4 @@ Widget scoreRow(String label, int score, int total) {
     ],
   );
 }
+

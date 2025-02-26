@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/views/reviews/samplebar.dart';
 import 'package:slms/views/reviews/score_details.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class ReviewsPage extends StatefulWidget {
   const ReviewsPage({super.key});
@@ -21,10 +20,13 @@ class ReviewsPage extends StatefulWidget {
 class _ReviewsPageState extends State<ReviewsPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Provider.of<Reviewcontroller>(context, listen: false)
-        .getAllDataFromReview();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<Reviewcontroller>(context, listen: false)
+          .getAllDataFromReview();
+      Provider.of<Reviewcontroller>(context, listen: false).getReviewDatw();
+    });
   }
 
   @override
@@ -32,6 +34,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text(
@@ -75,7 +78,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                           title: "Current Week",
                           content: value.reviewList.isEmpty
                               ? 'Loading....'
-                              : value.reviewList.first.week.toString(),
+                              : "${value.reviewList.first.studentId?.week}",
                           icon: Icons.person,
                           backgroundColor: Colors.blue.withAlpha(80),
                           iconColor: Colors.blue,
@@ -86,7 +89,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         child: currntCard(
                           context: context,
                           title: "Next Review",
-                          content: "Jan 25, 2025",
+                          content:
+                              context.read<Reviewcontroller>().reviewDate ==
+                                      null
+                                  ? 'loading'
+                                  : context.read<Reviewcontroller>().reviewDate!,
                           icon: Icons.calendar_today,
                           backgroundColor: Colors.green.withAlpha(80),
                           iconColor: Colors.green,
@@ -95,14 +102,21 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     ]),
                     Gap(20),
                     fullScoreCard(
+                        totalScore:
+                            context.read<Reviewcontroller>().reviewList.length *
+                                40,
+                        context: context,
                         totel: value.markTotel.toInt().toDouble(),
                         text1:
-                            'You Scored ${value.totelScoreCheacker()} out of 760',
-                        text2: 'You Acquired 82% of Total Score'),
+                            'You Scored ${value.totelScoreCheacker()[0].toInt()} out of ${value.reviewList.length * 40}',
+                        text2: 'You Acquired of Total Score'),
                     fullScoreCard(
-                        totel: 0,
-                        text1: 'Highest score scored in a Review: 37',
-                        text2: 'You Acquired 93% of Total Score')
+                        totalScore: 40,
+                        context: context,
+                        totel: value.totelScoreCheacker()[1].toDouble(),
+                        text1:
+                            'Highest score scored in a Review: ${value.totelScoreCheacker()[1].toInt()}',
+                        text2: 'You Acquired of Total Score')
                   ],
                 ),
               ),
@@ -153,9 +167,11 @@ class _ReviewsPageState extends State<ReviewsPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.grey.withOpacity(0.2)),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,
@@ -199,7 +215,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 }
 
-Widget progressCircle(totel) {
+Widget progressCircle(BuildContext context, double totel, num totalScore) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),
     child: Column(
@@ -207,22 +223,26 @@ Widget progressCircle(totel) {
         CircularPercentIndicator(
           radius: 30.0,
           lineWidth: 5.0,
-          percent: min(1.0, totel / 760),
+          percent: min(1.0, totel / totalScore),
           center: Text(
-            "${(((totel / 760) * 100) + 1).toInt()}%",
+            "${(((totel / totalScore) * 100)).toInt()}%",
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
           progressColor: Colors.green,
           backgroundColor: Colors.grey[300]!,
           circularStrokeCap: CircularStrokeCap.round,
-        )
+        ),
       ],
     ),
   );
 }
 
 Widget fullScoreCard(
-    {required String text1, required String text2, required double totel}) {
+    {required String text1,
+    required String text2,
+    required double totel,
+    required num totalScore,
+    required BuildContext context}) {
   return Card(
     elevation: 2,
     color: Colors.white,
@@ -247,7 +267,11 @@ Widget fullScoreCard(
               Spacer(),
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: progressCircle(totel),
+                child: Column(
+                  children: [
+                    progressCircle(context, totel, totalScore),
+                  ],
+                ),
               )
             ],
           ),

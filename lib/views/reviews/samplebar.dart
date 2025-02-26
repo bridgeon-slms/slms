@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_sales_graph/flutter_sales_graph.dart';
 import 'package:provider/provider.dart';
-import 'package:slider_bar_chart/slider_bar_chart.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 
@@ -19,14 +16,25 @@ class Samplebar extends StatelessWidget {
         builder: (context, value, child) => Column(
           children: [
             Center(
-              child: FlutterSalesGraph(
-                salesData: [100, 200, 150, 300, 250, 350],
-                labels: ['Week1', 'Week1', 'Week1', 'Week1', 'Week1', 'Week1'],
-                maxBarHeight: 250.0,
-                barWidth: 60.0,
-                colors: [Colors.blue, Colors.green, Colors.red],
-                dateLineHeight: 20.0,
-              ),
+              child:
+                  Consumer<Reviewcontroller>(builder: (context, value, child) {
+                final data =
+                    value.reviewList.map((e) => "week${e.week}").toList();
+                return FlutterSalesGraph(
+                  salesData: value.getTotalReviewMArk(),
+                  labels: data,
+                  maxBarHeight: 250.0,
+                  barWidth: 60.0,
+                  colors: value
+                      .getTotalReviewMArk()
+                      .map((e) => e >= 32
+                          ? Colors.green
+                          : e > 28
+                              ? Colors.yellow
+                              : Colors.orange)
+                      .toList(),
+                );
+              }),
             ),
           ],
         ),

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceReport/chartpage.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class AttendancePage extends StatefulWidget {
   const AttendancePage({super.key});
@@ -20,13 +20,12 @@ class AttendancePage extends StatefulWidget {
 class _AttendancePageState extends State<AttendancePage> {
   @override
   void initState() {
-    // TODO: implement initState
+    log('attendence init state calling');
     super.initState();
     DateTime time = DateTime.now();
     String startDate = DateFormat('yyyy-MM-dd').format(time);
     DateTime yesterday = time.subtract(Duration(days: 5));
     String endate = DateFormat('yyyy-MM-dd').format(yesterday);
-
     Provider.of<Attendencecontroller>(context, listen: false)
         .getAllDataFromAttendence(endate, startDate);
     Provider.of<Attendencecontroller>(context, listen: false)

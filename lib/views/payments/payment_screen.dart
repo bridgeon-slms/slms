@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slms/utils/color/color.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});
@@ -162,7 +162,7 @@ class PaymentScreen extends StatelessWidget {
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
