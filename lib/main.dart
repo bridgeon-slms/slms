@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/model/profilemodel/profilemodel.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
+import 'package:slms/view_model/course/course.dart';
 import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/view_model/bottom_bar.dart';
@@ -24,6 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (context) => CourseController(),),
         ChangeNotifierProvider(
           create: (context) => HomeController(),
         ),
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: LoginScreen(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),

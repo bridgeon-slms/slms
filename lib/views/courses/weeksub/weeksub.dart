@@ -101,7 +101,7 @@ class CourseCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.courses,
-    required this.color,
+     required this.color,
   });
 
   @override
