@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -9,17 +7,18 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/widget/widget.dart';
 
-
 CircularPercentIndicator circulePercentange(
   double percent,
 ) {
   return CircularPercentIndicator(
     animation: true,
     animationDuration: 1000,
-    radius: 40.0,
-    lineWidth: 10.0,
+    radius: 60.0,
+    lineWidth: 13.0,
     percent: percent,
-    center: textStyled(text: '${percent * 100}'),
+    center: textStyled(
+        text: '${(percent * 100).toStringAsFixed(0)}%',
+        fontweight: FontWeight.bold),
     progressColor: Colors.blue,
     backgroundColor: Colors.grey.shade300,
     circularStrokeCap: CircularStrokeCap.round,

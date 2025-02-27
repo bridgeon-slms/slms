@@ -51,17 +51,6 @@ class _HomeScreenState extends State<HomeScreen>
                               builder: (context) => NotificationS()));
                     },
                     icon: const Icon(Iconsax.notification)),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (cont) => const ProfilePage()));
-                  },
-                  child: const CircleAvatar(
-                    child: Icon(Icons.person),
-                  ),
-                ),
                 const SizedBox(width: 20),
               ],
             ),
@@ -84,7 +73,55 @@ class _HomeScreenState extends State<HomeScreen>
                           child: ListTile(
                             title: Row(
                               children: [
-                                CircleAvatar(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (cont) =>
+                                                const ProfilePage()));
+                                  },
+                                  child: Consumer<Profilecontroller>(
+                                    builder: (context, value, child) =>
+                                        CircleAvatar(
+                                      child: Positioned(
+                                        bottom: 30,
+                                        left: 20,
+                                        child: Consumer<Profilecontroller>(
+                                          builder: (context, value, child) {
+                                            String imageUrl = value.profileList
+                                                        .isNotEmpty &&
+                                                    value.profileList[0]
+                                                            .image !=
+                                                        null
+                                                ? value.profileList[0].image
+                                                : 'https://via.placeholder.com/150';
+
+                                            return Hero(
+                                              tag: 'profile',
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  image: DecorationImage(
+                                                    image:
+                                                        NetworkImage(imageUrl),
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
                                 textStyled(text: 'hello,  '),
                                 textStyled(
                                     text: value.profileList[0].name,
@@ -111,29 +148,29 @@ class _HomeScreenState extends State<HomeScreen>
                             Row(
                               children: [
                                 attendaceContainer(
-                                  icon: Icons.abc,
+                                  icon: Icons.reviews,
                                   percetange: "${acadamic?.review}",
                                   text: 'Review',
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 15),
                                 attendaceContainer(
-                                  icon: Icons.abc,
+                                  icon: Icons.task,
                                   percetange: "${acadamic?.task}",
                                   text: 'Task',
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 20),
                             Row(
                               children: [
                                 attendaceContainer(
-                                  icon: Icons.abc,
+                                  icon: Icons.person,
                                   percetange: "${others?.attendance}",
                                   text: 'Attendance',
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 15),
                                 attendaceContainer(
-                                  icon: Icons.abc,
+                                  icon: Icons.list_alt_outlined,
                                   percetange: "${others?.discipline}",
                                   text: 'Discipline',
                                 ),
@@ -144,6 +181,9 @@ class _HomeScreenState extends State<HomeScreen>
                       }),
                       const SizedBox(height: 30),
                       textStyled(text: 'Total Score', fontSize: 19),
+                      SizedBox(
+                        height: 40,
+                      ),
                       Consumer<HomeController>(
                           builder: (context, value, child) {
                         if (value.score?.data == null ||
@@ -168,42 +208,36 @@ class _HomeScreenState extends State<HomeScreen>
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    circulePercentange(acadamicper),
+                                    SizedBox(
+                                      height: 40,
+                                    ),
                                     textStyled(
                                       text: 'Acadamic',
                                       fontweight: FontWeight.bold,
                                     ),
                                   ],
                                 ),
-                                circulePercentange(acadamicper),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Divider(),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    circulePercentange(othersPercentage),
+                                    SizedBox(
+                                      height: 40,
+                                    ),
                                     textStyled(
                                       text: 'Others',
                                       fontweight: FontWeight.bold,
                                     ),
                                   ],
-                                ),
-                                circulePercentange(othersPercentage),
+                                )
                               ],
                             ),
                           ],
                         );
                       }),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
-                        child: Divider(),
+                      SizedBox(
+                        height: 30,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

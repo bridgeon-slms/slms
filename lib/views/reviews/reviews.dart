@@ -89,11 +89,12 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         child: currntCard(
                           context: context,
                           title: "Next Review",
-                          content:
-                              context.read<Reviewcontroller>().reviewDate ==
-                                      null
-                                  ? 'loading'
-                                  : context.read<Reviewcontroller>().reviewDate!,
+                          content: context
+                                      .read<Reviewcontroller>()
+                                      .reviewDate ==
+                                  null
+                              ? 'loading'
+                              : context.read<Reviewcontroller>().reviewDate!,
                           icon: Icons.calendar_today,
                           backgroundColor: Colors.green.withAlpha(80),
                           iconColor: Colors.green,
@@ -115,7 +116,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         context: context,
                         totel: value.totelScoreCheacker()[1].toDouble(),
                         text1:
-                            'Highest score scored in a Review: ${value.totelScoreCheacker()[1].toInt()}',
+                            'Highest score in a Review: ${value.totelScoreCheacker()[1].toInt()}',
                         text2: 'You Acquired of Total Score')
                   ],
                 ),
@@ -132,7 +133,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                 height: 300,
                 child: Samplebar(),
               ),
-              const SizedBox(height: 70),
+              const SizedBox(height: 100),
             ],
           );
         }),
