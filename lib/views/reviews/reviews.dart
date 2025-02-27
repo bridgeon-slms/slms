@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:slms/helpers/helpers.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
+import 'package:slms/views/error/error.dart';
 import 'package:slms/views/reviews/samplebar.dart';
 import 'package:slms/views/reviews/score_details.dart';
 import 'package:slms/views/widget/widget.dart';
@@ -32,7 +33,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  context.read<Reviewcontroller>().isError? Errorpage(): Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         automaticallyImplyLeading: false,

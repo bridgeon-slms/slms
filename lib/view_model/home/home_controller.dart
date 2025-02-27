@@ -40,7 +40,6 @@ class HomeController extends ChangeNotifier {
     } catch (e) {
       log('Error fetching data: $e');
     } finally {
-      isError = true;
       isLoading = false;
       notifyListeners();
     }
