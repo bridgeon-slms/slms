@@ -44,14 +44,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             ? value.profileList[0].image
                             : 'https://via.placeholder.com/150';
 
-                        return Container(
-                          height: 370,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  opacity: 0.70,
-                                  image: NetworkImage(imageUrl),
-                                  fit: BoxFit.cover)),
+                        return Hero(
+                          tag: 'profile',
+                          child: Container(
+                            height: 370,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    opacity: 0.70,
+                                    image: NetworkImage(imageUrl),
+                                    fit: BoxFit.cover)),
+                          ),
                         );
                       },
                     ),
@@ -370,9 +373,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                       builder: (context) => LoginScreen()),
                                   (route) => false,
                                 );
-                                FlutterSecureStorage storage = FlutterSecureStorage();
+                                FlutterSecureStorage storage =
+                                    FlutterSecureStorage();
                                 storage.deleteAll();
-                                
                               },
                               child: Text('Logout'))
                         ],
