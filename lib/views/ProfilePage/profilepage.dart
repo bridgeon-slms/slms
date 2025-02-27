@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gap/gap.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/helpers/helpers.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
@@ -263,7 +264,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               text2: value.profileList[0].qualification.name!),
                           acadamicInfo(
                               text: 'Joining Date',
-                              text2: value.profileList[0].joiningDate!),
+                              text2: formatDate(DateTime.parse(
+                                  value.profileList[0].joiningDate!))),
                           acadamicInfo(
                               text: 'Course Type',
                               text2: value.profileList[0].courseType!),

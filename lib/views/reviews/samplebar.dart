@@ -27,7 +27,7 @@ class Samplebar extends StatelessWidget {
                   barWidth: 60.0,
                   colors: value
                       .getTotalReviewMArk()
-                      .map((e) => e >= 32
+                      .map((e) => e > 32
                           ? Colors.green
                           : e > 28
                               ? Colors.yellow

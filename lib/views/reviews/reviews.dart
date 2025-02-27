@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/helpers/helpers.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/views/reviews/samplebar.dart';
@@ -89,12 +90,12 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         child: currntCard(
                           context: context,
                           title: "Next Review",
-                          content: context
-                                      .read<Reviewcontroller>()
-                                      .reviewDate ==
-                                  null
-                              ? 'loading'
-                              : context.read<Reviewcontroller>().reviewDate!,
+
+                          content:
+                              context.read<Reviewcontroller>().reviewDate ==
+                                      null
+                                  ? 'loading'
+                                  : formatDate(DateTime.parse(context.read<Reviewcontroller>().reviewDate!)) ,
                           icon: Icons.calendar_today,
                           backgroundColor: Colors.green.withAlpha(80),
                           iconColor: Colors.green,
