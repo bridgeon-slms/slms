@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
-import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart'; // Fixed import
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
@@ -39,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen>
             child: const Center(child: CircularProgressIndicator()))
         : Scaffold(
             appBar: AppBar(
+              backgroundColor: ColorConstents.bagroundColor,
+              // foregroundColor: ColorConstents.bagroundColor,
               automaticallyImplyLeading: false,
               surfaceTintColor: Colors.white,
               actions: [
@@ -66,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Consumer<Profilecontroller>(
+                      Consumer<HomeController>(
                         builder: (context, value, child) => Card(
                           color: Colors.white,
                           elevation: 2,
@@ -81,39 +82,27 @@ class _HomeScreenState extends State<HomeScreen>
                                             builder: (cont) =>
                                                 const ProfilePage()));
                                   },
-                                  child: Consumer<Profilecontroller>(
-                                    builder: (context, value, child) =>
-                                        CircleAvatar(
-                                      child: Positioned(
-                                        bottom: 30,
-                                        left: 20,
-                                        child: Consumer<Profilecontroller>(
-                                          builder: (context, value, child) {
-                                            String imageUrl = value.profileList
-                                                        .isNotEmpty &&
-                                                    value.profileList[0]
-                                                            .image !=
-                                                        null
-                                                ? value.profileList[0].image
-                                                : 'https://via.placeholder.com/150';
-
-                                            return Hero(
-                                              tag: 'profile',
-                                              child: Container(
-                                                height: 100,
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  image: DecorationImage(
-                                                    image:
-                                                        NetworkImage(imageUrl),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
+                                  child: CircleAvatar(
+                                    child: Positioned(
+                                      bottom: 30,
+                                      left: 20,
+                                      child: Hero(
+                                        tag: 'profile',
+                                        child: Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            image: DecorationImage(
+                                              onError: (exception,
+                                                      stackTrace) =>
+                                                  CircularProgressIndicator(),
+                                              image: NetworkImage(
+                                                  value.profile?.image ?? ''),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -122,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen>
                                 SizedBox(
                                   width: 20,
                                 ),
-                                textStyled(text: 'hello,  '),
+                                textStyled(text: 'hello,'),
                                 textStyled(
-                                    text: value.profileList[0].name,
+                                    text: value.profile?.name ?? 'loading',
                                     fontweight: FontWeight.w400,
                                     fontSize: 16),
                               ],

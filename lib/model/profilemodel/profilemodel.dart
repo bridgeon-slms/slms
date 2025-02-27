@@ -17,7 +17,7 @@ class ProfileModel {
   Qualification qualification;
   Branch branch;
   Space space;
-  int week; // Ensuring it defaults to an integer
+  int week; 
   String? courseType;
   String? passOutYear;
   bool agreementSigned; // Ensuring it defaults to a boolean

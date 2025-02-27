@@ -18,10 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 2),(){
-    checkLogin();
+    Future.delayed(Duration(seconds: 2), () {
+      checkLogin();
     });
-
   }
 
   @override
@@ -52,10 +51,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void checkLogin() async {
     FlutterSecureStorage storage = FlutterSecureStorage();
     final token = await storage.read(key: 'token');
-    if(token !=null){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomBar()));
-    }else{
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+    if (token != null) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => BottomBar()));
+    } else {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginScreen()));
     }
   }
 }

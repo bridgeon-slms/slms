@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
+import 'package:slms/view_model/home/home_controller.dart';
 
 class Errorpage extends StatefulWidget {
   const Errorpage({super.key});
@@ -38,7 +41,9 @@ class _ErrorpageState extends State<Errorpage> {
               height: 30,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.read<Reviewcontroller>().getAllDataFromReview();
+              },
               child: Container(
                 height: 50,
                 width: 200,

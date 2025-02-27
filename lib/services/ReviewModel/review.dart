@@ -30,6 +30,8 @@ class ReviewServices {
       }
     } catch (e) {
       if (e is DioException) {
+        log(e.toString());
+        throw Exception();
         // log('DioException: ${e.message} - ${e.response?.data}');
       } else {
         // log('Error: $e');
