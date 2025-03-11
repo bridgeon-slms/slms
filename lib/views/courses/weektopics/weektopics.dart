@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:slms/views/courses/weekclass/weekclass.dart';
+import 'package:provider/provider.dart';
+import 'package:slms/view_model/course/course.dart';
+import 'package:slms/views/courses/topic_screen.dart';
 
 class Weektopicspage extends StatefulWidget {
   const Weektopicspage({super.key});
@@ -9,49 +11,33 @@ class Weektopicspage extends StatefulWidget {
 }
 
 class _WeektopicspageState extends State<Weektopicspage> {
-  List<String> topics = [
-    "What is Dart?",
-    "Dart Keywords",
-    "Dart Datatypes",
-    "Variables",
-    "Dart Constants"
-  ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<CourseController>().getTopics();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: topics.map((topic) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Weekclasspage()));
-                },
-                child: Card(
-                  elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 10),
-                    child: ListTile(
-                      title: Text(
-                        topic,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
-        ),
+      appBar: AppBar(),
+      body: Consumer<CourseController>(
+        builder: (context, value, child) {
+          return ListView.builder(
+            itemCount: value.topicData.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TopicScreen(
+                              topic: value.topicData[index].description,
+                            ))),
+                title: Text(value.topicData[index].title),
+              );
+            },
+          );
+        },
       ),
     );
   }
