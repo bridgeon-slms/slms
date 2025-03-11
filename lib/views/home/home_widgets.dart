@@ -25,6 +25,7 @@ CircularPercentIndicator circulePercentange(
   );
 }
 
+// ignore: must_be_immutable, camel_case_types
 class attendaceContainer extends StatelessWidget {
   IconData icon;
   String percetange;
@@ -203,8 +204,8 @@ Widget pendingPayments() {
       try {
         totalBalance = paymentData.fold<double>(
             0, (sum, payment) => sum + (payment.balance));
+      // ignore: empty_catches
       } catch (e) {
-        print('Error calculating balance: $e');
       }
 
       return Container(
@@ -286,7 +287,6 @@ Widget pendingPayments() {
                             ),
                           );
                         } catch (e) {
-                          print('Error rendering payment at index $index: $e');
                           return const SizedBox.shrink();
                         }
                       },

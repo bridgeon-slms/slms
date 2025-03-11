@@ -13,7 +13,6 @@ class WeeklistPage extends StatefulWidget {
 class _WeeklistPageState extends State<WeeklistPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<CourseController>().getWeekData();
   }

@@ -24,6 +24,7 @@ getAllDataFromReview() async {
 
   try {
     reviewList = await ser.getAllReviewDatas();
+     
     totelScoreCheacker();
     notifyListeners();
   } catch (e) {
@@ -33,7 +34,6 @@ getAllDataFromReview() async {
     notifyListeners();
   }
 }
-
 
   List<num> totelScoreCheacker() {
     double totel = 0;
@@ -45,7 +45,6 @@ getAllDataFromReview() async {
     var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
     var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
 
-//get maximum mark
     final maxReview = review.reduce(max);
     final maxTask = review.reduce(max);
     final maxDiciplne = review.reduce(max);
@@ -60,16 +59,14 @@ getAllDataFromReview() async {
       displine = dis.reduce((b, c) => b + c).toDouble();
     }
     var sum = totelTask + totel + displine + accTotel;
-    markTotel = sum;
+     notifyListeners();
     return [sum, maximumMark];
   }
-
   List<double> getTotalReviewMArk() {
     var review = reviewList.map((e) => e.academic?.review ?? 0).toList();
     var task = reviewList.map((e) => e.academic?.task ?? 0).toList();
     var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
     var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
-
     List<double> totalReviewMArk = List.generate(
       review.length,
       (index) =>
@@ -77,10 +74,8 @@ getAllDataFromReview() async {
     );
     return totalReviewMArk;
   }
-
   void getReviewDatw() async {
     reviewDate = await ser.getReviewDate();
-
     notifyListeners();
   }
 }

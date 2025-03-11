@@ -93,11 +93,6 @@ GestureDetector cd(
                           targetDate)
                       .toList();
 
-                  int inCount =
-                      filteredLogs.where((log) => log.direction == 'in').length;
-                  int outCount = filteredLogs
-                      .where((log) => log.direction == 'out')
-                      .length;
 
                   filteredLogs.sort((a, b) {
                     if (a.logDate != null && b.logDate != null) {

@@ -9,7 +9,9 @@ class CourseController extends ChangeNotifier {
     try {
       weekData = (await reviewServices.getReviewCatogary())!;
       return weekData;
+    // ignore: empty_catches
     } catch (e) {}
     notifyListeners();
+    return null;
   }
 }

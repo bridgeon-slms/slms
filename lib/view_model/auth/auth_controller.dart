@@ -49,11 +49,11 @@ class AuthenticationController extends ChangeNotifier {
       if (message != null) {
         return message;
       }
-    } catch (e) {
     } finally {
       isLogging = false;
       notifyListeners();
     }
+    return null;
   }
 
   void hidePasswordFunction() {

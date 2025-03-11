@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/common/scaffoldmessenger.dart';
@@ -108,6 +107,7 @@ class LoginScreen extends StatelessWidget {
                                       builder: (context) => BottomBar()));
                             } else {
                               scaffoldmessenger(
+                                  // ignore: use_build_context_synchronously
                                   context, value ?? "", Colors.grey);
                             }
                           });
