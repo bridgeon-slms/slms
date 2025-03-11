@@ -11,15 +11,15 @@ class AttendattendanceModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -60,7 +60,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     userId =
-        json['userId'] != null ? new UserId.fromJson(json['userId']) : null;
+        json['userId'] != null ? UserId.fromJson(json['userId']) : null;
     date = json['date'];
     status = json['status'];
     checkIn = json['checkIn'];
@@ -75,22 +75,22 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.userId != null) {
-      data['userId'] = this.userId!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    if (userId != null) {
+      data['userId'] = userId!.toJson();
     }
-    data['date'] = this.date;
-    data['status'] = this.status;
-    data['checkIn'] = this.checkIn;
-    data['checkOut'] = this.checkOut;
-    data['totalTime'] = this.totalTime;
-    data['workTime'] = this.workTime;
-    data['isRequested'] = this.isRequested;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['__v'] = this.iV;
-    data['updatedBy'] = this.updatedBy;
+    data['date'] = date;
+    data['status'] = status;
+    data['checkIn'] = checkIn;
+    data['checkOut'] = checkOut;
+    data['totalTime'] = totalTime;
+    data['workTime'] = workTime;
+    data['isRequested'] = isRequested;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['__v'] = iV;
+    data['updatedBy'] = updatedBy;
     return data;
   }
 }
@@ -107,23 +107,23 @@ class UserId {
   UserId.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
-    batch = json['batch'] != null ? new Batch.fromJson(json['batch']) : null;
+    batch = json['batch'] != null ? Batch.fromJson(json['batch']) : null;
     advisor =
-        json['advisor'] != null ? new Batch.fromJson(json['advisor']) : null;
+        json['advisor'] != null ? Batch.fromJson(json['advisor']) : null;
     externalId = json['externalId'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    if (this.batch != null) {
-      data['batch'] = this.batch!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    if (batch != null) {
+      data['batch'] = batch!.toJson();
     }
-    if (this.advisor != null) {
-      data['advisor'] = this.advisor!.toJson();
+    if (advisor != null) {
+      data['advisor'] = advisor!.toJson();
     }
-    data['externalId'] = this.externalId;
+    data['externalId'] = externalId;
     return data;
   }
 }
@@ -140,9 +140,9 @@ class Batch {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
     return data;
   }
 }

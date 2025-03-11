@@ -16,7 +16,6 @@ class Attendencecontroller extends ChangeNotifier {
   List last7 = [];
   List last30 = [];
 
-// for the attendence date piker calander
 
   List<DateTime?> _selectedDates = [];
 
@@ -26,8 +25,6 @@ class Attendencecontroller extends ChangeNotifier {
     _selectedDates = dates;
     notifyListeners(); // Notify UI of changes
   }
-
-// for getting the datas form the api of attendence and adding to
   getAllDataFromAttendence(from, to) async {
     try {
       attendenceList = await ser.getAllAttendenceDatas(from, to);
@@ -60,7 +57,6 @@ class Attendencecontroller extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// date piker
 
   DateTime selectedDate = DateTime.now();
 
@@ -113,7 +109,6 @@ class Attendencecontroller extends ChangeNotifier {
 
 // totel worktime in   hour & seconds
   String workTimeTotelInHour(totalTime) {
-    int totelWorkTime = 555;
     int time = totalTime ~/ 60;
     int minits = totalTime % 60;
 

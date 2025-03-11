@@ -12,20 +12,20 @@ class ReviewModel {
     if (json['data'] != null) {
       data = <ReviewData>[];
       json['data'].forEach((v) {
-        data!.add(new ReviewData.fromJson(v));
+        data!.add(ReviewData.fromJson(v));
       });
     }
     dataLength = json['dataLength'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['dataLength'] = this.dataLength;
+    data['dataLength'] = dataLength;
     return data;
   }
 }
@@ -42,7 +42,7 @@ class ReviewData {
   String? remark;
   bool? isDeleted;
   bool? isWeekBack;
-  Null? taskRecordId;
+  Null taskRecordId;
   String? createdBy;
   String? createdDate;
   String? updatedDate;
@@ -72,18 +72,18 @@ class ReviewData {
 
   ReviewData.fromJson(Map<String, dynamic> json) {
     academic = json['academic'] != null
-        ? new Academic.fromJson(json['academic'])
+        ? Academic.fromJson(json['academic'])
         : null;
     others =
-        json['others'] != null ? new Others.fromJson(json['others']) : null;
+        json['others'] != null ? Others.fromJson(json['others']) : null;
     sId = json['_id'];
     studentId = json['studentId'] != null
-        ? new StudentId.fromJson(json['studentId'])
+        ? StudentId.fromJson(json['studentId'])
         : null;
     week = json['week'];
     reviewDate = json['reviewDate'];
     reviewerName = json['reviewerName'] != null
-        ? new ReviewerName.fromJson(json['reviewerName'])
+        ? ReviewerName.fromJson(json['reviewerName'])
         : null;
     isScheduled = json['isScheduled'];
     remark = json['remark'];
@@ -99,33 +99,33 @@ class ReviewData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.academic != null) {
-      data['academic'] = this.academic!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (academic != null) {
+      data['academic'] = academic!.toJson();
     }
-    if (this.others != null) {
-      data['others'] = this.others!.toJson();
+    if (others != null) {
+      data['others'] = others!.toJson();
     }
-    data['_id'] = this.sId;
-    if (this.studentId != null) {
-      data['studentId'] = this.studentId!.toJson();
+    data['_id'] = sId;
+    if (studentId != null) {
+      data['studentId'] = studentId!.toJson();
     }
-    data['week'] = this.week;
-    data['reviewDate'] = this.reviewDate;
-    if (this.reviewerName != null) {
-      data['reviewerName'] = this.reviewerName!.toJson();
+    data['week'] = week;
+    data['reviewDate'] = reviewDate;
+    if (reviewerName != null) {
+      data['reviewerName'] = reviewerName!.toJson();
     }
-    data['isScheduled'] = this.isScheduled;
-    data['remark'] = this.remark;
-    data['isDeleted'] = this.isDeleted;
-    data['isWeekBack'] = this.isWeekBack;
-    data['taskRecordId'] = this.taskRecordId;
-    data['createdBy'] = this.createdBy;
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['__v'] = this.iV;
-    data['updatedBy'] = this.updatedBy;
-    data['feeRecordId'] = this.feeRecordId;
+    data['isScheduled'] = isScheduled;
+    data['remark'] = remark;
+    data['isDeleted'] = isDeleted;
+    data['isWeekBack'] = isWeekBack;
+    data['taskRecordId'] = taskRecordId;
+    data['createdBy'] = createdBy;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['__v'] = iV;
+    data['updatedBy'] = updatedBy;
+    data['feeRecordId'] = feeRecordId;
     return data;
   }
 }
@@ -142,9 +142,9 @@ class Academic {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['review'] = this.review;
-    data['task'] = this.task;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['review'] = review;
+    data['task'] = task;
     return data;
   }
 }
@@ -161,9 +161,9 @@ class Others {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['attendance'] = this.attendance;
-    data['discipline'] = this.discipline;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['attendance'] = attendance;
+    data['discipline'] = discipline;
     return data;
   }
 }
@@ -185,7 +185,7 @@ class StudentId {
   String? qualification;
   String? branch;
   String? space;
-  Null? company;
+  Null company;
   num? week;
   String? courseType;
   bool? courseCompleted;
@@ -208,14 +208,14 @@ class StudentId {
   String? targetedSalary;
   String? password;
   bool? agreementSigned;
-  Null? exitDate;
+  Null exitDate;
   bool? isScheduledAttendance;
   String? workShift;
   num? externalId;
   String? district;
   String? admissionDate;
-  Null? refStaff;
-  Null? refStudent;
+  Null refStaff;
+  Null refStudent;
 
   StudentId(
       {this.guardian,
@@ -268,10 +268,10 @@ class StudentId {
 
   StudentId.fromJson(Map<String, dynamic> json) {
     guardian = json['guardian'] != null
-        ? new Guardian.fromJson(json['guardian'])
+        ? Guardian.fromJson(json['guardian'])
         : null;
     socialLinks = json['socialLinks'] != null
-        ? new SocialLinks.fromJson(json['socialLinks'])
+        ? SocialLinks.fromJson(json['socialLinks'])
         : null;
     sId = json['_id'];
     name = json['name'];
@@ -279,11 +279,11 @@ class StudentId {
     phone = json['phone'];
     email = json['email'];
     course = json['course'];
-    batch = json['batch'] != null ? new Batch.fromJson(json['batch']) : null;
+    batch = json['batch'] != null ? Batch.fromJson(json['batch']) : null;
     image = json['image'];
     mentor = json['mentor'];
     advisor =
-        json['advisor'] != null ? new Batch.fromJson(json['advisor']) : null;
+        json['advisor'] != null ? Batch.fromJson(json['advisor']) : null;
     joiningDate = json['joiningDate'];
     qualification = json['qualification'];
     branch = json['branch'];
@@ -302,7 +302,7 @@ class StudentId {
     if (json['document'] != null) {
       document = <Document>[];
       json['document'].forEach((v) {
-        document!.add(new Document.fromJson(v));
+        document!.add(Document.fromJson(v));
       });
     }
     createdDate = json['createdDate'];
@@ -327,64 +327,64 @@ class StudentId {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.guardian != null) {
-      data['guardian'] = this.guardian!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (guardian != null) {
+      data['guardian'] = guardian!.toJson();
     }
-    if (this.socialLinks != null) {
-      data['socialLinks'] = this.socialLinks!.toJson();
+    if (socialLinks != null) {
+      data['socialLinks'] = socialLinks!.toJson();
     }
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['address'] = this.address;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['course'] = this.course;
-    if (this.batch != null) {
-      data['batch'] = this.batch!.toJson();
+    data['_id'] = sId;
+    data['name'] = name;
+    data['address'] = address;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['course'] = course;
+    if (batch != null) {
+      data['batch'] = batch!.toJson();
     }
-    data['image'] = this.image;
-    data['mentor'] = this.mentor;
-    if (this.advisor != null) {
-      data['advisor'] = this.advisor!.toJson();
+    data['image'] = image;
+    data['mentor'] = mentor;
+    if (advisor != null) {
+      data['advisor'] = advisor!.toJson();
     }
-    data['joiningDate'] = this.joiningDate;
-    data['qualification'] = this.qualification;
-    data['branch'] = this.branch;
-    data['space'] = this.space;
-    data['company'] = this.company;
-    data['week'] = this.week;
-    data['courseType'] = this.courseType;
-    data['courseCompleted'] = this.courseCompleted;
-    data['remark'] = this.remark;
-    data['feeStructures'] = this.feeStructures;
-    data['skillSets'] = this.skillSets;
-    data['status'] = this.status;
-    data['isRegistered'] = this.isRegistered;
-    data['isDeleted'] = this.isDeleted;
-    data['createdBy'] = this.createdBy;
-    if (this.document != null) {
-      data['document'] = this.document!.map((v) => v.toJson()).toList();
+    data['joiningDate'] = joiningDate;
+    data['qualification'] = qualification;
+    data['branch'] = branch;
+    data['space'] = space;
+    data['company'] = company;
+    data['week'] = week;
+    data['courseType'] = courseType;
+    data['courseCompleted'] = courseCompleted;
+    data['remark'] = remark;
+    data['feeStructures'] = feeStructures;
+    data['skillSets'] = skillSets;
+    data['status'] = status;
+    data['isRegistered'] = isRegistered;
+    data['isDeleted'] = isDeleted;
+    data['createdBy'] = createdBy;
+    if (document != null) {
+      data['document'] = document!.map((v) => v.toJson()).toList();
     }
-    data['createdDate'] = this.createdDate;
-    data['updatedDate'] = this.updatedDate;
-    data['__v'] = this.iV;
-    data['imageLowRes'] = this.imageLowRes;
-    data['updatedBy'] = this.updatedBy;
-    data['institution'] = this.institution;
-    data['isPlacementUnlocked'] = this.isPlacementUnlocked;
-    data['passOutYear'] = this.passOutYear;
-    data['targetedSalary'] = this.targetedSalary;
-    data['password'] = this.password;
-    data['agreementSigned'] = this.agreementSigned;
-    data['exitDate'] = this.exitDate;
-    data['isScheduledAttendance'] = this.isScheduledAttendance;
-    data['workShift'] = this.workShift;
-    data['externalId'] = this.externalId;
-    data['district'] = this.district;
-    data['admissionDate'] = this.admissionDate;
-    data['refStaff'] = this.refStaff;
-    data['refStudent'] = this.refStudent;
+    data['createdDate'] = createdDate;
+    data['updatedDate'] = updatedDate;
+    data['__v'] = iV;
+    data['imageLowRes'] = imageLowRes;
+    data['updatedBy'] = updatedBy;
+    data['institution'] = institution;
+    data['isPlacementUnlocked'] = isPlacementUnlocked;
+    data['passOutYear'] = passOutYear;
+    data['targetedSalary'] = targetedSalary;
+    data['password'] = password;
+    data['agreementSigned'] = agreementSigned;
+    data['exitDate'] = exitDate;
+    data['isScheduledAttendance'] = isScheduledAttendance;
+    data['workShift'] = workShift;
+    data['externalId'] = externalId;
+    data['district'] = district;
+    data['admissionDate'] = admissionDate;
+    data['refStaff'] = refStaff;
+    data['refStudent'] = refStudent;
     return data;
   }
 }
@@ -403,10 +403,10 @@ class Guardian {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['relationship'] = this.relationship;
-    data['phone'] = this.phone;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['relationship'] = relationship;
+    data['phone'] = phone;
     return data;
   }
 }
@@ -425,10 +425,10 @@ class SocialLinks {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['linkedIn'] = this.linkedIn;
-    data['github'] = this.github;
-    data['leetCode'] = this.leetCode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['linkedIn'] = linkedIn;
+    data['github'] = github;
+    data['leetCode'] = leetCode;
     return data;
   }
 }
@@ -445,9 +445,9 @@ class Batch {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
     return data;
   }
 }
@@ -481,14 +481,14 @@ class Document {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['fileName'] = this.fileName;
-    data['originalName'] = this.originalName;
-    data['size'] = this.size;
-    data['mimeType'] = this.mimeType;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['url'] = url;
+    data['fileName'] = fileName;
+    data['originalName'] = originalName;
+    data['size'] = size;
+    data['mimeType'] = mimeType;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
     return data;
   }
 }
@@ -504,16 +504,16 @@ class ReviewerName {
     sId = json['_id'];
     name = json['name'];
     designation = json['designation'] != null
-        ? new Batch.fromJson(json['designation'])
+        ? Batch.fromJson(json['designation'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    if (this.designation != null) {
-      data['designation'] = this.designation!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    if (designation != null) {
+      data['designation'] = designation!.toJson();
     }
     return data;
   }

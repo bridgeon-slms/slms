@@ -97,7 +97,9 @@ class HomeServices {
       } else {
         throw Exception('Failed to load fees data');
       }
+    // ignore: empty_catches
     } catch (e) {}
+    return null;
   }
 
   Future<NotificationResponse?> fetchNotification() async {
@@ -111,6 +113,7 @@ class HomeServices {
 } on DioException catch (e) {
     log(e.toString()); 
 }
+    return null;
   
   }
 }

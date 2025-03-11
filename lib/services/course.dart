@@ -8,7 +8,6 @@ class ReviewServices {
   FlutterSecureStorage storage = FlutterSecureStorage();
   Future<List<String>?> getReviewCatogary() async {
     final dio = await DioClient.getDioInstance();
-    final userid = await storage.read(key: 'userid');
     try {
       final response = await dio.get(
           'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/64be36abb6dfaefb9e580c95/categories');
@@ -24,5 +23,6 @@ class ReviewServices {
       log(e.response!.data.toString());
       //  log(e.toString());
     }
+    return null;
   }
 }

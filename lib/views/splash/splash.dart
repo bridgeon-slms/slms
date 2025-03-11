@@ -16,7 +16,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 2), () {
       checkLogin();
@@ -28,21 +27,19 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: ColorConstents.bagroundColor,
       body: Center(
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                ImageConstents.bridgeonLogo,
-                width: 100,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              textStyled(
-                  text: 'Bridgeon', fontweight: FontWeight.bold, fontSize: 30)
-            ],
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              ImageConstents.bridgeonLogo,
+              width: 100,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            textStyled(
+                text: 'Bridgeon', fontweight: FontWeight.bold, fontSize: 30)
+          ],
         ),
       ),
     );
@@ -53,9 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final token = await storage.read(key: 'token');
     if (token != null) {
       Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context, MaterialPageRoute(builder: (context) => BottomBar()));
     } else {
       Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context, MaterialPageRoute(builder: (context) => LoginScreen()));
     }
   }

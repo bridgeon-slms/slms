@@ -7,8 +7,11 @@ import 'package:slms/services/profileservices/profileservices.dart';
 class Profilecontroller extends ChangeNotifier {
   ProfileServices services = ProfileServices();
   List<ProfileModel> profileList = [];
+  bool isLodding = false;
 
   getAllProfileData() async {
+    isLodding = true;
+    notifyListeners();
     try {
       final data = await services.getAllProfileDatas();
       profileList = [data];
@@ -18,6 +21,9 @@ class Profilecontroller extends ChangeNotifier {
     } catch (e) {
       log('error found profile provider or function $e');
       notifyListeners();
+    } finally {
+      isLodding = false;
     }
+    notifyListeners();
   }
 }

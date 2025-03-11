@@ -3,6 +3,7 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
 
+// ignore: must_be_immutable
 class ChangePasswordScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();

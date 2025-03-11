@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,7 +20,6 @@ class ScoreDetailsPage extends StatefulWidget {
 class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<Reviewcontroller>(context, listen: false)
         .getAllDataFromReview();
@@ -80,6 +78,7 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.blue.withOpacity(0.3),
             blurRadius: 10,
             offset: const Offset(0, 6),
@@ -111,6 +110,7 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
               value: 0.85,
+              // ignore: deprecated_member_use
               backgroundColor: Colors.white.withOpacity(0.3),
               valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
               minHeight: 10,
@@ -214,7 +214,7 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
                         Text(data.studentId?.name ?? 'no name',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text('Week' + ' ' + data.week.toString(),
+                        Text('Week ${data.week}',
                             style: TextStyle(fontSize: 14, color: Colors.grey)),
                       ],
                     ),
@@ -335,17 +335,6 @@ Widget sectionTitle(String title, IconData icon) {
 
 Widget progressCircle(String title, double value, Color color, bardata) {
   var data = bardata * 10;
-  Color getScoreColor(double score) {
-    if (score > 80) {
-      return Colors.green;
-    } else if (score > 70) {
-      return Colors.yellow;
-    } else if (score > 60) {
-      return Colors.orange;
-    } else {
-      return Colors.red;
-    }
-  }
 
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8),

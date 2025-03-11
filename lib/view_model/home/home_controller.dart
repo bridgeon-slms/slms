@@ -19,32 +19,31 @@ class HomeController extends ChangeNotifier {
   bool isError = false;
   FeesApiResponse? payments;
   bool isLoading = false;
-ProfileModel? profile;
+  ProfileModel? profile;
   bool notificationLodding = false;
 
   NotificationResponse? notificationResponse;
 
   Future<void> fetchAllData() async {
     isLoading = true;
+    isError = false;
     notifyListeners();
 
     try {
       final results = await Future.wait([
-        services.leaderBoardData(),
         services.fetchLeetCodeModel(),
         services.getAcadamicScore(),
         services.getLeetcodeId(),
         services.fetchFeesData(),
         profileServices.getAllProfileDatas()
       ]);
-      // leaderboardData = results[0] as List<LeaderboardData>;
-      leetcodeModel = results[1] as LeetcodeModel;
-      score = results[2] as ReviewResponse;
-      payments = results[4] as FeesApiResponse;
-      profile = results[5] as ProfileModel;
-
+      leetcodeModel = results[0] as LeetcodeModel;
+      score = results[1] as ReviewResponse;
+      payments = results[3] as FeesApiResponse;
+      profile = results[4] as ProfileModel;
     } catch (e) {
       log('Error fetching data: $e');
+      isError = true;
     } finally {
       isLoading = false;
       notifyListeners();

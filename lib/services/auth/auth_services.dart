@@ -92,6 +92,7 @@ class AuthServices {
         log(response.data);
         return response.data['message'];
       }
+    // ignore: empty_catches
     } catch (e) {}
     return null;
   }

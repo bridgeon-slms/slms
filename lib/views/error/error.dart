@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
-import 'package:slms/view_model/home/home_controller.dart';
+import 'package:slms/utils/color/color.dart';
 
 class Errorpage extends StatefulWidget {
-  const Errorpage({super.key});
+  final VoidCallback onRefresh;
+
+  const Errorpage({super.key, required this.onRefresh});
 
   @override
   State<Errorpage> createState() => _ErrorpageState();
@@ -14,36 +14,29 @@ class _ErrorpageState extends State<Errorpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorConstents.bagroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.error_outline,
               size: 60,
-              color: const Color.fromARGB(255, 198, 197, 197),
+              color: Color.fromARGB(255, 198, 197, 197),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Can't reach the internet",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               "Check your connection and try again",
               style: TextStyle(fontSize: 13),
             ),
-            SizedBox(
-              height: 30,
-            ),
+            const SizedBox(height: 30),
             GestureDetector(
-              onTap: () {
-                context.read<Reviewcontroller>().getAllDataFromReview();
-              },
+              onTap: widget.onRefresh,
               child: Container(
                 height: 50,
                 width: 200,
@@ -51,16 +44,14 @@ class _ErrorpageState extends State<Errorpage> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blueAccent,
                 ),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.restart_alt,
                       color: Colors.white,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     Text(
                       "Try again",
                       style: TextStyle(color: Colors.white),
