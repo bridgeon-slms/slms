@@ -60,6 +60,9 @@ dependencies:
   score_progress_pretty_display: ^1.0.5
   flutter_secure_storage: ^9.2.4
   syncfusion_flutter_charts: ^28.2.9
+  flutter_html: ^2.1.2
+  html_unescape: ^2.0.0
+  html_parser_plus: ^0.1.4
 
 
 dev_dependencies:

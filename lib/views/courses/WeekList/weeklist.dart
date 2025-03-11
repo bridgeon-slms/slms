@@ -3,19 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weeksub/weeksub.dart';
 
-class WeeklistPage extends StatefulWidget {
-  const WeeklistPage({super.key});
+class WeeklistPage extends StatelessWidget {
+  final String id;
+  const WeeklistPage({super.key,required this.id});
 
   @override
-  State<WeeklistPage> createState() => _WeeklistPageState();
-}
-
-class _WeeklistPageState extends State<WeeklistPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<CourseController>().getWeekData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +45,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  "Flutter weeek",
+                  "Flutter week",
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -72,7 +64,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: FutureBuilder(
-                future: context.read<CourseController>().getWeekData(),
+                future: context.read<CourseController>().getWeekData(courseId: id),
                 builder: (context, snapshot) {
                   return
                   ListView.builder(
@@ -87,7 +79,11 @@ class _WeeklistPageState extends State<WeeklistPage> {
                         ),
                       ),
                       child: ListTile(
-                        title: Text(course??''),
+                        title: Container(
+                          height: 100,
+                          width: 200,
+                          color: const Color.fromARGB(255, 244, 244, 245),
+                          child: Center(child: Text(course??''))),
                       ),
                       // child: CourseCard(
                       //   title: ,
@@ -106,73 +102,3 @@ class _WeeklistPageState extends State<WeeklistPage> {
   }
 }
 
-// class CourseCard extends StatelessWidget {
-//   final String title, courses;
-
-//   final Color color;
-
-//   const CourseCard({
-//     super.key,
-//     required this.title,
-//     required this.courses,
-//     required this.color,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//       elevation: 2,
-//       borderRadius: BorderRadius.circular(20),
-//       child: Container(
-//         decoration: BoxDecoration(
-//           color: color,
-//           borderRadius: BorderRadius.circular(20),
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const SizedBox(height: 10),
-//             Text(title,
-//                 style: const TextStyle(
-//                     fontSize: 18,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.black)),
-//             const SizedBox(height: 5),
-//             Text(courses,
-//                 style: const TextStyle(fontSize: 14, color: Colors.black)),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class CourseDetailPage extends StatelessWidget {
-//   final Map<String, dynamic> course;
-
-//   const CourseDetailPage({super.key, required this.course});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text(course["title"])),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const SizedBox(height: 20),
-//             Text(
-//               course["title"],
-//               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 10),
-//             Text(
-//               course["courses"],
-//               style: const TextStyle(fontSize: 18, color: Colors.grey),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
