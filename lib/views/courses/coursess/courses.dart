@@ -1,193 +1,170 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:slms/view_model/course/course.dart';
-import 'package:slms/views/courses/WeekList/weeklist.dart';
 
-class CoursesPage extends StatefulWidget {
-  const CoursesPage({super.key});
+class CoursePage extends StatefulWidget {
+  const CoursePage({super.key});
 
   @override
-  State<CoursesPage> createState() => _CoursesPageState();
+  State<CoursePage> createState() => _CoursePageState();
 }
 
-class _CoursesPageState extends State<CoursesPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    context.read<CourseController>().getAllCourse();
-  }
+class _CoursePageState extends State<CoursePage> {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color.fromARGB(255, 29, 77, 161), Colors.blueAccent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Row(
-                  children: [
-                    Text("Courses",
-                        style: TextStyle(color: Colors.white, fontSize: 18)),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "Ready to learn?",
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  "Choose your course",
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
-                ),
-              ],
-            ),
+        body: Column(children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color.fromARGB(255, 29, 77, 161), Colors.blueAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Consumer<CourseController>(
-                builder:(context, value, child) =>  GridView.builder(
-                  itemCount: value.allCourse.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                    childAspectRatio: 0.8,
-                  ),
-                  itemBuilder: (context, index) {
-                    final course = value.allCourse[index];
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WeeklistPage(id: course.id,))),
-                      child: CourseCard(
-                        title:course.name ,
-                        // courses: course["courses"],
-                        // color: course["color"],
-                        // imagePath: course["image"],
-                      ),
-                    );
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
                 ),
-              ),
+                SizedBox(width: 10),
+                Text("Course",
+                    style: TextStyle(color: Colors.white, fontSize: 18)),
+              ],
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            const Text(
+              "Flutter week",
+              style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+            const SizedBox(height: 5),
+            const Text(
+              "Choose your Week",
+              style: TextStyle(fontSize: 16, color: Colors.white70),
+            ),
+          ],
+        ),
       ),
-    );
+      const SizedBox(height: 10),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.builder(
+            itemCount: courses.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 15,
+              mainAxisSpacing: 15,
+              childAspectRatio: 0.8,
+            ),
+            itemBuilder: (context, index) {
+              final course = courses[index];
+              return CourseCard(
+                title: course["title"],
+                color: course["color"],
+                imagePath: course["image"],
+              );
+            },
+          ),
+        ),
+      ),
+    ]));
   }
 }
-
-List<Map<String, dynamic>> courses = [
-  // {
-  //   "title": "HTML",
-  //   "courses": "1 Week",
-  //   "color": Colors.white,
-  //   "image": "assets/image/html_imaggee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "CSS",
-  //   "courses": "1 Week",
-  //   "color": Colors.white,
-  //   "image": "assets/image/css_imagee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "JavaScript",
-  //   "courses": "2 Weeks",
-  //   "color": Colors.white,
-  //   "image": "assets/image/js_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "React",
-  //   "courses": "7 Weeks",
-  //   "color": Colors.white,
-  //   "image": "assets/image/react_imagee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "MERN",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/mern_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "Flutter",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/flutter_imggg-removebg-preview.png"
-  // },
-  // {
-  //   "title": ".Net",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/net_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "Python",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/python_imagee-removebg-preview.png"
-  // },
-];
 
 class CourseCard extends StatelessWidget {
   final String title;
-  // final Color color;
+  final Color color;
+  final String imagePath;
 
   const CourseCard({
     super.key,
     required this.title,
-    // required this.courses,
-    // required this.color,
-    // required this.imagePath,
+    required this.color,
+    required this.imagePath,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      elevation: 1,
-      borderRadius: BorderRadius.circular(20),
+      elevation: 3,
+      borderRadius: BorderRadius.circular(15),
       child: Container(
         decoration: BoxDecoration(
-          // color: color,
-          borderRadius: BorderRadius.circular(20),
+          color: color,
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Image.asset(imagePath, height: 70, width: 70, fit: BoxFit.contain),
-            // const SizedBox(height: 10),
-            Text(title,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            const SizedBox(height: 5),
-            // Text(courses,
-            //     style: const TextStyle(fontSize: 14, color: Colors.black)),
+            Text(
+              title,
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+            SizedBox(height: 10),
+            Image.asset(imagePath, width: 120, fit: BoxFit.contain),
           ],
         ),
       ),
     );
   }
 }
+
+List<Map<String, dynamic>> courses = [
+  {
+    "title": "HTML",
+    "color": Colors.white,
+    "image": "assets/image/html_imaggee-removebg-preview.png"
+  },
+  {
+    "title": "CSS",
+    "color": Colors.white,
+    "image": "assets/image/css_imagee-removebg-preview.png"
+  },
+  {
+    "title": "JavaScript",
+    "color": Colors.white,
+    "image": "assets/image/js_imageee-removebg-preview.png"
+  },
+  {
+    "title": "React",
+    "color": Colors.white,
+    "image": "assets/image/react_imagee-removebg-preview.png"
+  },
+  {
+    "title": "MERN",
+    "color": Colors.white,
+    "image": "assets/image/MERN_Stack_App_Development-removebg-preview.png",
+  },
+  {
+    "title": "Flutter",
+    "color": Colors.white,
+    "image": "assets/image/flutterimg-removebg-preview.png"
+  },
+  {
+    "title": ".Net",
+    "color": Colors.white,
+    "image": "assets/image/net-removebg-preview.png"
+  },
+  {
+    "title": "Python",
+    "color": Colors.white,
+    "image":
+        "assets/image/Common_excuses_for_not_having_a_website-removebg-preview.png"
+  },
+];
