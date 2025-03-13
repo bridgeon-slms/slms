@@ -6,13 +6,13 @@ import 'package:slms/model/course/subcatogary.dart';
 import 'package:slms/services/course/course.dart';
 
 class CourseController extends ChangeNotifier {
-  List<String> weekData = [];
+  List<CartogaryModel> weekData = [];
   List<CourseModel> allCourse =[];
   List<SubCategory> subcategories = [];
   List<Topic> topicData = [];
   ReviewServices reviewServices = ReviewServices();
 
-  Future<List<String>?> getWeekData({required String courseId}) async {
+  Future<List<CartogaryModel>?> getWeekData({required String courseId}) async {
     try {
       weekData = (await reviewServices.getReviewCatogary(courseId))!;
       return weekData;
@@ -22,9 +22,9 @@ class CourseController extends ChangeNotifier {
     return null;
   }
 
-  Future<void> getSubCatogary() async {
+  Future<void> getSubCatogary({required String courseID,required String categoryId}) async {
     try {
-      subcategories = await reviewServices.fetchSubCategories();
+      subcategories = await reviewServices.fetchSubCategories(courseID,categoryId);
       log(subcategories.first.title.toString());
     } catch (e) {
       log(e.toString());
@@ -32,9 +32,9 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void>getTopics()async{
+  Future<void>getTopics({required String courseID,required String categoryId})async{
     try {
-      topicData = await reviewServices.fetchTopics();
+      topicData = await reviewServices.fetchTopics(courseID,categoryId);
       log(topicData.first.title);
     } catch (e) {
       log(e.toString());

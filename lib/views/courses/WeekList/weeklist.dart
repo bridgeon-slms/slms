@@ -71,24 +71,18 @@ class WeeklistPage extends StatelessWidget {
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
                     final course = snapshot.data?[index];
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
+                    return ListTile(
+                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Weeksubpage(),
+                          builder: (context) => Weeksubpage(catogaryId: course?.id??'',courseId: course?.courseId??'',),
                         ),
                       ),
-                      child: ListTile(
-                        title: Container(
-                          height: 100,
-                          width: 200,
-                          color: const Color.fromARGB(255, 244, 244, 245),
-                          child: Center(child: Text(course??''))),
-                      ),
-                      // child: CourseCard(
-                      //   title: ,
-                      //   courses: ,
-                      // ),
+                      title: Container(
+                        height: 100,
+                        width: 200,
+                        color: const Color.fromARGB(255, 244, 244, 245),
+                        child: Center(child: Text(course?.id??''))),
                     );
                   },
                 );

@@ -1,11 +1,13 @@
 class SubCategory {
   final String id;
   final String title;
+  final String courseId;
 
-  SubCategory({required this.id, required this.title});
+  SubCategory({required this.id, required this.title,required this.courseId});
 
   factory SubCategory.fromJson(Map<String, dynamic> json) {
     return SubCategory(
+courseId: json['categoryId']['_id'],
       id: json['_id'],
       title: json['title'].trim(),
     );

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -8,7 +9,7 @@ import 'package:slms/services/dio/dio_services.dart';
 
 class ReviewServices {
   FlutterSecureStorage storage = FlutterSecureStorage();
-  Future<List<String>?> getReviewCatogary(String courseId) async {
+  Future<List<CartogaryModel>?> getReviewCatogary(String courseId) async {
     final dio = await DioClient.getDioInstance();
     try {
       final response = await dio.get(
@@ -16,10 +17,7 @@ class ReviewServices {
       if (response.statusCode == 200) {
         List<dynamic> categories = response.data['data']['category'];
 
-        List<String> titles =
-            categories.map((category) => category['title'] as String).toList();
-        log(titles.toString());
-        return titles;
+        return categories.map((json) => CartogaryModel.fromJson(json)).toList();
       }
     } on DioException catch (e) {
       log(e.response!.data.toString());
@@ -28,10 +26,11 @@ class ReviewServices {
     return null;
   }
 
-  Future<List<SubCategory>> fetchSubCategories() async {
+  Future<List<SubCategory>> fetchSubCategories(
+      String courseID, String categoryId) async {
     final dio = await DioClient.getDioInstance();
     final String url =
-        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/64be36abb6dfaefb9e580c95/categories/6774b654d75966e65d4d6b9f/subcategories';
+        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/categories/$categoryId/subcategories';
 
     try {
       final response = await dio.get(url);
@@ -49,10 +48,10 @@ class ReviewServices {
     }
   }
 
-  Future<List<Topic>> fetchTopics() async {
+  Future<List<Topic>> fetchTopics(String courseID,String subcategoriesId) async {
     final dio = await DioClient.getDioInstance();
     final String url =
-        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/64be36abb6dfaefb9e580c95/subcategories/6774b6a8d75966e65d4d6f56/topics';
+        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';
     try {
       final response = await dio.get(url);
       if (response.statusCode == 200) {

@@ -308,7 +308,6 @@ Widget pendingPayments() {
   });
 }
 
-// Helper function for container decoration
 BoxDecoration _buildContainerDecoration() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(8),

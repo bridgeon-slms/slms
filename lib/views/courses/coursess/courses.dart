@@ -83,9 +83,6 @@ class _CoursesPageState extends State<CoursesPage> {
                               builder: (context) => WeeklistPage(id: course.id,))),
                       child: CourseCard(
                         title:course.name ,
-                        // courses: course["courses"],
-                        // color: course["color"],
-                        // imagePath: course["image"],
                       ),
                     );
                   },
@@ -99,56 +96,6 @@ class _CoursesPageState extends State<CoursesPage> {
   }
 }
 
-List<Map<String, dynamic>> courses = [
-  // {
-  //   "title": "HTML",
-  //   "courses": "1 Week",
-  //   "color": Colors.white,
-  //   "image": "assets/image/html_imaggee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "CSS",
-  //   "courses": "1 Week",
-  //   "color": Colors.white,
-  //   "image": "assets/image/css_imagee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "JavaScript",
-  //   "courses": "2 Weeks",
-  //   "color": Colors.white,
-  //   "image": "assets/image/js_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "React",
-  //   "courses": "7 Weeks",
-  //   "color": Colors.white,
-  //   "image": "assets/image/react_imagee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "MERN",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/mern_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "Flutter",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/flutter_imggg-removebg-preview.png"
-  // },
-  // {
-  //   "title": ".Net",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/net_imageee-removebg-preview.png"
-  // },
-  // {
-  //   "title": "Python",
-  //   "courses": "20 Courses",
-  //   "color": Colors.white,
-  //   "image": "assets/image/python_imagee-removebg-preview.png"
-  // },
-];
 
 class CourseCard extends StatelessWidget {
   final String title;
@@ -157,9 +104,6 @@ class CourseCard extends StatelessWidget {
   const CourseCard({
     super.key,
     required this.title,
-    // required this.courses,
-    // required this.color,
-    // required this.imagePath,
   });
 
   @override

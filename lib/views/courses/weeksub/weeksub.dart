@@ -4,7 +4,10 @@ import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weektopics/weektopics.dart';
 
 class Weeksubpage extends StatefulWidget {
-  const Weeksubpage({super.key});
+  final String courseId;
+  final String catogaryId;
+  const Weeksubpage(
+      {super.key, required this.catogaryId, required this.courseId});
 
   @override
   State<Weeksubpage> createState() => _WeeksubpageState();
@@ -14,14 +17,14 @@ class _WeeksubpageState extends State<Weeksubpage> {
   @override
   void initState() {
     super.initState();
-    context.read<CourseController>().getSubCatogary();
+    context.read<CourseController>().getSubCatogary(
+        categoryId: widget.catogaryId, courseID: widget.courseId);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           SizedBox(
@@ -31,21 +34,22 @@ class _WeeksubpageState extends State<Weeksubpage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Consumer<CourseController>(
-                builder:(context, value, child) =>  ListView.builder(
+                builder: (context, value, child) => ListView.builder(
                   itemCount: value.subcategories.length,
-              
                   itemBuilder: (context, index) {
-                    final course =value.subcategories[index];
+                    final course = value.subcategories[index];
                     return GestureDetector(
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Weektopicspage(),
+                          builder: (context) => Weektopicspage(
+                            catogaryId: course.courseId,
+                            courseIDl: widget.courseId,
+                          ),
                         ),
                       ),
                       child: CourseCard(
                         title: course.title,
-     
                       ),
                     );
                   },
@@ -59,17 +63,12 @@ class _WeeksubpageState extends State<Weeksubpage> {
   }
 }
 
-
 class CourseCard extends StatelessWidget {
-  final String title ;
-
-  // final Color color;
+  final String title;
 
   const CourseCard({
     super.key,
     required this.title,
-    // required this.courses,
-    //  required this.color,
   });
 
   @override
@@ -97,7 +96,6 @@ class CourseCard extends StatelessWidget {
                           color: Colors.black)),
                 ),
                 const SizedBox(height: 40),
-               
               ],
             ),
           ),
@@ -126,10 +124,6 @@ class CourseDetailPage extends StatelessWidget {
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            // Text(
-            //   course["courses"],
-            //   style: const TextStyle(fontSize: 18, color: Colors.grey),
-            // ),
           ],
         ),
       ),
