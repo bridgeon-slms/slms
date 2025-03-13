@@ -78,7 +78,6 @@ class _CoursePageState extends State<CoursePage> {
                     ...availableCourses,
                     ...lockedCourses
                   ];
-
                   return GridView.builder(
                     itemCount: finalCourses.length,
                     gridDelegate:
