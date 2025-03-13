@@ -4,7 +4,10 @@ import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/topic_screen.dart';
 
 class Weektopicspage extends StatefulWidget {
-  const Weektopicspage({super.key});
+  final String catogaryId;
+  final String courseIDl;
+  const Weektopicspage({super.key,required this.catogaryId,
+  required  this.courseIDl});
 
   @override
   State<Weektopicspage> createState() => _WeektopicspageState();
@@ -14,7 +17,7 @@ class _WeektopicspageState extends State<Weektopicspage> {
   @override
   void initState() {
     super.initState();
-    context.read<CourseController>().getTopics();
+    context.read<CourseController>().getTopics(categoryId: widget.catogaryId  ,courseID:widget.courseIDl );
   }
 
   @override

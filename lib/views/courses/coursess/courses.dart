@@ -41,33 +41,35 @@ class _CoursePageState extends State<CoursePage> {
                     style: TextStyle(color: Colors.white, fontSize: 18)),
               ],
             ),
-            const SizedBox(height: 20),
-            const Text(
-              "Flutter week",
-              style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-              "Choose your Week",
-              style: TextStyle(fontSize: 16, color: Colors.white70),
-            ),
-          ],
-        ),
-      ),
-      const SizedBox(height: 10),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: GridView.builder(
-            itemCount: courses.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-              childAspectRatio: 0.8,
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Consumer<CourseController>(
+                builder:(context, value, child) =>  GridView.builder(
+                  itemCount: value.allCourse.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemBuilder: (context, index) {
+                    final course = value.allCourse[index];
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WeeklistPage(id: course.id,))),
+                      child: CourseCard(
+                        title:course.name ,
+                      ),
+                    );
+                  },
+                ),
+              ),
+
             ),
             itemBuilder: (context, index) {
               final course = courses[index];
@@ -92,8 +94,6 @@ class CourseCard extends StatelessWidget {
   const CourseCard({
     super.key,
     required this.title,
-    required this.color,
-    required this.imagePath,
   });
 
   @override
