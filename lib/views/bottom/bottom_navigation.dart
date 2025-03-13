@@ -15,7 +15,7 @@ class BottomBar extends StatelessWidget {
     HomeScreen(),
     AttendancePage(),
     ReviewsPage(),
-    CoursesPage(),
+    CoursePage(),
   ];
   BottomBar({super.key});
   @override
