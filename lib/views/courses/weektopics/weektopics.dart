@@ -33,7 +33,14 @@ class _WeektopicspageState extends State<Weektopicspage> {
                         builder: (context) => TopicScreen(
                               topic: value.topicData[index].description,
                             ))),
-                title: Text(value.topicData[index].title),
+                title: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      height: 80,
+                      width: 300,
+                      color: Color.fromARGB(255, 237, 237, 237),
+                      child: Center(child: Text(value.topicData[index].title))),
+                ),
               );
             },
           );
