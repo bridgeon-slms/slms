@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:slms/model/course/cartogary.dart';
+import 'package:slms/model/course/courseModel.dart';
 import 'package:slms/model/course/subcatogary.dart';
 import 'package:slms/services/dio/dio_services.dart';
 
@@ -21,7 +22,6 @@ class ReviewServices {
       }
     } on DioException catch (e) {
       log(e.response!.data.toString());
-      //  log(e.toString());
     }
     return null;
   }
@@ -48,7 +48,8 @@ class ReviewServices {
     }
   }
 
-  Future<List<Topic>> fetchTopics(String courseID,String subcategoriesId) async {
+  Future<List<Topic>> fetchTopics(
+      String courseID, String subcategoriesId) async {
     final dio = await DioClient.getDioInstance();
     final String url =
         'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';
@@ -56,7 +57,6 @@ class ReviewServices {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
         List<dynamic> topicsJson = response.data['data']['topics'];
-        log(topicsJson.toString());
         return topicsJson.map((json) => Topic.fromJson(json)).toList();
       } else {
         throw Exception('Failed to fetch data');

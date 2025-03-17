@@ -24,7 +24,9 @@ class _WeeksubpageState extends State<Weeksubpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('data'),
+      ),
       body: Column(
         children: [
           SizedBox(
@@ -43,7 +45,7 @@ class _WeeksubpageState extends State<Weeksubpage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => Weektopicspage(
-                            catogaryId: course.courseId,
+                            catogaryId: course.id,
                             courseIDl: widget.courseId,
                           ),
                         ),
