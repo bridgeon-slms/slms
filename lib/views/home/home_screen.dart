@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/utils/image/image.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/ProfilePage/profilepage.dart'; // Fixed import
 import 'package:slms/views/error/error.dart';
@@ -38,11 +39,15 @@ class _HomeScreenState extends State<HomeScreen>
             color: Colors.white,
             child: const Center(child: CircularProgressIndicator()))
         : context.watch<HomeController>().isError
-            ? Errorpage(onRefresh: context.read<HomeController>().fetchAllData,)
+            ? Errorpage(
+                onRefresh: context.read<HomeController>().fetchAllData,
+              )
             : Scaffold(
-                appBar: AppBar(
+                appBar: AppBar(leading: Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Image.asset(ImageConstents.bridgeonLogo),
+                ),
                   backgroundColor: ColorConstents.bagroundColor,
-                  // foregroundColor: ColorConstents.bagroundColor,
                   automaticallyImplyLeading: false,
                   surfaceTintColor: Colors.white,
                   actions: [

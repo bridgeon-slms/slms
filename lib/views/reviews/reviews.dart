@@ -20,16 +20,20 @@ class ReviewsPage extends StatefulWidget {
 }
 
 class _ReviewsPageState extends State<ReviewsPage> {
-  @override
-  void initState() {
-    super.initState();
+@override
+void initState() {
+  super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<Reviewcontroller>(context, listen: false)
-          .getAllDataFromReview();
-      Provider.of<Reviewcontroller>(context, listen: false).getReviewDatw();
-    });
-  }
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) {
+      final reviewController =
+          Provider.of<Reviewcontroller>(context, listen: false);
+      reviewController.getAllDataFromReview();
+      reviewController.getReviewDatw();
+    }
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {

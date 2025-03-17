@@ -27,12 +27,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   final List<Color> colorList = [
-    Colors.green,
-    Colors.orange,
-    Colors.blue,
-    Colors.red,
-    Colors.purple,
-    Colors.grey,
+    Color(0XFF90BE6D), // Present (Green)
+    Color(0XFFF9C74F), // Late (Yellow)
+    Color(0XFFF8961D), // Half Day (Orange)
+    Color(0XFFDF582D), // Excused (Dark Orange)
+    Color(0XFFF84144), // Unexcused (Red)
+    Color(0XFF616161), // No Status (Grey)
   ];
 
   @override
@@ -46,71 +46,83 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
       backgroundColor: ColorConstents.bagroundColor,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Consumer<Attendencecontroller>(
-              builder: (context, value, child) {
-                var datas = value.attendenceList.map((e) => e.status).toList();
-
-                var present = datas.where((e) => e == 1).length;
-                var late = datas.where((e) => e == 2).length;
-                var halfDay = datas.where((e) => e == 3).length;
-                var excused = datas.where((e) => e == 4).length;
-                var unexcused = datas.where((e) => e == 5).length;
-                var noStatus = datas.where((e) => e == 6).length;
-
-                final Map<String, double> dataMap = {
-                  "Present": present.toDouble(),
-                  "Late": late.toDouble(),
-                  "Half Day": halfDay.toDouble(),
-                  "Excused": excused.toDouble(),
-                  "Unexcused": unexcused.toDouble(),
-                  "No Status": noStatus.toDouble(),
-                };
-
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        const Text("Attendance Summary",
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Consumer<Attendencecontroller>(
+                builder: (context, value, child) {
+                  var datas = value.attendenceList.map((e) => e.status).toList();
+        
+                  var present = datas.where((e) => e == 1).length;
+                  var late = datas.where((e) => e == 2).length;
+                  var halfDay = datas.where((e) => e == 3).length;
+                  var excused = datas.where((e) => e == 4).length;
+                  var unexcused = datas.where((e) => e == 5).length;
+                  var noStatus = datas.where((e) => e == 6).length;
+        
+                  final Map<String, double> dataMap = {
+                    "Present": present.toDouble(),
+                    "Late": late.toDouble(),
+                    "Half Day": halfDay.toDouble(),
+                    "Excused": excused.toDouble(),
+                    "Unexcused": unexcused.toDouble(),
+                    "No Status": noStatus.toDouble(),
+                  };
+        
+                  return Card(
+                    color: ColorConstents.bagroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Attendance Summary",
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600)),
-                        const Gap(15),
-                        PieChart(
-                          dataMap: dataMap,
-                          colorList: colorList,
-                          chartRadius: MediaQuery.of(context).size.width / 2.5,
-                          chartValuesOptions: const ChartValuesOptions(
-                            showChartValuesInPercentage: true,
-                            showChartValuesOutside: false,
-                            decimalPlaces: 1,
-                            chartValueStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
                             ),
                           ),
-                          legendOptions: const LegendOptions(
-                            showLegends: true,
-                            legendPosition: LegendPosition.bottom,
-                            legendShape: BoxShape.circle,
-                            legendTextStyle: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500),
+                          const Gap(15),
+                          PieChart(
+                            dataMap: dataMap,
+                            colorList: colorList,
+                            chartRadius: MediaQuery.of(context).size.width / 2,
+                            chartValuesOptions: const ChartValuesOptions(
+                              showChartValuesInPercentage: true,
+                              showChartValuesOutside: true,
+                              decimalPlaces: 1,
+                              chartValueStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black, 
+                              ),
+                            ),
+                            legendOptions: const LegendOptions(
+                              showLegends: true,
+                              legendPosition: LegendPosition.bottom,
+                              legendShape: BoxShape.circle,
+                              legendTextStyle: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black, 
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-          ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

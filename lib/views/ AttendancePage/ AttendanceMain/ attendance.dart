@@ -390,12 +390,10 @@ Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(double.infinity, 50),
-        backgroundColor: Colors.white,
+        backgroundColor: ColorConstents.primeryColor,
         padding: EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Colors.blue.shade600,
-          ),
+          
           borderRadius: BorderRadius.circular(12),
         ),
         elevation: 2,
@@ -403,12 +401,12 @@ Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 22, color: Colors.blue),
+          Icon(icon, size: 22, color: Colors.white),
           SizedBox(width: 12),
           Text(
             text,
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.blue),
+                fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ],
       ),
