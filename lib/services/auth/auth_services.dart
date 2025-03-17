@@ -59,7 +59,6 @@ class AuthServices {
     }
   }
 
-
   Future<String?> verifyEmail(String email) async {
     try {
       final response = await dio.post(ApiUrls.forgotPassWordUrl, data: {
@@ -85,15 +84,29 @@ class AuthServices {
         "email": email,
         "code": code,
       });
-      if (response.statusCode == 201) {
-        log(response.data);
-        return response.data['message'];
-      } else if (response.statusCode == 404) {
-        log(response.data);
+      if (response.statusCode == 200) {
+        log(response.data.toString());
         return response.data['message'];
       }
-    // ignore: empty_catches
-    } catch (e) {}
+    } on DioException catch (e) {
+      return e.response?.data['message'];
+    }
     return null;
+  }
+
+  Future<String> confirmPAssword(String email,String password)async{
+       try {
+           final response = await dio.post(ApiUrls.confirmPAssword,data: {
+            "email":email,
+            "password":password
+           });
+           if(response.statusCode == 200){
+            await userLogin(email, password);
+            return response.data['message'];
+           }
+       }on DioException catch (e) {
+         return e.response?.data['message'];
+       }
+       return 'somthing went wrong';
   }
 }
