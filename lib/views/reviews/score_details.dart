@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -200,29 +199,18 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
                   border: Border.all(color: getScoreColor(datasss)),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(data.studentId?.image ??
-                          'https://cdn.pixabay.com/photo/2013/07/13/10/44/man-157699_640.png'),
-                    ),
-                    const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(data.studentId?.name ?? 'no name',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        Text('Week ${data.week}',
-                            style: TextStyle(fontSize: 14, color: Colors.grey)),
-                      ],
-                    ),
-                    Spacer(),
-                    Consumer<Reviewcontroller>(
-                      builder: (context, value, child) => Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                child: Consumer<Reviewcontroller>(
+                  builder: (context, value, child) => Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text(data.studentId?.name ?? 'no name',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text('Week ${data.week}',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey)),
                           textStyled(
                               text: getScoreText(datasss),
                               color: getScoreColor(datasss),
@@ -235,9 +223,16 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(10),
-                                    child: textStyled(
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      child: textStyled(
+                                        softwrap: true,
+                                        textoverflow: TextOverflow.visible,
                                         text: data.remark ?? 'no remark added',
-                                        color: Colors.black),
+                                        color: Colors.black,
+                                      ),
+                                    ),
                                   ))
                               : IconButton(
                                   onPressed: () {
@@ -249,8 +244,8 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
                                   ))
                         ],
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Gap(10),

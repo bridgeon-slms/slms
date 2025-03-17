@@ -15,6 +15,7 @@ class WeeklistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Column(
         children: [
@@ -57,6 +58,7 @@ class WeeklistPage extends StatelessWidget {
                                   builder: (context) => Weeksubpage(
                                     catogaryId: course.id,
                                     courseId: course.courseId,
+                                    name: course.title,
                                   ),
                                 ),
                               ),
@@ -68,7 +70,8 @@ class WeeklistPage extends StatelessWidget {
                                       width: 10,
                                     ),
                                     CircleAvatar(
-                                      backgroundColor: const Color.fromARGB(255, 194, 242, 196),
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 194, 242, 196),
                                       radius: 30,
                                       child: Icon(
                                         Icons.check,
@@ -78,7 +81,10 @@ class WeeklistPage extends StatelessWidget {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Center(child: textStyled(text:  course.title,fontweight: FontWeight.bold)),
+                                    Center(
+                                        child: textStyled(
+                                            text: course.title,
+                                            fontweight: FontWeight.bold)),
                                     Spacer(),
                                     Icon(
                                       Icons.arrow_forward_ios,

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weektopics/weektopics.dart';
 
 class Weeksubpage extends StatefulWidget {
   final String courseId;
+  final String name;
   final String catogaryId;
   const Weeksubpage(
-      {super.key, required this.catogaryId, required this.courseId});
+      {super.key,
+      required this.catogaryId,
+      required this.courseId,
+      required this.name});
 
   @override
   State<Weeksubpage> createState() => _WeeksubpageState();
@@ -25,7 +30,7 @@ class _WeeksubpageState extends State<Weeksubpage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('data'),
+        title: Text(widget.name),
       ),
       body: Column(
         children: [
