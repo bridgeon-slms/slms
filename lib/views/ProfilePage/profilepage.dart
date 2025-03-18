@@ -410,14 +410,179 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Consumer<Profilecontroller>(
+                      builder: (context, value, child) => Card(
+                        elevation: 2,
+                        color: ColorConstents.bagroundColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textStyled(
+                                  text: 'Academic Info:',
+                                  fontweight: FontWeight.bold,
+                                  fontSize: 18),
+                              Gap(10),
+                              acadamicInfo(
+                                  text: 'Branch',
+                                  text2: value.profileList[0].branch.name!),
+                              acadamicInfo(
+                                  text: 'Space',
+                                  text2: value.profileList[0].space.name!),
+                              acadamicInfo(
+                                  text: 'Week',
+                                  text2: value.profileList[0].week.toString()),
+                              acadamicInfo(
+                                  text: 'Advisor',
+                                  text2: value.profileList[0].advisor.name!),
+                              acadamicInfo(
+                                  text: 'Mentor',
+                                  text2: value.profileList[0].mentor.name!),
+                              acadamicInfo(
+                                  text: 'Qualification',
+                                  text2:
+                                      value.profileList[0].qualification.name!),
+                              acadamicInfo(
+                                  text: 'Joining Date',
+                                  text2: formatDate(DateTime.parse(
+                                      value.profileList[0].joiningDate!))),
+                              acadamicInfo(
+                                  text: 'Course Type',
+                                  text2: value.profileList[0].courseType!),
+                              acadamicInfo(
+                                  text: 'Domain',
+                                  text2: value.profileList[0].course.name),
+                              Gap(10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton.icon(
+                                      onPressed: () {},
+                                      icon: Icon(Iconsax.document,
+                                          color: Colors.white),
+                                      label: Text('Resume',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Gap(20),
+                                  Expanded(
+                                    child: ElevatedButton.icon(
+                                      onPressed: () {},
+                                      icon: Icon(Iconsax.document,
+                                          color: Colors.white),
+                                      label: Text('Document',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            ColorConstents.primeryColor,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Gap(10),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Consumer<Profilecontroller>(
+                      builder: (context, value, child) => Card(
+                        elevation: 2,
+                        color: ColorConstents.bagroundColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              textStyled(
+                                  text: 'Personal Info',
+                                  fontweight: FontWeight.bold,
+                                  fontSize: 18),
+                              Gap(10),
+                              acadamicInfo(
+                                  text: 'Institution',
+                                  text2: value.profileList[0].institution.name!,
+                                  icon: Icons.school),
+                              acadamicInfo(
+                                  text: 'PassOut Year',
+                                  text2: value.profileList[0].passOutYear!,
+                                  icon: Iconsax.calendar),
+                              acadamicInfo(
+                                  text: 'Week',
+                                  text2: value.profileList[0].week.toString(),
+                                  icon: Iconsax.clock),
+                              Gap(5),
+                              textStyled(
+                                  text: 'Guardian:',
+                                  fontweight: FontWeight.bold,
+                                  fontSize: 18),
+                              Gap(10),
+                              acadamicInfo(
+                                  text: 'Name',
+                                  text2: value.profileList[0].guardian.name,
+                                  icon: Icons.person),
+                              acadamicInfo(
+                                  text: 'Relationship',
+                                  text2: value
+                                      .profileList[0].guardian.relationship,
+                                  icon: Icons.family_restroom),
+                              acadamicInfo(
+                                  text: 'Phone',
+                                  text2: value.profileList[0].guardian.phone,
+                                  icon: Iconsax.call),
+                              Gap(10),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                      (route) => false,
+                                    );
+                                    FlutterSecureStorage storage =
+                                        FlutterSecureStorage();
+                                    storage.deleteAll();
+                                  },
+                                  child: Text('Logout'))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           );
   }
 
-  Widget acadamicInfo(
-      {required String text, required String text2, IconData? icon}) {
+  Widget acadamicInfo({
+    required String text,
+    required String text2,
+    IconData? icon,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Row(
@@ -429,16 +594,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 Icon(icon, size: 18),
                 Gap(5),
               ],
-              textStyled(
-                maxline: 1,
-                textoverflow: TextOverflow.ellipsis,
-                text: text,
-                fontSize: 17,
-                fontweight: FontWeight.bold,
+              SizedBox(
+                width: 150, // Adjust the width as needed
+                child: textStyled(
+                  text: text,
+                  fontSize: 17,
+                  fontweight: FontWeight.bold,
+                  maxline: 2,
+                  textoverflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
-          textStyled(text: text2, fontSize: 17),
+          Expanded(
+            child: textStyled(
+              text: text2,
+              fontSize: 17,
+              maxline: 2,
+              textoverflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );
@@ -465,6 +640,24 @@ class _ProfilePageState extends State<ProfilePage> {
             color: colors, borderRadius: BorderRadius.circular(5)),
         child: Image.asset(path),
       ),
+    );
+  }
+
+  Text textStyled({
+    required String text,
+    double? fontSize,
+    FontWeight? fontweight,
+    int? maxline,
+    TextOverflow? textoverflow,
+  }) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: fontweight,
+      ),
+      maxLines: maxline,
+      overflow: textoverflow,
     );
   }
 }
