@@ -7,7 +7,6 @@ import 'package:slms/helpers/helpers.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/auth/login/login_screen.dart';
-import 'package:slms/views/widget/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatelessWidget {

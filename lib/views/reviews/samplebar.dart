@@ -27,7 +27,9 @@ class SalesChartPage extends StatelessWidget {
                   (index < reviewController.getTotalReviewMArk().length)
                       ? reviewController.getTotalReviewMArk()[index]
                       : 0.0;
-              return ChartData('Week ${reviewController.reviewList[index].week}', reviewScore);
+              return ChartData(
+                  'Week ${reviewController.reviewList[index].week}',
+                  reviewScore);
             },
           );
 
