@@ -17,7 +17,7 @@ List<Map<String, dynamic>> courses = [
     "image": "assets/image/js_imageee-removebg-preview.png"
   },
   {
-    "title": "React",
+    "title": "React Developer",
     "color": Colors.white,
     "image": "assets/image/react_imagee-removebg-preview.png"
   },
@@ -32,7 +32,7 @@ List<Map<String, dynamic>> courses = [
     "image": "assets/image/flutterimg-removebg-preview.png"
   },
   {
-    "title": ".Net",
+    "title": "Introduction to Web Development",
     "color": Colors.white,
     "image": "assets/image/net-removebg-preview.png"
   },

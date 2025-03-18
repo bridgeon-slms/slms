@@ -34,12 +34,20 @@ class CourseController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getTopics(
-      {required String courseID, required String categoryId}) async {
+  Future<void> getTopics({
+    required String courseID,
+    required String categoryId,
+  }) async {
     try {
       topicData = await reviewServices.fetchTopics(courseID, categoryId);
+
+      if (topicData.isNotEmpty) {
+        print(topicData.first.description);
+      } else {
+        print('No topics available or description is null');
+      }
     } catch (e) {
-      log(e.toString());
+      log('Error fetching topics: $e');
     }
     notifyListeners();
   }

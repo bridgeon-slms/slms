@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
-import 'package:slms/views/courses/weektopics/weektopics.dart';
 
 class Weeksubpage extends StatefulWidget {
   final String courseId;
   final String name;
   final String catogaryId;
-  const Weeksubpage(
-      {super.key,
-      required this.catogaryId,
-      required this.courseId,
-      required this.name});
+
+  const Weeksubpage({
+    super.key,
+    required this.catogaryId,
+    required this.courseId,
+    required this.name,
+  });
 
   @override
   State<Weeksubpage> createState() => _WeeksubpageState();
@@ -23,116 +24,143 @@ class _WeeksubpageState extends State<Weeksubpage> {
   void initState() {
     super.initState();
     context.read<CourseController>().getSubCatogary(
-        categoryId: widget.catogaryId, courseID: widget.courseId);
+          categoryId: widget.catogaryId,
+          courseID: widget.courseId,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.name),
-      ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
+          Container(
+            height: 200,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color.fromARGB(255, 29, 77, 161), Colors.blueAccent],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        )),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      widget.name,
+                      style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 60,
+                    ),
+                    Text(
+                      " Choose your topic",
+                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 30,
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Consumer<CourseController>(
-                builder: (context, value, child) => ListView.builder(
+            child: Consumer<CourseController>(
+              builder: (context, value, child) {
+                if (value.subcategories.isEmpty) {
+                  return const Center(
+                      child: Text('No subcategories available'));
+                }
+                return ListView.builder(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   itemCount: value.subcategories.length,
                   itemBuilder: (context, index) {
                     final course = value.subcategories[index];
-                    return GestureDetector(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Weektopicspage(
-                            catogaryId: course.id,
-                            courseIDl: widget.courseId,
-                          ),
+                    return Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Card(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                      child: CourseCard(
-                        title: course.title,
+                        child: ExpansionTile(
+                          key: Key(course.id),
+                          title: Text(
+                            course.title,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onExpansionChanged: (isExpanded) {
+                            if (isExpanded) {
+                              context.read<CourseController>().getTopics(
+                                    categoryId: course.id,
+                                    courseID: widget.courseId,
+                                  );
+                            }
+                          },
+                          children: value.topicData.isNotEmpty
+                              ? value.topicData.map((topic) {
+                                  return ListTile(
+                                    leading: const Icon(
+                                        Icons.play_circle_outline,
+                                        color: Colors.blue),
+                                    title: Text(
+                                      topic.title,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  );
+                                }).toList()
+                              : [
+                                  const Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Text('No topics available'),
+                                  ),
+                                ],
+                        ),
                       ),
                     );
                   },
-                ),
-              ),
+                );
+              },
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CourseCard extends StatelessWidget {
-  final String title;
-
-  const CourseCard({
-    super.key,
-    required this.title,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(20),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 237, 237, 237),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Center(
-                  child: Text(title,
-                      style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                ),
-                const SizedBox(height: 40),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CourseDetailPage extends StatelessWidget {
-  final Map<String, dynamic> course;
-
-  const CourseDetailPage({super.key, required this.course});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(course["title"])),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              course["title"],
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-          ],
-        ),
       ),
     );
   }
