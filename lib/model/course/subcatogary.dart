@@ -24,8 +24,8 @@ class Topic {
 
   factory Topic.fromJson(Map<String, dynamic> json) {
     return Topic(
-      title: json['title'].trim(),
-      description: json['description'].trim(),
+      title: json['title']??'null',
+      description: json['description']??'null',
     );
   }
 }
