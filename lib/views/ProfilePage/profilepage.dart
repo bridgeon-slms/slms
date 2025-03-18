@@ -370,12 +370,10 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                               
-                       
+                  ]
               ),
             ),
-          );
+          ));
   }
 
   Widget acadamicInfo({
