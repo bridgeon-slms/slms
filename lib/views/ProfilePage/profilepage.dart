@@ -370,15 +370,19 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                  ]
-                ),
+
+                               
+                       
               ),
             ),
           );
   }
 
-  Widget acadamicInfo(
-      {required String text, required String text2, IconData? icon}) {
+  Widget acadamicInfo({
+    required String text,
+    required String text2,
+    IconData? icon,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(5),
       child: Row(
@@ -390,16 +394,26 @@ class ProfilePage extends StatelessWidget {
                 Icon(icon, size: 18),
                 Gap(5),
               ],
-              textStyled(
-                maxline: 1,
-                textoverflow: TextOverflow.ellipsis,
-                text: text,
-                fontSize: 17,
-                fontweight: FontWeight.bold,
+              SizedBox(
+                width: 150, // Adjust the width as needed
+                child: textStyled(
+                  text: text,
+                  fontSize: 17,
+                  fontweight: FontWeight.bold,
+                  maxline: 2,
+                  textoverflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
-          textStyled(text: text2, fontSize: 17),
+          Expanded(
+            child: textStyled(
+              text: text2,
+              fontSize: 17,
+              maxline: 2,
+              textoverflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );
@@ -426,6 +440,24 @@ class ProfilePage extends StatelessWidget {
             color: colors, borderRadius: BorderRadius.circular(5)),
         child: Image.asset(path),
       ),
+    );
+  }
+
+  Text textStyled({
+    required String text,
+    double? fontSize,
+    FontWeight? fontweight,
+    int? maxline,
+    TextOverflow? textoverflow,
+  }) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: fontweight,
+      ),
+      maxLines: maxline,
+      overflow: textoverflow,
     );
   }
 }
