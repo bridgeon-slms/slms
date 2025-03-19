@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 Widget textStyled(
     {required String text,
@@ -18,4 +19,9 @@ Widget textStyled(
           fontSize: fontSize,
           fontStyle: fontStyle,
           color: color));
+}
+
+
+Widget loddingWidget(){
+  return Lottie.asset('assets/animation/Animation - 1732086805692.json',width: 300,);
 }

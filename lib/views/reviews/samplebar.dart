@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/ReviewModel/review.dart';
@@ -22,13 +21,22 @@ class SalesChartPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final List<double> reviewMarks = reviewController.getTotalReviewMArk();
+          final List<double> reviewMarks =
+              reviewController.getTotalReviewMArk()[0];
+          final List<double> otherMArk =
+              reviewController.getTotalReviewMArk()[1];
           final List<ChartData> data = [];
-
-          for (int index = 0; index < reviewController.reviewList.length; index++) {
+          print(reviewMarks);
+          for (int index = 0;
+              index < reviewController.reviewList.length;
+              index++) {
             if (index < reviewMarks.length) {
-              String weekLabel = 'Week ${reviewController.reviewList[index].week}';
-              double percentage = (reviewMarks[index] / 40) * 100;
+              String weekLabel =
+                  'Week ${reviewController.reviewList[index].week}';
+              double percentage =
+                  (reviewMarks[index] * 0.7 + otherMArk[index] * 0.3) /
+                      20 *
+                      100;
               data.add(ChartData(weekLabel, percentage));
             }
           }
@@ -40,8 +48,8 @@ class SalesChartPage extends StatelessWidget {
               child: SizedBox(
                 width: data.length * (barWidth + spacingValue),
                 child: SalesChart(
-                  data, 
-                  reviewController.reviewList, // ✅ Pass correct list
+                  data,
+                  reviewController.reviewList,
                 ),
               ),
             ),
@@ -54,7 +62,7 @@ class SalesChartPage extends StatelessWidget {
 
 class SalesChart extends StatelessWidget {
   final List<ChartData> data;
-  final List<ReviewData> reviewList; 
+  final List<ReviewData> reviewList;
 
   const SalesChart(this.data, this.reviewList, {super.key});
 
@@ -87,12 +95,12 @@ class SalesChart extends StatelessWidget {
 
   Color _getPointColor(double value, int index) {
     bool hasWeekBack = reviewList[index].isWeekBack ?? false;
-    if (hasWeekBack) return Colors.red; 
+    if (hasWeekBack) return Colors.red;
     if (value >= 80) return Colors.green;
     if (value >= 70) return Colors.yellow;
-    if (value >= 60) return Colors.orange;
+    if (value <= 60) return Colors.orange;
 
-    return Colors.blue;
+    return Colors.grey;
   }
 }
 

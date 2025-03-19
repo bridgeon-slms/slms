@@ -9,6 +9,7 @@ import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
+import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/splash/splash.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: SplashScreen(),
+        home: LoginScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),

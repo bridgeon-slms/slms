@@ -62,17 +62,18 @@ class Reviewcontroller extends ChangeNotifier {
     notifyListeners();
     return [sum, maximumMark];
   }
-  List<double> getTotalReviewMArk() {
+  List<List<double>> getTotalReviewMArk() {
     var review = reviewList.map((e) => e.academic?.review ?? 0).toList();
     var task = reviewList.map((e) => e.academic?.task ?? 0).toList();
     var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
     var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
-    List<double> totalReviewMArk = List.generate(
+    List<double> acdamicMark = List.generate(
       review.length,
       (index) =>
-          task[index] + review[index] + acc[index] + dis[index].toDouble(),
+          task[index] + review[index].toDouble(),
     );
-    return totalReviewMArk;
+    List<double> otherMArk = List.generate(review.length, (index) => acc[index] + dis[index].toDouble(),);
+    return [acdamicMark,otherMArk];
   }
 
   void getReviewDatw() async {

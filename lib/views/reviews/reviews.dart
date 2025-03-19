@@ -8,6 +8,7 @@ import 'package:slms/views/error/error.dart';
 import 'package:slms/views/reviews/samplebar.dart';
 import 'package:slms/views/reviews/score_details.dart';
 import 'package:slms/views/reviews/widgets.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class ReviewsPage extends StatefulWidget {
   const ReviewsPage({super.key});
@@ -32,7 +33,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
   Widget build(BuildContext context) {
 
     return context.watch<Reviewcontroller>().isLoding
-        ? const Center(child: CircularProgressIndicator())
+        ?  Scaffold(
+          backgroundColor: Colors.white,
+          body: Center(child: loddingWidget()))
         : context.watch<Reviewcontroller>().isError
             ? Errorpage(
                 onRefresh: context.read<Reviewcontroller>().getAllDataFromReview,
@@ -70,6 +73,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                               color: Colors.white,
                               boxShadow: [
                                 BoxShadow(
+                                  // ignore: deprecated_member_use
                                   color: Colors.grey.withOpacity(0.1),
                                   spreadRadius: 1,
                                   blurRadius: 10,

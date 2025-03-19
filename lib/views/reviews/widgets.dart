@@ -160,9 +160,11 @@ Widget scoreRow(String label, int score, int total) {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        // ignore: deprecated_member_use
         border: Border.all(color: Colors.grey.withOpacity(0.2)),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 5,

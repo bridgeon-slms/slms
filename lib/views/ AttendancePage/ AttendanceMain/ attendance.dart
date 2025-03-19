@@ -44,7 +44,7 @@ class _AttendancePageState extends State<AttendancePage> {
             child: Consumer<Attendencecontroller>(
               builder: (context, datas, child) {
                 if (datas.attendenceList.isEmpty) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: loddingWidget());
                 }
 
                 return Column(
