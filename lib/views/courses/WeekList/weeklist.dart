@@ -8,9 +8,8 @@ import 'package:slms/views/widget/widget.dart';
 // ignore: must_be_immutable
 class WeeklistPage extends StatelessWidget {
   CourseModel courseModel;
-  String imagePath;
 
-  WeeklistPage({super.key, required this.courseModel, required this.imagePath});
+  WeeklistPage({super.key, required this.courseModel});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,6 @@ class WeeklistPage extends StatelessWidget {
           AppBar(
             title: Text(courseModel.name),
           ),
-          SizedBox(width: double.infinity, child: Image.asset(imagePath)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

@@ -159,50 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             bottom: 0,
                             right: 10,
                             child: Row(
-                              children: [
-                                socialContainers(
-                                  ontap: () async {
-                                    final url = Uri.parse(
-                                        'https://leetcode.com/u/${value.profileList.first.socialLinks.leetCode}');
-                                    if (await canLaunchUrl(url)) {
-                                      await launchUrl(url,
-                                          mode: LaunchMode.externalApplication);
-                                    } else {
-                                      throw "Could not launch $url";
-                                    }
-                                  },
-                                  path: 'assets/image/LeetCode_logo_rvs.png',
-                                  colors: Colors.black,
-                                ),
-                                Gap(10),
-                                socialContainers(
-                                  path: 'assets/image/Link.png',
-                                  ontap: () async {
-                                    final url = Uri.parse(
-                                        'https://leetcode.com/u/rinshid10/');
-                                    if (await canLaunchUrl(url)) {
-                                      await launchUrl(url,
-                                          mode: LaunchMode.externalApplication);
-                                    } else {
-                                      throw "Could not launch $url";
-                                    }
-                                  },
-                                ),
-                                Gap(10),
-                                socialContainers(
-                                  path: 'assets/image/git.png',
-                                  ontap: () async {
-                                    final url = Uri.parse(
-                                        'https://leetcode.com/u/rinshid10/');
-                                    if (await canLaunchUrl(url)) {
-                                      await launchUrl(url,
-                                          mode: LaunchMode.externalApplication);
-                                    } else {
-                                      throw "Could not launch $url";
-                                    }
-                                  },
-                                )
-                              ],
+                              children: [],
                             )),
                       )
                     ],
@@ -216,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         color: ColorConstents.bagroundColor,
                         elevation: 2,
                         child: Container(
-                          height: 300,
+                          height: 400,
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10)),
@@ -225,6 +182,57 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Row(
+                                  children: [
+                                    socialContainers(
+                                      ontap: () async {
+                                        final url = Uri.parse(
+                                            'https://leetcode.com/u/${value.profileList.first.socialLinks.leetCode}');
+                                        if (await canLaunchUrl(url)) {
+                                          await launchUrl(url,
+                                              mode: LaunchMode
+                                                  .externalApplication);
+                                        } else {
+                                          throw "Could not launch $url";
+                                        }
+                                      },
+                                      path:
+                                          'assets/image/LeetCode_logo_rvs.png',
+                                      colors: Colors.black,
+                                    ),
+                                    Gap(10),
+                                    socialContainers(
+                                      path: 'assets/image/Link.png',
+                                      ontap: () async {
+                                        final url = Uri.parse(
+                                            'https://leetcode.com/u/${value.profileList.first.socialLinks.linkedIn}');
+                                        if (await canLaunchUrl(url)) {
+                                          await launchUrl(url,
+                                              mode: LaunchMode
+                                                  .externalApplication);
+                                        } else {
+                                          throw "Could not launch $url";
+                                        }
+                                      },
+                                    ),
+                                    Gap(10),
+                                    socialContainers(
+                                      path: 'assets/image/git.png',
+                                      ontap: () async {
+                                        final url = Uri.parse(
+                                            'https://leetcode.com/u/${value.profileList.first.socialLinks.github}');
+                                        if (await canLaunchUrl(url)) {
+                                          await launchUrl(url,
+                                              mode: LaunchMode
+                                                  .externalApplication);
+                                        } else {
+                                          throw "Could not launch $url";
+                                        }
+                                      },
+                                    )
+                                  ],
+                                ),
+                                Gap(30),
                                 textStyled(
                                     text: 'Contact Information :',
                                     fontweight: FontWeight.bold,

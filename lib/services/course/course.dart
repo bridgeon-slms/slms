@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:slms/model/course/cartogary.dart';
-import 'package:slms/model/course/courseModel.dart';
 import 'package:slms/model/course/subcatogary.dart';
 import 'package:slms/services/dio/dio_services.dart';
 
@@ -50,7 +49,7 @@ class ReviewServices {
 
   Future<List<Topic>> fetchTopics(
       String courseID, String subcategoriesId) async {
-        log('fetching topics.....');
+    log('fetching topics.....');
     final dio = await DioClient.getDioInstance();
     final String url =
         'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';
