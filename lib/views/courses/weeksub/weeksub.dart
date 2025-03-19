@@ -168,7 +168,12 @@ class _WeeksubpageState extends State<Weeksubpage> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       TopicScreen(
-                                                          topic: topic.title))),
+                                                        topic: topic.title,
+                                                        catogaryId: course.id,
+                                                        courseId:
+                                                            course.courseId,
+                                                        name: widget.name,
+                                                      ))),
                                           leading: const Icon(
                                               Icons.play_circle_outline,
                                               color: Colors.blue),

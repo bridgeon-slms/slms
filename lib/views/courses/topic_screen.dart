@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:slms/views/courses/coursess/course_list.dart';
+import 'package:slms/views/courses/weeksub/weeksub.dart';
 
-class TopicScreen extends StatelessWidget {
+class TopicScreen extends StatefulWidget {
   final String topic;
+  final String courseId;
+  final String catogaryId;
+  final String name;
 
-  const TopicScreen({
-    super.key,
-    required this.topic,
-  });
+  const TopicScreen(
+      {super.key,
+      required this.topic,
+      required this.courseId,
+      required this.catogaryId,
+      required this.name});
 
+  @override
+  State<TopicScreen> createState() => _TopicScreenState();
+}
+
+class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +30,7 @@ class TopicScreen extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              topic,
+              widget.topic,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const Gap(500),
@@ -31,8 +43,14 @@ class TopicScreen extends StatelessWidget {
                     content: const Text("You have finished this topic."),
                     actions: [
                       TextButton(
-                        onPressed: () => Navigator.pop(context), // Close dialog
-                        child: const Text("OK"),
+                        onPressed: () => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Weeksubpage(
+                                    catogaryId: widget.catogaryId,
+                                    courseId: widget.courseId,
+                                    name: widget.name))),
+                        child: Text("OK"),
                       ),
                     ],
                   ),
