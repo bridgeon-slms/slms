@@ -7,7 +7,7 @@ class Reviewcontroller extends ChangeNotifier {
   ReviewServices ser = ReviewServices();
   List<ReviewData> reviewList = [];
   bool isLoding = false;
-  double markTotel = 0;
+  // double markTotel = 0;
   bool isError = false;
   String? reviewDate;
 
@@ -17,23 +17,23 @@ class Reviewcontroller extends ChangeNotifier {
     notifyListeners();
   }
 
-getAllDataFromReview() async {
-  isLoding = true;
-  isError = false;
-  notifyListeners();
+  getAllDataFromReview() async {
+    isLoding = true;
+    isError = false;
+    notifyListeners();
 
-  try {
-    reviewList = await ser.getAllReviewDatas();
-     
-    totelScoreCheacker();
-    notifyListeners();
-  } catch (e) {
-    isError = true;
-  } finally {
-    isLoding = false; 
-    notifyListeners();
+    try {
+      reviewList = await ser.getAllReviewDatas();
+
+      totelScoreCheacker();
+      notifyListeners();
+    } catch (e) {
+      isError = true;
+    } finally {
+      isLoding = false;
+      notifyListeners();
+    }
   }
-}
 
   List<num> totelScoreCheacker() {
     double totel = 0;
@@ -59,21 +59,23 @@ getAllDataFromReview() async {
       displine = dis.reduce((b, c) => b + c).toDouble();
     }
     var sum = totelTask + totel + displine + accTotel;
-     notifyListeners();
+    notifyListeners();
     return [sum, maximumMark];
   }
-  List<double> getTotalReviewMArk() {
+  List<List<double>> getTotalReviewMArk() {
     var review = reviewList.map((e) => e.academic?.review ?? 0).toList();
     var task = reviewList.map((e) => e.academic?.task ?? 0).toList();
     var acc = reviewList.map((e) => e.others?.attendance ?? 0).toList();
     var dis = reviewList.map((e) => e.others?.discipline ?? 0).toList();
-    List<double> totalReviewMArk = List.generate(
+    List<double> acdamicMark = List.generate(
       review.length,
       (index) =>
-          task[index] + review[index] + acc[index] + dis[index].toDouble(),
+          task[index] + review[index].toDouble(),
     );
-    return totalReviewMArk;
+    List<double> otherMArk = List.generate(review.length, (index) => acc[index] + dis[index].toDouble(),);
+    return [acdamicMark,otherMArk];
   }
+
   void getReviewDatw() async {
     reviewDate = await ser.getReviewDate();
     notifyListeners();

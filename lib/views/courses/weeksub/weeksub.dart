@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 
 class Weeksubpage extends StatefulWidget {
@@ -116,12 +115,18 @@ class _WeeksubpageState extends State<Weeksubpage> {
                         ),
                         child: ExpansionTile(
                           key: Key(course.id),
-                          title: Text(
-                            course.title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          title: Row(
+                            spacing: 5,
+                            children: [
+                              Text('${index+1}'),
+                              Text(
+                                course.title,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                           onExpansionChanged: (isExpanded) {
                             if (isExpanded) {

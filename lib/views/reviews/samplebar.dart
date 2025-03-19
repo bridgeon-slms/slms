@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/model/ReviewModel/review.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -20,16 +21,25 @@ class SalesChartPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final List<ChartData> data = List.generate(
-            reviewController.reviewList.length,
-            (index) {
-              double reviewScore =
-                  (index < reviewController.getTotalReviewMArk().length)
-                      ? reviewController.getTotalReviewMArk()[index]
-                      : 0.0;
-              return ChartData('Week ${reviewController.reviewList[index].week}', reviewScore);
-            },
-          );
+          final List<double> reviewMarks =
+              reviewController.getTotalReviewMArk()[0];
+          final List<double> otherMArk =
+              reviewController.getTotalReviewMArk()[1];
+          final List<ChartData> data = [];
+          print(reviewMarks);
+          for (int index = 0;
+              index < reviewController.reviewList.length;
+              index++) {
+            if (index < reviewMarks.length) {
+              String weekLabel =
+                  'Week ${reviewController.reviewList[index].week}';
+              double percentage =
+                  (reviewMarks[index] * 0.7 + otherMArk[index] * 0.3) /
+                      20 *
+                      100;
+              data.add(ChartData(weekLabel, percentage));
+            }
+          }
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -37,7 +47,10 @@ class SalesChartPage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: SizedBox(
                 width: data.length * (barWidth + spacingValue),
-                child: SalesChart(data),
+                child: SalesChart(
+                  data,
+                  reviewController.reviewList,
+                ),
               ),
             ),
           );
@@ -49,37 +62,45 @@ class SalesChartPage extends StatelessWidget {
 
 class SalesChart extends StatelessWidget {
   final List<ChartData> data;
-  const SalesChart(this.data, {super.key});
+  final List<ReviewData> reviewList;
+
+  const SalesChart(this.data, this.reviewList, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
-      primaryXAxis: const CategoryAxis(
+      enableAxisAnimation: true,
+      primaryXAxis: CategoryAxis(
         labelRotation: 0,
-        majorGridLines: MajorGridLines(width: 0),
+        majorGridLines: const MajorGridLines(width: 0),
+        arrangeByIndex: true,
       ),
-      primaryYAxis: const NumericAxis(minimum: 0, maximum: 40, interval: 10),
+      primaryYAxis: const NumericAxis(minimum: 0, maximum: 100, interval: 20),
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <CartesianSeries<ChartData, String>>[
         ColumnSeries<ChartData, String>(
+          animationDuration: 500,
           dataSource: data,
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,
-          name: 'Sales',
-          width: 0.99,
+          name: 'Review (%)',
+          width: 0.6,
           spacing: 0.4,
-          color: Colors.transparent,
-          pointColorMapper: (ChartData data, _) => _getPointColor(data.y),
+          pointColorMapper: (ChartData data, index) =>
+              _getPointColor(data.y, index),
         ),
       ],
     );
   }
 
-  Color _getPointColor(double value) {
-    if (value >= 35) return Colors.green;
-    if (value >= 30) return Colors.yellow;
-    if (value >= 25) return Colors.orange;
-    return Colors.red;
+  Color _getPointColor(double value, int index) {
+    bool hasWeekBack = reviewList[index].isWeekBack ?? false;
+    if (hasWeekBack) return Colors.red;
+    if (value >= 80) return Colors.green;
+    if (value >= 70) return Colors.yellow;
+    if (value <= 60) return Colors.orange;
+
+    return Colors.grey;
   }
 }
 

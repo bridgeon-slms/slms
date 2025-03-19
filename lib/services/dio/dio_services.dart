@@ -8,8 +8,8 @@ class DioClient {
   static FlutterSecureStorage storage = FlutterSecureStorage();
   static final Dio dio = Dio(
     BaseOptions(
-      connectTimeout: Duration(seconds: 20),
-      receiveTimeout: Duration(seconds: 20),
+      connectTimeout: Duration(seconds: 15),
+      receiveTimeout: Duration(seconds: 15),
     ),
   );
   static Future<Dio> getDioInstance() async {
@@ -60,7 +60,6 @@ class DioClient {
 
   static Future<Response<dynamic>> _retry(RequestOptions requestOptions) async {
     final newAccessToken = await storage.read(key: "token");
-
     final options = Options(
       method: requestOptions.method,
       headers: {

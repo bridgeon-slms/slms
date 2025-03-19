@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slms/utils/api/api.dart';
 
 class AuthServices {
@@ -10,7 +9,6 @@ class AuthServices {
   Dio dio = Dio();
 
   Future<String> userLogin(String email, String password) async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
     log('Login Attempt: $email');
 
     try {
