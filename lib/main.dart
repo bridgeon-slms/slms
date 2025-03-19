@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: LoginScreen(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             textTheme: GoogleFonts.poppinsTextTheme(),
