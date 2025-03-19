@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/ReviewModel/review.dart';
 import 'package:slms/utils/color/color.dart';
@@ -140,3 +144,108 @@ Widget scoreRow(String label, int score, int total) {
   );
 }
 
+
+
+
+  Widget currntCard({
+    required BuildContext context,
+    required String title,
+    required String content,
+    required IconData icon,
+    required Color backgroundColor,
+    required Color iconColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        // ignore: deprecated_member_use
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
+        boxShadow: [
+          BoxShadow(
+            // ignore: deprecated_member_use
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(1),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: iconColor, size: 24),
+          ),
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(fontSize: 13, color: Colors.grey),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                content,
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+Widget progressCircle(BuildContext context, double total, num totalScore) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: CircularPercentIndicator(
+      radius: 30.0,
+      lineWidth: 5.0,
+      percent: min(1.0, total / totalScore),
+      center: Text(
+        "${(((total / totalScore) * 100)).toInt()}%",
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+      ),
+      progressColor: Colors.green,
+      backgroundColor: Colors.grey[300]!,
+      circularStrokeCap: CircularStrokeCap.round,
+    ),
+  );
+}
+
+Widget fullScoreCard({
+  required String text1,
+  required String text2,
+  required double total,
+  required num totalScore,
+  required BuildContext context,
+}) {
+  return Card(
+    elevation: 2,
+    color: Colors.white,
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textStyled(text: text1, fontSize: 15, fontweight: FontWeight.bold),
+                const Gap(5),
+                textStyled(text: text2, fontSize: 12),
+              ],
+            ),
+          ),
+          progressCircle(context, total, totalScore),
+        ],
+      ),
+    ),
+  );
+}

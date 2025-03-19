@@ -32,13 +32,12 @@ class AuthServices {
         final accessToken = response.data['data'];
         if (accessToken != null && accessToken.isNotEmpty) {
           log('Access Token: $accessToken');
+          
           await storage.write(key: 'token', value: accessToken);
-
           final user = JwtDecoder.decode(accessToken);
           final userId = user['userId'];
           log('User ID: $userId');
           await storage.write(key: 'userid', value: userId);
-
           return 'login success';
         } else {
           log("Access token is null or empty!");

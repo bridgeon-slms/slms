@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/view_model/home/home_controller.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class NotificationS extends StatefulWidget {
   const NotificationS({super.key});
@@ -29,8 +30,8 @@ class _NotificationSState extends State<NotificationS> {
       body: Consumer<HomeController>(
         builder: (context, value, child) {
           if (value.notificationLodding) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return  Center(
+              child: loddingWidget(),
             );
           }
 

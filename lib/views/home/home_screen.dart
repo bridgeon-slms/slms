@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -37,16 +36,17 @@ class _HomeScreenState extends State<HomeScreen>
     return context.watch<HomeController>().isLoading
         ? Container(
             color: Colors.white,
-            child: const Center(child: CircularProgressIndicator()))
+            child: Center(child: loddingWidget()))
         : context.watch<HomeController>().isError
             ? Errorpage(
                 onRefresh: context.read<HomeController>().fetchAllData,
               )
             : Scaffold(
-                appBar: AppBar(leading: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Image.asset(ImageConstents.bridgeonLogo),
-                ),
+                appBar: AppBar(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Image.asset(ImageConstents.bridgeonLogo),
+                  ),
                   backgroundColor: ColorConstents.bagroundColor,
                   automaticallyImplyLeading: false,
                   surfaceTintColor: Colors.white,
@@ -91,15 +91,18 @@ class _HomeScreenState extends State<HomeScreen>
                                                 builder: (cont) =>
                                                     const ProfilePage()));
                                       },
-                                      child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundImage: value.profile?.image !=
-                                                null
-                                            ? NetworkImage(value.profile!.image)
-                                            : null,
-                                        child: value.profile?.image == null
-                                            ? CircularProgressIndicator()
-                                            : null,
+                                      child: Hero(
+                                        tag: 'profile',
+                                        child: CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage: value.profile?.image !=
+                                                  null
+                                              ? NetworkImage(value.profile!.image)
+                                              : null,
+                                          child: value.profile?.image == null
+                                              ? CircularProgressIndicator()
+                                              : null,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(

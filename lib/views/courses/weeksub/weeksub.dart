@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/topic_screen.dart';
 import 'package:slms/views/courses/weektopics/weektopics.dart';

@@ -49,8 +49,9 @@ class ReviewData {
   num? iV;
   String? updatedBy;
   String? feeRecordId;
-
+ bool? isWeekBAck;
   ReviewData(
+
       {this.academic,
       this.others,
       this.sId,
@@ -68,6 +69,7 @@ class ReviewData {
       this.updatedDate,
       this.iV,
       this.updatedBy,
+      this.isWeekBAck,
       this.feeRecordId});
 
   ReviewData.fromJson(Map<String, dynamic> json) {
@@ -96,6 +98,7 @@ class ReviewData {
     iV = json['__v'];
     updatedBy = json['updatedBy'];
     feeRecordId = json['feeRecordId'];
+    isWeekBAck = json['isWeekBack'];
   }
 
   Map<String, dynamic> toJson() {

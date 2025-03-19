@@ -1,4 +1,4 @@
-import 'dart:convert';
+
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -57,7 +57,6 @@ class ReviewServices {
       final response = await dio.get(url);
       if (response.statusCode == 200) {
         List<dynamic> topicsJson = response.data['data']['topics'];
-        print(topicsJson);
         return topicsJson.map((json) => Topic.fromJson(json)).toList();
       } else {
         throw Exception('Failed to fetch data');

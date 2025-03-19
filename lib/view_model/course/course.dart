@@ -55,11 +55,6 @@ class CourseController extends ChangeNotifier {
     try {
       topicData = await reviewServices.fetchTopics(courseID, categoryId);
 
-      if (topicData.isNotEmpty) {
-        print(topicData.first.description);
-      } else {
-        print('No topics available or description is null');
-      }
     } catch (e) {
       log('Error fetching topics: $e');
     }

@@ -20,8 +20,9 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<Reviewcontroller>(context, listen: false)
-        .getAllDataFromReview();
+   // ignore: use_build_context_synchronously
+   Future.microtask(() =>  Provider.of<Reviewcontroller>(context, listen: false)
+        .getAllDataFromReview());
   }
 
   @override
