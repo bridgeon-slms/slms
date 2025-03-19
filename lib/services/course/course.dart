@@ -49,7 +49,7 @@ class ReviewServices {
 
   Future<List<Topic>> fetchTopics(
       String courseID, String subcategoriesId) async {
-        log('fetching topics.....');
+    log('fetching topics.....');
     final dio = await DioClient.getDioInstance();
     final String url =
         'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';

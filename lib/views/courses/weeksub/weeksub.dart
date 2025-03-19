@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/view_model/course/course.dart';
+import 'package:slms/views/courses/topic_screen.dart';
+import 'package:slms/views/courses/weektopics/weektopics.dart';
 
 class Weeksubpage extends StatefulWidget {
   final String courseId;
@@ -35,18 +37,21 @@ class _WeeksubpageState extends State<Weeksubpage> {
       body: Column(
         children: [
           Container(
-            height: 200,
+            height: 176,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(color: Colors.grey, blurRadius: 30, spreadRadius: 3)
+              ],
               gradient: LinearGradient(
                 colors: [Color.fromARGB(255, 29, 77, 161), Colors.blueAccent],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
             ),
             child: Column(
@@ -108,56 +113,89 @@ class _WeeksubpageState extends State<Weeksubpage> {
                     final course = value.subcategories[index];
                     return Padding(
                       padding: const EdgeInsets.all(15),
-                      child: Card(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ExpansionTile(
-                          key: Key(course.id),
-                          title: Row(
-                            spacing: 5,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
                             children: [
-                              Text('${index+1}'),
-                              Text(
-                                course.title,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              CircleAvatar(
+                                backgroundColor:
+                                    const Color.fromARGB(255, 246, 246, 246),
+                                child: Text("${index + 1}"),
                               ),
                             ],
                           ),
-                          onExpansionChanged: (isExpanded) {
-                            if (isExpanded) {
-                              context.read<CourseController>().getTopics(
-                                    categoryId: course.id,
-                                    courseID: widget.courseId,
-                                  );
-                            }
-                          },
-                          children: value.topicData.isNotEmpty
-                              ? value.topicData.map((topic) {
-                                  return ListTile(
-                                    leading: const Icon(
-                                        Icons.play_circle_outline,
-                                        color: Colors.blue),
-                                    title: Text(
-                                      topic.title,
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: Card(
+                              color: Colors.white,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ExpansionTile(
+                                key: Key(course.id),
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      course.title,
                                       style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  );
-                                }).toList()
-                              : [
-                                  const Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Text('No topics available'),
-                                  ),
-                                ],
-                        ),
+                                  ],
+                                ),
+                                onExpansionChanged: (isExpanded) {
+                                  if (isExpanded) {
+                                    context.read<CourseController>().getTopics(
+                                          categoryId: course.id,
+                                          courseID: widget.courseId,
+                                        );
+                                  }
+                                },
+                                children: value.topicData.isNotEmpty
+                                    ? value.topicData.map((topic) {
+                                        return ListTile(
+                                          onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TopicScreen(
+                                                        topic: topic.title,
+                                                        catogaryId: course.id,
+                                                        courseId:
+                                                            course.courseId,
+                                                        name: widget.name,
+                                                      ))),
+                                          leading: const Icon(
+                                              Icons.play_circle_outline,
+                                              color: Colors.blue),
+                                          title: Text(
+                                            topic.title,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList()
+                                    : [
+                                        const Padding(
+                                          padding: EdgeInsets.all(16.0),
+                                          child: Text('No topics available'),
+                                        ),
+                                      ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },

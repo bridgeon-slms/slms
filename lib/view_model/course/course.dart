@@ -3,14 +3,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/model/course/subcatogary.dart';
+import 'package:slms/model/profilemodel/profilemodel.dart';
 import 'package:slms/services/course/course.dart';
+import 'package:slms/services/course/maincourseservises.dart';
 
 class CourseController extends ChangeNotifier {
   List<CartogaryModel> weekData = [];
   List<CourseModel> allCourse = [];
   List<SubCategory> subcategories = [];
   List<Topic> topicData = [];
+  List<Course> fullcourse = [];
   ReviewServices reviewServices = ReviewServices();
+  Maincourseservises servises = Maincourseservises();
 
   Future<List<CartogaryModel>?> getWeekData({required String courseId}) async {
     try {
@@ -20,6 +24,16 @@ class CourseController extends ChangeNotifier {
     } catch (e) {}
     notifyListeners();
     return null;
+  }
+
+  Future<void> fullAllcourse() async {
+    log("fetching all courses");
+    try {
+      fullcourse = await servises.fetchAllCourses();
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
   }
 
   Future<void> getSubCatogary(

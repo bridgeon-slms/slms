@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/model/profilemodel/profilemodel.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/WeekList/weeklist.dart';
-import 'package:slms/views/courses/coursess/course_list.dart';
 import 'package:slms/views/courses/coursess/course_widgets.dart';
 
 class CoursePage extends StatefulWidget {
@@ -16,6 +16,7 @@ class _CoursePageState extends State<CoursePage> {
   @override
   void initState() {
     super.initState();
+    context.read<CourseController>().fullAllcourse();
     context.read<CourseController>().getAllCourse();
   }
 
@@ -63,21 +64,24 @@ class _CoursePageState extends State<CoursePage> {
               padding: const EdgeInsets.all(10.0),
               child: Consumer<CourseController>(
                 builder: (context, value, child) {
-                  List<Map<String, dynamic>> availableCourses = [];
-                  List<Map<String, dynamic>> lockedCourses = [];
+                  List<Course> availableCourses = [];
+                  List<Course> lockedCourses = [];
 
-                  for (var course in courses) {
-                    if (value.allCourse.any((c) => c.name == course["title"])) {
+                  final courseList = value.fullcourse;
+
+                  for (var course in courseList) {
+                    if (value.allCourse.any((c) => c.name == course.name)) {
                       availableCourses.add(course);
                     } else {
                       lockedCourses.add(course);
                     }
                   }
 
-                  List<Map<String, dynamic>> finalCourses = [
+                  List<Course> finalCourses = [
                     ...availableCourses,
                     ...lockedCourses
                   ];
+
                   return GridView.builder(
                     itemCount: finalCourses.length,
                     gridDelegate:
@@ -94,22 +98,28 @@ class _CoursePageState extends State<CoursePage> {
                       return isAvailable
                           ? GestureDetector(
                               onTap: () {
-                                Navigator.push(
+                                final selectedCourse =
+                                    value.allCourse.firstWhere(
+                                  (c) => c.name == course.name,
+                                );
+
+                                if (selectedCourse != null) {
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => WeeklistPage(
-                                          imagePath: course['image'],
-                                         courseModel: value.allCourse[index],)));
+                                      builder: (context) => WeeklistPage(
+                                        courseModel: selectedCourse,
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: CourseCard(
-                                title: course["title"],
-                                color: course["color"],
-                                imagePath: course["image"],
+                                title: course.name,
                               ),
                             )
                           : LockedCourseCard(
-                              title: course["title"],
-                              imagePath: course["image"],
+                              title: course.name,
                             );
                     },
                   );
