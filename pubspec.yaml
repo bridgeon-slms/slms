@@ -60,6 +60,7 @@ dependencies:
   score_progress_pretty_display: ^1.0.5
   flutter_secure_storage: ^9.2.4
   syncfusion_flutter_charts: ^28.2.9
+  shared_preferences: ^2.5.2
 
 
 dev_dependencies:

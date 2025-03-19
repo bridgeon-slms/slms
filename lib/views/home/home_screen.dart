@@ -43,10 +43,11 @@ class _HomeScreenState extends State<HomeScreen>
                 onRefresh: context.read<HomeController>().fetchAllData,
               )
             : Scaffold(
-                appBar: AppBar(leading: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Image.asset(ImageConstents.bridgeonLogo),
-                ),
+                appBar: AppBar(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Image.asset(ImageConstents.bridgeonLogo),
+                  ),
                   backgroundColor: ColorConstents.bagroundColor,
                   automaticallyImplyLeading: false,
                   surfaceTintColor: Colors.white,
