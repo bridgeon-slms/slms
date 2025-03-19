@@ -7,7 +7,7 @@ class Reviewcontroller extends ChangeNotifier {
   ReviewServices ser = ReviewServices();
   List<ReviewData> reviewList = [];
   bool isLoding = false;
-  double markTotel = 0;
+  // double markTotel = 0;
   bool isError = false;
   String? reviewDate;
 
@@ -17,23 +17,23 @@ class Reviewcontroller extends ChangeNotifier {
     notifyListeners();
   }
 
-getAllDataFromReview() async {
-  isLoding = true;
-  isError = false;
-  notifyListeners();
+  getAllDataFromReview() async {
+    isLoding = true;
+    isError = false;
+    notifyListeners();
 
-  try {
-    reviewList = await ser.getAllReviewDatas();
-     
-    totelScoreCheacker();
-    notifyListeners();
-  } catch (e) {
-    isError = true;
-  } finally {
-    isLoding = false; 
-    notifyListeners();
+    try {
+      reviewList = await ser.getAllReviewDatas();
+
+      totelScoreCheacker();
+      notifyListeners();
+    } catch (e) {
+      isError = true;
+    } finally {
+      isLoding = false;
+      notifyListeners();
+    }
   }
-}
 
   List<num> totelScoreCheacker() {
     double totel = 0;
@@ -59,7 +59,7 @@ getAllDataFromReview() async {
       displine = dis.reduce((b, c) => b + c).toDouble();
     }
     var sum = totelTask + totel + displine + accTotel;
-     notifyListeners();
+    notifyListeners();
     return [sum, maximumMark];
   }
   List<double> getTotalReviewMArk() {
@@ -74,6 +74,7 @@ getAllDataFromReview() async {
     );
     return totalReviewMArk;
   }
+
   void getReviewDatw() async {
     reviewDate = await ser.getReviewDate();
     notifyListeners();
