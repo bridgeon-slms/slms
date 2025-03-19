@@ -1,11 +1,22 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/utils/common/scaffoldmessenger.dart';
+import 'package:slms/view_model/auth/auth_controller.dart';
+import 'package:slms/views/auth/password/change_password.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/views/widget/widget.dart';
 
+// ignore: must_be_immutable
 class OptScreen extends StatelessWidget {
-  const OptScreen({super.key});
+  String email;
+  OptScreen({super.key, required, required this.email});
+
+  String opt = '';
+
+  TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +30,23 @@ class OptScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
-            spacing: 20,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 130,
-              ),
+              const SizedBox(height: 130),
               textStyled(
-                  text: "Code is send to sinan@gmail.com",
+                  text: "Code is sent to $email",
                   color: Colors.grey,
-                  fontSize: 17),
+                  fontSize: 16),
+              const SizedBox(height: 20),
               PinCodeTextField(
+                controller: otpController,
                 keyboardType: TextInputType.number,
                 length: 6,
                 appContext: context,
+                onCompleted: (value) {
+                  opt = value;
+                },
                 pinTheme: PinTheme(
-                  
                   activeFillColor: Colors.white,
                   activeColor: Colors.blue,
                   selectedColor: Colors.blue,
@@ -42,10 +54,31 @@ class OptScreen extends StatelessWidget {
                   disabledColor: Colors.grey.shade400,
                   fieldHeight: 58,
                   fieldWidth: 48,
-
                 ),
               ),
-              containerBtn(text: 'Verify'),
+              const SizedBox(height: 20),
+              InkWell(
+                onTap: () {
+                  log("Entered OTP: $opt");
+                  context
+                      .read<AuthenticationController>()
+                      .verifyOtp(code: opt, email: email)
+                      .then((value) {
+                    if (value == "Successfully Verified the otp") {
+                      Navigator.push(
+                          // ignore: use_build_context_synchronously
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePasswordScreen(email: email,)));
+                                                // ignore: use_build_context_synchronously
+                                                scaffoldmessenger(context, value??"", Colors.grey);
+                    }
+                    // ignore: use_build_context_synchronously
+                  scaffoldmessenger(context, value??"", Colors.grey);
+                  });
+                },
+                child: containerBtn(text: 'Verify', context: context),
+              ),
             ],
           ),
         ),

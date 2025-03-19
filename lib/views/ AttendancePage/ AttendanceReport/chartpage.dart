@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:provider/provider.dart';
+import 'package:slms/utils/color/color.dart';
+import 'package:slms/view_model/attendence/attendencecontroller.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -10,52 +14,116 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final Map<String, double> dataMap = {
-    "Half Day": 10,
-    "Present": 20,
-    'Unexcused': 10,
-    "Excused": 10,
-    "Late": 10,
-  };
+  @override
+  void initState() {
+    super.initState();
+    DateTime time = DateTime.now();
+    String startDate = DateFormat('yyyy-MM-dd').format(time);
+    DateTime yesterday = time.subtract(Duration(days: 5));
+    String endDate = DateFormat('yyyy-MM-dd').format(yesterday);
+
+    Provider.of<Attendencecontroller>(context, listen: false)
+        .getAllDataFromAttendence(endDate, startDate);
+  }
 
   final List<Color> colorList = [
-    Colors.orange,
-    Colors.green,
-    const Color.fromARGB(255, 231, 85, 75),
-    Colors.red,
-    Colors.yellow,
+    Color(0XFF90BE6D), // Present (Green)
+    Color(0XFFF9C74F), // Late (Yellow)
+    Color(0XFFF8961D), // Half Day (Orange)
+    Color(0XFFDF582D), // Excused (Dark Orange)
+    Color(0XFFF84144), // Unexcused (Red)
+    Color(0XFF616161), // No Status (Grey)
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Gap(30),
-
-          /// Pie Chart
-          Center(
-            child: PieChart(
-              dataMap: dataMap,
-              colorList: colorList,
-              chartRadius: MediaQuery.of(context).size.width / 2.2,
-              legendOptions: LegendOptions(
-                showLegendsInRow: false,
-                legendPosition: LegendPosition.right,
-                showLegends: false,
-                legendShape: BoxShape.circle,
-                legendTextStyle: TextStyle(),
+      appBar: AppBar(
+        backgroundColor: ColorConstents.bagroundColor,
+        title: Text(
+          "Attendance Overview",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
+      backgroundColor: ColorConstents.bagroundColor,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Consumer<Attendencecontroller>(
+                builder: (context, value, child) {
+                  var datas = value.attendenceList.map((e) => e.status).toList();
+        
+                  var present = datas.where((e) => e == 1).length;
+                  var late = datas.where((e) => e == 2).length;
+                  var halfDay = datas.where((e) => e == 3).length;
+                  var excused = datas.where((e) => e == 4).length;
+                  var unexcused = datas.where((e) => e == 5).length;
+                  var noStatus = datas.where((e) => e == 6).length;
+        
+                  final Map<String, double> dataMap = {
+                    "Present": present.toDouble(),
+                    "Late": late.toDouble(),
+                    "Half Day": halfDay.toDouble(),
+                    "Excused": excused.toDouble(),
+                    "Unexcused": unexcused.toDouble(),
+                    "No Status": noStatus.toDouble(),
+                  };
+        
+                  return Card(
+                    color: ColorConstents.bagroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            "Attendance Summary",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const Gap(15),
+                          PieChart(
+                            dataMap: dataMap,
+                            colorList: colorList,
+                            chartRadius: MediaQuery.of(context).size.width / 2,
+                            chartValuesOptions: const ChartValuesOptions(
+                              showChartValuesInPercentage: true,
+                              showChartValuesOutside: true,
+                              decimalPlaces: 1,
+                              chartValueStyle: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black, 
+                              ),
+                            ),
+                            legendOptions: const LegendOptions(
+                              showLegends: true,
+                              legendPosition: LegendPosition.bottom,
+                              legendShape: BoxShape.circle,
+                              legendTextStyle: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black, 
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-              chartValuesOptions: const ChartValuesOptions(
-                showChartValuesInPercentage: true,
-                showChartValuesOutside: true,
-                decimalPlaces: 1,
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

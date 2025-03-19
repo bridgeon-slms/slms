@@ -5,25 +5,24 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/%20attendance.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart';
+import 'package:slms/views/courses/coursess/courses.dart';
 import 'package:slms/views/home/home_screen.dart';
-import 'package:slms/views/payments/payment_screen.dart';
+import 'package:slms/views/reviews/reviews.dart';
 
+// ignore: must_be_immutable
 class BottomBar extends StatelessWidget {
   List<Widget> bottomBarPages = [
     HomeScreen(),
     AttendancePage(),
-    PaymentScreen(),
-    ProfilePage()
-    
-
+    ReviewsPage(),
+    CoursePage(),
   ];
   BottomBar({super.key});
-
   @override
   Widget build(BuildContext context) {
+    final index = context.watch<BottomBarController>().currentIndex;
     return Scaffold(
-        body: bottomBarPages[context.watch<BottomBarController>().currentIndex],
+        body: bottomBarPages[index],
         bottomNavigationBar: SalomonBottomBar(
             currentIndex: context.read<BottomBarController>().currentIndex,
             onTap: (index) {
@@ -38,9 +37,9 @@ class BottomBar extends StatelessWidget {
               SalomonBottomBarItem(
                   icon: Icon(Iconsax.clock), title: Text('Attendance')),
               SalomonBottomBarItem(
-                  icon: Icon(Iconsax.money), title: Text('Payments')),
+                  icon: Icon(Iconsax.chart), title: Text('Review')),
               SalomonBottomBarItem(
-                  icon: Icon(Iconsax.user), title: Text('Profile')),
+                  icon: Icon(Iconsax.add), title: Text('Courses')),
             ]));
   }
 }

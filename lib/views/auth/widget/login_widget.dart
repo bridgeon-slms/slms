@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:slms/utils/color/color.dart';
-import 'package:slms/widget/widget.dart';
+import 'package:slms/view_model/auth/auth_controller.dart';
+import 'package:slms/views/widget/widget.dart';
 
-TextField costumTextfeild({ String? hintText}) {
-  return TextField(
+TextFormField costumTextfeild(
+    {String? hintText,
+    TextEditingController? controller,
+    String? validationText,
+    TextInputType? type}) {
+  return TextFormField(
+    obscureText: type == TextInputType.visiblePassword? true:false,
+    keyboardType: type,
+    validator: (value) {
+      if (value == null || value.isEmpty) {
+        return validationText;
+      }
+    return null;
+    },
+    controller: controller,
     cursorColor: Colors.grey,
     decoration: InputDecoration(
-       enabledBorder: OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: Colors.grey.shade400,
+            color: Colors.grey.shade400,
             )),
-        hintText: hintText??"",
+        hintText: hintText ?? "",
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: Colors.grey.shade400,
+            color: Colors.grey.shade400,
             )),
         border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
@@ -23,26 +38,26 @@ TextField costumTextfeild({ String? hintText}) {
   );
 }
 
-Container containerBtn({ String? text}) {
+Widget containerBtn(
+    {String? text, VoidCallback? onTap, required BuildContext context}) {
+  bool isLodding = context.watch<AuthenticationController>().isLogging;
   return Container(
     decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(2, 4),
-          )
-        ],
         color: ColorConstents.primeryColor,
         borderRadius: BorderRadius.circular(10)),
     width: double.infinity,
     height: 60,
     child: Center(
-        child: textStyled(
-            text: text??'',
-            color: Colors.white,
-            fontweight: FontWeight.bold,
-            fontSize: 18)),
+        child: isLodding
+            ? Center(
+                child: CircularProgressIndicator(
+                color: ColorConstents.bagroundColor,
+                ),
+              )
+            : textStyled(
+                text: text ?? '',
+                color: ColorConstents.bagroundColor,
+                fontweight: FontWeight.bold,
+                fontSize: 18)),
   );
 }
