@@ -1,11 +1,14 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/AttendanceModel/AttendanceModels/model.dart';
 import 'package:slms/model/AttendanceModel/logModel/logmodel.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/utils/color/color.dart';
+import 'package:slms/view_model/datecontroller.dart';
 import 'package:slms/views/widget/widget.dart';
 
 int last = 0;
@@ -25,7 +28,9 @@ Widget attenceBar({required BuildContext context}) {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      textStyled(text: '10 Feb 2025', fontSize: 18),
+                      textStyled(
+                          text: DateFormat('dd-M-yyyy').format(DateTime.now()),
+                          fontSize: 18),
                       Gap(25),
                       textStyled(text: 'Status', fontSize: 18),
                     ],
@@ -92,7 +97,6 @@ GestureDetector cd(
                               .toString() ==
                           targetDate)
                       .toList();
-
 
                   filteredLogs.sort((a, b) {
                     if (a.logDate != null && b.logDate != null) {
@@ -284,4 +288,89 @@ Widget containerForAttendts({required Color color, required String text}) {
     ),
     child: Center(child: textStyled(text: text, color: Colors.white)),
   );
+}
+
+class MultiDatePickerButton extends StatelessWidget {
+  const MultiDatePickerButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Consumer<DateProvider>(
+              builder: (context, datePickerProvider, child) {
+                return StatefulBuilder(
+                  builder: (context, setState) {
+                    return Dialog(
+                      child: Container(
+                        width: double.infinity,
+                        height: 500,
+                        color: Colors.white,
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Selected Dates',
+                                suffixIcon: IconButton(
+                                  onPressed: () async {
+                                    final results =
+                                        await showCalendarDatePicker2Dialog(
+                                      config:
+                                          CalendarDatePicker2WithActionButtonsConfig(
+                                        calendarType:
+                                            CalendarDatePicker2Type.multi,
+                                      ),
+                                      context: context,
+                                      dialogSize: Size(325, 400),
+                                      value: datePickerProvider.selectedDates,
+                                    );
+
+                                    if (results != null) {
+                                      datePickerProvider
+                                          .updateSelectedDates(results);
+                                    }
+                                  },
+                                  icon: Icon(Icons.calendar_month),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            ListView.builder(
+                              itemCount:
+                                  datePickerProvider.selectedDates.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final date = DateFormat('dd/MM/yyyy').format(
+                                    datePickerProvider.selectedDates[index]!);
+                                return Container(
+
+                                  child: Row(
+                                    children: [
+                                      Text(date),
+                                      
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            );
+          },
+        );
+      },
+      child: Text('Request Leave'),
+    );
+  }
 }
