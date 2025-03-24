@@ -4,26 +4,39 @@ import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weeksub/weeksub.dart';
 
-class WeeklistPage extends StatelessWidget {
+class WeeklistPage extends StatefulWidget {
   final CourseModel courseModel;
 
   const WeeklistPage({super.key, required this.courseModel});
 
   @override
+  State<WeeklistPage> createState() => _WeeklistPageState();
+}
+
+class _WeeklistPageState extends State<WeeklistPage> {
+  @override
+  void initState() {
+    super.initState();
+    context
+        .read<CourseController>()
+        .getWeekData(courseId: widget.courseModel.id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(context),
-            _buildProgressBar(context),
-            Expanded(
-              child: _buildWeeksList(context, screenWidth),
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _buildHeader(context),
+              _buildProgressBar(context),
+              _buildWeeksList(context, screenWidth),
+            ],
+          ),
         ),
       ),
     );
@@ -56,27 +69,11 @@ class WeeklistPage extends StatelessWidget {
                   child: const Icon(Icons.arrow_back, size: 22),
                 ),
               ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.more_vert, size: 22),
-              ),
             ],
           ),
           const SizedBox(height: 20),
           Text(
-            courseModel.name,
+            widget.courseModel.name,
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
@@ -84,142 +81,77 @@ class WeeklistPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              const Icon(
-                Icons.calendar_today,
-                size: 14,
-                color: Color(0xFF717F92),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                "${DateTime.now().year} • ${courseModel.catogaryNumber} weeks",
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF717F92),
-                ),
-              ),
-              const SizedBox(width: 20),
-              const Icon(
-                Icons.person_outline,
-                size: 14,
-                color: Color(0xFF717F92),
-              ),
-              const SizedBox(width: 6),
-              const Text(
-                "Your instructor",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF717F92),
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
 
   Widget _buildProgressBar(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Your Progress",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1E2B3C),
-                ),
-              ),
-              Text(
-                "50%",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4B7BEC),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: 0.5,
-              minHeight: 8,
-              backgroundColor: const Color(0xFFEDF1F9),
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4B7BEC)),
+    return Consumer<CourseController>(
+      builder: (context, value, child) => Container(
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-          ),
-        ],
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Your Progress",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1E2B3C),
+                  ),
+                ),
+                Text(
+                  "${(value.weekData.first.catogaryNumber / value.weekData.length * 100).toStringAsFixed(0)}%",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4B7BEC),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: LinearProgressIndicator(
+                value:
+                    value.weekData.first.catogaryNumber / value.weekData.length,
+                minHeight: 8,
+                backgroundColor: const Color(0xFFEDF1F9),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4B7BEC)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildWeeksList(BuildContext context, double screenWidth) {
-    return FutureBuilder(
-      future: context.read<CourseController>().getWeekData(courseId: courseModel.id),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4B7BEC)),
-            ),
-          );
-        }
-
-        if (snapshot.hasError) {
+    return Consumer<CourseController>(
+      builder: (context, courseController, child) {
+        if (courseController.isLodding) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/error.png', 
-                  width: 120,
-                  height: 120,
-                  fit: BoxFit.contain,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  "Oops! Something went wrong",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red.shade700,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Please try again later",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey.shade600,
-                  ),
-                ),
-              ],
-            ),
+            child: CircularProgressIndicator(),
           );
         }
-
-        if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
+        if (courseController.weekData.isEmpty) {
           return const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -265,24 +197,17 @@ class WeeklistPage extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final course = snapshot.data![index];
-                  bool isUnlocked = course.catogaryNumber != null &&
-                      course.catogaryNumber <= courseModel.catogaryNumber;
-
-                  return _buildWeekCard(
-                    context, 
-                    course, 
-                    isUnlocked, 
-                    index,
-                    screenWidth
-                  );
-                },
-              ),
+            ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              itemCount: courseController.weekData.length,
+              itemBuilder: (context, index) {
+                final course = courseController.weekData[index];
+                bool isUnlocked =
+                    course.catogaryNumber <= widget.courseModel.catogaryNumber;
+                return _buildWeekCard(
+                    context, course, isUnlocked, index, screenWidth);
+              },
             ),
           ],
         );
@@ -290,18 +215,12 @@ class WeeklistPage extends StatelessWidget {
     );
   }
 
-  Widget _buildWeekCard(BuildContext context, dynamic course, bool isUnlocked, int index, double screenWidth) {
+  Widget _buildWeekCard(BuildContext context, CartogaryModel course,
+      bool isUnlocked, int index, double screenWidth) {
     final cardHeight = 120.0;
-    final colors = [
-      const Color(0xFF4B7BEC),
-      const Color(0xFFF1556C),
-      const Color(0xFF45CE8C),
-      const Color(0xFFFF905A),
-      const Color(0xFF7B68EE),
-    ];
-    
-    final color = colors[index % colors.length];
-    
+
+    final color = Colors.blue;
+
     return Container(
       height: cardHeight,
       margin: const EdgeInsets.only(bottom: 16),
@@ -357,31 +276,37 @@ class WeeklistPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: isUnlocked ? const Color(0xFF1E2B3C) : Colors.grey.shade400,
+                                    color: isUnlocked
+                                        ? const Color(0xFF1E2B3C)
+                                        : Colors.grey.shade400,
                                   ),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  isUnlocked 
-                                      ? "Week ${index + 1} - Tap to explore" 
+                                  isUnlocked
+                                      ? "Week ${index + 1} - Tap to explore"
                                       : "Complete previous weeks first",
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: isUnlocked ? const Color(0xFF717F92) : Colors.grey.shade400,
+                                    color: isUnlocked
+                                        ? const Color(0xFF717F92)
+                                        : Colors.grey.shade400,
                                   ),
                                 ),
                                 const SizedBox(height: 10),
                                 if (isUnlocked)
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 4),
                                     decoration: BoxDecoration(
+                                      // ignore: deprecated_member_use
                                       color: color.withOpacity(0.1),
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Text(
-                                      "4 Lessons",
+                                      "${course.totalSubCAtogary} Lessons",
                                       style: TextStyle(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
@@ -420,7 +345,7 @@ class WeeklistPage extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: isUnlocked 
+                    color: isUnlocked
                         ? color.withOpacity(0.3)
                         : Colors.black.withOpacity(0.05),
                     blurRadius: 12,

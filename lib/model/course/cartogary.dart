@@ -5,6 +5,7 @@ class CourseModel {
   final String catogaryId;
   final String subcatogaryId;
   final int catogaryNumber;
+
   CourseModel(
       {required this.name,
       required this.duration,
@@ -31,12 +32,13 @@ class CartogaryModel {
   final String courseId;
   final String title;
   final int catogaryNumber;
-
+  final int totalSubCAtogary;
   CartogaryModel(
-      {required this.id, required this.title, required this.courseId,required this.catogaryNumber});
+      {required this.id, required this.title, required this.courseId,required this.catogaryNumber,required this.totalSubCAtogary});
 
   factory CartogaryModel.fromJson(Map<String, dynamic> json) {
     return CartogaryModel(
+      totalSubCAtogary: json['totalSubCategories'],
       catogaryNumber: json['categoryNumber'],
         id: json['_id'],
         title: json['title'],
