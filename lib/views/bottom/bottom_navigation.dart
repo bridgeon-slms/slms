@@ -39,7 +39,7 @@ class BottomBar extends StatelessWidget {
               SalomonBottomBarItem(
                   icon: Icon(Iconsax.chart), title: Text('Review')),
               SalomonBottomBarItem(
-                  icon: Icon(Iconsax.add), title: Text('Courses')),
+                  icon: Icon(Iconsax.book_saved), title: Text('Courses')),
             ]));
   }
 }

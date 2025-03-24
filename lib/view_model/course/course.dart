@@ -15,15 +15,19 @@ class CourseController extends ChangeNotifier {
   List<Course> fullcourse = [];
   ReviewServices reviewServices = ReviewServices();
   Maincourseservises servises = Maincourseservises();
+  bool isLodding = false;
 
-  Future<List<CartogaryModel>?> getWeekData({required String courseId}) async {
+  void getWeekData({required String courseId}) async {
+    isLodding = true;
+    notifyListeners();
     try {
       weekData = (await reviewServices.getReviewCatogary(courseId))!;
-      return weekData;
-      // ignore: empty_catches
-    } catch (e) {}
+    } catch (e) {
+      log(e.toString());
+    } finally {
+      isLodding = false;
+    }
     notifyListeners();
-    return null;
   }
 
   Future<void> fullAllcourse() async {
@@ -54,7 +58,6 @@ class CourseController extends ChangeNotifier {
   }) async {
     try {
       topicData = await reviewServices.fetchTopics(courseID, categoryId);
-
     } catch (e) {
       log('Error fetching topics: $e');
     }
