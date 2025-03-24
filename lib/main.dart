@@ -9,7 +9,6 @@ import 'package:slms/view_model/bottom_bar.dart';
 import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
-import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/splash/splash.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +16,6 @@ void main() {
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
