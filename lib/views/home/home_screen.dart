@@ -1,15 +1,12 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:slms/utils/color/color.dart';
 import 'package:slms/utils/image/image.dart';
 import 'package:slms/view_model/home/home_controller.dart';
-import 'package:slms/views/ProfilePage/profilepage.dart'; // Fixed import
+import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/error/error.dart';
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
-import 'package:slms/views/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
   @override
   void initState() {
     super.initState();
@@ -33,332 +31,315 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return context.watch<HomeController>().isLoading
-        ? Container(
+
+
+    return Consumer<HomeController>(
+      builder: (context, homeController, _) {
+        if (homeController.isLoading) {
+          return Container(
             color: Colors.white,
-            child: Center(child: loddingWidget()))
-        : context.watch<HomeController>().isError
-            ? Errorpage(
-                onRefresh: context.read<HomeController>().fetchAllData,
-              )
-            : Scaffold(
-                appBar: AppBar(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Image.asset(ImageConstents.bridgeonLogo),
-                  ),
-                  backgroundColor: ColorConstents.bagroundColor,
-                  automaticallyImplyLeading: false,
-                  surfaceTintColor: Colors.white,
-                  actions: [
-                    IconButton(
-                        onPressed: () {}, icon: const Icon(Iconsax.message)),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          );
+        }
+
+        if (homeController.isError) {
+          return Errorpage(
+            onRefresh: homeController.fetchAllData,
+          );
+        }
+
+        return Scaffold(
+          backgroundColor: const Color(0xFFF5F7FA),
+          appBar: AppBar(
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            backgroundColor: Colors.white,
+            leadingWidth: 60,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Image.asset(
+                ImageConstents.bridgeonLogo,
+              ),
+            ),
+            actions: [
+    
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NotificationS()),
+                  );
+                },
+                icon: Badge(
+                  isLabelVisible: true,
+                  label: const Text('0',
+                      style: TextStyle(color: Colors.white, fontSize: 10)),
+                  child: const Icon(Iconsax.notification,
+                      color: Color(0xFF2D3748)),
+                ),
+              ),
+              const SizedBox(width: 20),
+            ],
+          ),
+          body: RefreshIndicator(
+            color: Theme.of(context).primaryColor,
+            onRefresh: () async {
+              await homeController.fetchAllData();
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // User Profile Card
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NotificationS()));
-                        },
-                        icon: const Icon(Iconsax.notification)),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-                backgroundColor: ColorConstents.bagroundColor,
-                body: RefreshIndicator(
-                  onRefresh: () async {
-                    await context.watch<HomeController>().fetchAllData();
-                  },
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Consumer<HomeController>(
-                            builder: (context, value, child) => Card(
-                              color: Colors.white,
-                              elevation: 2,
-                              child: ListTile(
-                                title: Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (cont) =>
-                                                    const ProfilePage()));
-                                      },
-                                      child: Hero(
-                                        tag: 'profile',
-                                        child: CircleAvatar(
-                                          radius: 30,
-                                          backgroundImage: value.profile?.image !=
-                                                  null
-                                              ? NetworkImage(value.profile!.image)
-                                              : null,
-                                          child: value.profile?.image == null
-                                              ? CircularProgressIndicator()
-                                              : null,
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    textStyled(text: 'hello,'),
-                                    textStyled(
-                                        text: value.profile?.name ?? 'loading',
-                                        fontweight: FontWeight.w400,
-                                        fontSize: 16),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          // Padding(
-                          Consumer<HomeController>(
-                              builder: (context, provider, child) {
-                            final acadamic =
-                                provider.score?.data.first.academic;
-                            final others = provider.score?.data.first.others;
-                            return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    attendaceContainer(
-                                      icon: Icons.reviews,
-                                      percetange: "${acadamic?.review}",
-                                      text: 'Review',
-                                    ),
-                                    const SizedBox(width: 15),
-                                    attendaceContainer(
-                                      icon: Icons.task,
-                                      percetange: "${acadamic?.task}",
-                                      text: 'Task',
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 20),
-                                Row(
-                                  children: [
-                                    attendaceContainer(
-                                      icon: Icons.person,
-                                      percetange: "${others?.attendance}",
-                                      text: 'Attendance',
-                                    ),
-                                    const SizedBox(width: 15),
-                                    attendaceContainer(
-                                      icon: Icons.list_alt_outlined,
-                                      percetange: "${others?.discipline}",
-                                      text: 'Discipline',
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                  builder: (context) => const ProfilePage()),
                             );
-                          }),
-                          const SizedBox(height: 30),
-                          textStyled(text: 'Total Score', fontSize: 19),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          Consumer<HomeController>(
-                              builder: (context, value, child) {
-                            if (value.score?.data == null ||
-                                value.score!.data.isEmpty) {
-                              return SizedBox();
-                            }
-                            final academic = value.score?.data.first.academic;
-                            final others = value.score?.data.first.others;
-                            if (academic == null) {}
-                            double academicMark =
-                                (academic?.review ?? 0) + (academic?.task ?? 0);
-                            double acadamicper = academicMark / 20;
-                            acadamicper = acadamicper.clamp(0.0, 1.0);
-                            log(others!.attendance.toString());
-                            double othersMark =
-                                (others.attendance) + (others.discipline);
-                            double othersPercentage = othersMark / 20;
-                            othersPercentage = othersPercentage.clamp(0.0, 1.0);
-                            return Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        circulePercentange(acadamicper),
-                                        SizedBox(
-                                          height: 40,
-                                        ),
-                                        textStyled(
-                                          text: 'Acadamic',
-                                          fontweight: FontWeight.bold,
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        circulePercentange(othersPercentage),
-                                        SizedBox(
-                                          height: 40,
-                                        ),
-                                        textStyled(
-                                          text: 'Others',
-                                          fontweight: FontWeight.bold,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  textStyled(
-                                      text: 'Others',
-                                      fontweight: FontWeight.bold),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          pendingPayments(),
-                          const SizedBox(height: 30),
-                          Consumer<HomeController>(
-                            builder: (context, controller, child) => Container(
+                          },
+                          child: Hero(
+                            tag: 'profile',
+                            child: Container(
+                              width: 60,
+                              height: 60,
                               decoration: BoxDecoration(
-                                  color: const Color(0XFF191818),
-                                  borderRadius: BorderRadius.circular(8)),
-                              height: 255,
-                              width: double.infinity,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 30.0, top: 30),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/image/LeetCode_logo_rvs.png',
-                                          width: 40,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        textStyled(
-                                            text: 'Leetcode \nStatistics',
-                                            color: Colors.white,
-                                            fontweight: FontWeight.bold,
-                                            fontSize: 18),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      textStyled(
-                                          text:
-                                              '${controller.leetcodeModel?.data.acSubmissionNum[0].count ?? 0}',
-                                          fontSize: 40,
-                                          fontweight: FontWeight.bold,
-                                          color: Colors.white),
-                                      Row(
-                                        children: [
-                                          Column(
-                                            spacing: 10,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              textStyled(
-                                                  text: controller
-                                                          .leetcodeModel
-                                                          ?.data
-                                                          .acSubmissionNum[1]
-                                                          .difficulty ??
-                                                      'N/A',
-                                                  color: Colors.white,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                              textStyled(
-                                                  text: controller
-                                                          .leetcodeModel
-                                                          ?.data
-                                                          .acSubmissionNum[2]
-                                                          .difficulty ??
-                                                      'N/A',
-                                                  color: Colors.white,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                              textStyled(
-                                                  text: controller
-                                                          .leetcodeModel
-                                                          ?.data
-                                                          .acSubmissionNum[3]
-                                                          .difficulty ??
-                                                      'N/A',
-                                                  color: Colors.white,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                            ],
-                                          ),
-                                          const SizedBox(width: 20),
-                                          Column(
-                                            spacing: 10,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              textStyled(
-                                                  text:
-                                                      '${controller.leetcodeModel?.data.acSubmissionNum[1].count ?? 0}',
-                                                  color: Colors.green,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                              textStyled(
-                                                  text:
-                                                      '${controller.leetcodeModel?.data.acSubmissionNum[2].count ?? 0}',
-                                                  color: Colors.yellow,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                              textStyled(
-                                                  text:
-                                                      '${controller.leetcodeModel?.data.acSubmissionNum[3].count ?? 0}',
-                                                  color: Colors.red,
-                                                  fontweight: FontWeight.bold,
-                                                  fontSize: 20),
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
                                   ),
                                 ],
                               ),
+                              child: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.grey[100],
+                                backgroundImage:
+                                    homeController.profile?.image != null
+                                        ? NetworkImage(
+                                            homeController.profile!.image)
+                                        : null,
+                                child: homeController.profile?.image == null
+                                    ? const Icon(Icons.person,
+                                        size: 30, color: Colors.grey)
+                                    : null,
+                              ),
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Hello, ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                                Text(
+                                  homeController.profile?.name ?? 'User',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF2D3748),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Welcome back!',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                      ],
                     ),
                   ),
-                ),
-              );
+
+                  // Score Cards
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 16),
+                          child: Text(
+                            'Performance ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2D3748),
+                            ),
+                          ),
+                        ),
+                        performanceMetricsSection(homeController),
+                        const SizedBox(height: 24),
+                        const Text(
+                          'Total Score',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF2D3748),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        scoreProgressSection(homeController),
+                        const SizedBox(height: 24),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Others',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF2D3748),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        modernPaymentsCard(),
+                        const SizedBox(height: 24),
+                        leetcodeStatisticsCard(homeController),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
+
+  Widget performanceMetricsSection(HomeController controller) {
+    final academic = controller.score?.data.first.academic;
+    final others = controller.score?.data.first.others;
+
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      children: [
+        metricCard(
+          icon: Iconsax.document_text,
+          title: 'Review',
+          value: "${academic!.review.toInt() * 10}%",
+          color: const Color(0xFF4338CA),
+        ),
+
+        metricCard(
+          icon: Iconsax.task_square,
+          title: 'Task',
+          value: "${academic.task.toInt() * 10}%",
+          color: const Color(0xFF0EA5E9),
+        ),
+        metricCard(
+          icon: Iconsax.user_tick,
+          title: 'Attendance',
+          value: "${others!.attendance.toInt() * 10}%",
+          color: const Color(0xFF10B981),
+        ),
+
+        metricCard(
+          icon: Iconsax.teacher,
+          title: 'Discipline',
+          value: "${others.discipline.toInt() * 10}%",
+          color: const Color(0xFFF59E0B),
+        ),
+      ],
+    );
+  }
+
+  Widget metricCard({
+    required IconData icon,
+    required String title,
+    required String value,
+    required Color color,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 12,
+            right: 12,
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 22),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF2D3748),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  } 
 }

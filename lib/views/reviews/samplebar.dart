@@ -98,7 +98,7 @@ class SalesChart extends StatelessWidget {
     if (hasWeekBack) return Colors.red;
     if (value >= 80) return Colors.green;
     if (value >= 70) return Colors.yellow;
-    if (value <= 60) return Colors.orange;
+    if (value >= 60) return Colors.orange;
 
     return Colors.grey;
   }

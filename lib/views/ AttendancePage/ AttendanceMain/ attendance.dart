@@ -317,6 +317,7 @@ class _AttendancePageState extends State<AttendancePage> {
                         )
                       ],
                     ),
+                    MultiDatePickerButton(),
                     Gap(10),
                     TabBar(
                       labelColor: ColorConstents.primeryColor,
@@ -352,6 +353,9 @@ class _AttendancePageState extends State<AttendancePage> {
     );
   }
 
+ 
+  }
+
   Expanded dateContainer({VoidCallback? ontap}) {
     return Expanded(
       child: GestureDetector(
@@ -381,7 +385,6 @@ class _AttendancePageState extends State<AttendancePage> {
       ),
     );
   }
-}
 
 Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
   return Padding(
@@ -393,7 +396,6 @@ Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
         backgroundColor: ColorConstents.primeryColor,
         padding: EdgeInsets.symmetric(vertical: 14),
         shape: RoundedRectangleBorder(
-          
           borderRadius: BorderRadius.circular(12),
         ),
         elevation: 2,

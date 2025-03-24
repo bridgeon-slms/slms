@@ -14,4 +14,14 @@ class DateProvider with ChangeNotifier {
     endDate = date;
     notifyListeners();
   }
+
+  List<DateTime?> _selectedDates = [];
+
+  List<DateTime?> get selectedDates => _selectedDates;
+
+  void updateSelectedDates(List<DateTime?> dates) {
+    _selectedDates = dates;
+    notifyListeners(); 
+}
+
 }
