@@ -125,7 +125,7 @@ class _CoursePageState extends State<CoursePage> {
               builder: (context, controller, _) {
                 List<Course> availableCourses = [];
                 List<Course> lockedCourses = [];
-      
+
                 for (var course in controller.fullcourse) {
                   if (controller.allCourse.any((c) => c.name == course.name)) {
                     availableCourses.add(course);
@@ -133,9 +133,12 @@ class _CoursePageState extends State<CoursePage> {
                     lockedCourses.add(course);
                   }
                 }
-      
-                List<Course> finalCourses = [...availableCourses, ...lockedCourses];
-      
+
+                List<Course> finalCourses = [
+                  ...availableCourses,
+                  ...lockedCourses
+                ];
+
                 return SliverList(
                   delegate: SliverChildListDelegate([
                     const Padding(
@@ -153,7 +156,8 @@ class _CoursePageState extends State<CoursePage> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: finalCourses.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 16,
                         mainAxisSpacing: 16,
@@ -162,9 +166,10 @@ class _CoursePageState extends State<CoursePage> {
                       itemBuilder: (context, index) {
                         final course = finalCourses[index];
                         final isAvailable = availableCourses.contains(course);
-                        
+
                         return isAvailable
-                            ? _buildAvailableCourseCard(context, course, controller)
+                            ? _buildAvailableCourseCard(
+                                context, course, controller)
                             : _buildLockedCourseCard(course);
                       },
                     ),
@@ -178,9 +183,10 @@ class _CoursePageState extends State<CoursePage> {
     );
   }
 
-  Widget _buildAvailableCourseCard(BuildContext context, Course course, CourseController controller) {
+  Widget _buildAvailableCourseCard(
+      BuildContext context, Course course, CourseController controller) {
     final Color cardColor = _getRandomColor();
-    
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -225,7 +231,7 @@ class _CoursePageState extends State<CoursePage> {
                 ),
                 alignment: Alignment.center,
                 child: Icon(
-                  _getCourseIcon(course.name),
+                  Icons.school,
                   size: 40,
                   color: Colors.white,
                 ),
@@ -311,7 +317,7 @@ class _CoursePageState extends State<CoursePage> {
                   Opacity(
                     opacity: 0.3,
                     child: Icon(
-                      _getCourseIcon(course.name),
+                      Icons.school,
                       size: 40,
                       color: Colors.grey[700],
                     ),
@@ -374,33 +380,6 @@ class _CoursePageState extends State<CoursePage> {
     );
   }
 
-  IconData _getCourseIcon(String courseName) {
-    final Map<String, IconData> courseIcons = {
-      "Mathematics": Icons.calculate,
-      "Physics": Icons.science,
-      "Chemistry": Icons.biotech,
-      "Biology": Icons.spa,
-      "History": Icons.history_edu,
-      "Literature": Icons.book,
-      "Computer Science": Icons.computer,
-      "Programming": Icons.code,
-      "Art": Icons.palette,
-      "Music": Icons.music_note,
-    };
-
-    // Default icon if course name doesn't match any in the map
-    IconData defaultIcon = Icons.school;
-    
-    // Check if the course name contains any of the keys
-    for (var key in courseIcons.keys) {
-      if (courseName.toLowerCase().contains(key.toLowerCase())) {
-        return courseIcons[key]!;
-      }
-    }
-    
-    return defaultIcon;
-  }
-
   Color _getRandomColor() {
     final List<Color> colors = [
       Colors.blue,
@@ -412,8 +391,7 @@ class _CoursePageState extends State<CoursePage> {
       Colors.indigo,
       Colors.cyan,
     ];
-    
-    // Use the hashCode of the current time to get a "random" index
+
     int index = DateTime.now().millisecondsSinceEpoch.hashCode % colors.length;
     if (index < 0) index = -index;
     return colors[index];
