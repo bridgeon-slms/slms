@@ -33,11 +33,14 @@ class CartogaryModel {
   final int catogaryNumber;
 
   CartogaryModel(
-      {required this.id, required this.title, required this.courseId,required this.catogaryNumber});
+      {required this.id,
+      required this.title,
+      required this.courseId,
+      required this.catogaryNumber});
 
   factory CartogaryModel.fromJson(Map<String, dynamic> json) {
     return CartogaryModel(
-      catogaryNumber: json['categoryNumber'],
+        catogaryNumber: json['categoryNumber'],
         id: json['_id'],
         title: json['title'],
         courseId: json['courseId']['_id']);

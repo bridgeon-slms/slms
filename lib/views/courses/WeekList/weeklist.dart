@@ -53,10 +53,13 @@ class WeeklistPage extends StatelessWidget {
                               onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Weeksubpage(
-                                    catogaryId: course.id,
+                                  builder: (context) => WeekSubPage(
+                                    categoryId: course.courseId,
                                     courseId: course.courseId,
                                     name: course.title,
+                                    topic: course.id,
+                                    categoryNumber: course.catogaryNumber,
+                                    catogaryId: course.courseId,
                                   ),
                                 ),
                               ),

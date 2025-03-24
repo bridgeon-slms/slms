@@ -8,13 +8,15 @@ class TopicScreen extends StatefulWidget {
   final String courseId;
   final String catogaryId;
   final String name;
+  final String catogaryNumber;
 
   const TopicScreen(
       {super.key,
       required this.topic,
       required this.courseId,
       required this.catogaryId,
-      required this.name});
+      required this.name,
+      required this.catogaryNumber});
 
   @override
   State<TopicScreen> createState() => _TopicScreenState();
@@ -46,10 +48,15 @@ class _TopicScreenState extends State<TopicScreen> {
                         onPressed: () => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Weeksubpage(
-                                    catogaryId: widget.catogaryId,
-                                    courseId: widget.courseId,
-                                    name: widget.name))),
+                                builder: (context) => WeekSubPage(
+                                      courseId: widget.courseId,
+                                      topic: widget.topic,
+                                      name: widget.name,
+                                      categoryId: widget.catogaryId,
+                                      categoryNumber:
+                                          widget.catogaryNumber.length,
+                                      catogaryId: widget.catogaryId,
+                                    ))),
                         child: Text("OK"),
                       ),
                     ],

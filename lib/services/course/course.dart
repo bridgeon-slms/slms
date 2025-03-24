@@ -1,11 +1,13 @@
-
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:slms/model/course/cartogary.dart';
+import 'package:slms/model/course/courseModel.dart';
 import 'package:slms/model/course/subcatogary.dart';
 import 'package:slms/services/dio/dio_services.dart';
+import 'package:slms/views/courses/topic_screen.dart';
 
 class ReviewServices {
   FlutterSecureStorage storage = FlutterSecureStorage();
@@ -47,24 +49,25 @@ class ReviewServices {
     }
   }
 
-  Future<List<Topic>> fetchTopics(
-      String courseID, String subcategoriesId) async {
-    log('fetching topics.....');
-    final dio = await DioClient.getDioInstance();
-    final String url =
-        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';
-    try {
-      final response = await dio.get(url);
-      if (response.statusCode == 200) {
-        List<dynamic> topicsJson = response.data['data']['topics'];
-        return topicsJson.map((json) => Topic.fromJson(json)).toList();
-      } else {
-        throw Exception('Failed to fetch data');
-      }
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
-  }
+  // Future<List<TopicScreen>> fetchTopics(
+  //     String courseID, String subcategoriesId) async {
+  //   log('fetching topics.....');
+  //   final dio = await DioClient.getDioInstance();
+  //   final String url =
+  //       'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/$courseID/subcategories/$subcategoriesId/topics';
+  //   try {
+  //     final response = await dio.get(url);
+  //     if (response.statusCode == 200) {
+  //       List<dynamic> topicsJson = response.data['data']['topics'];
+  //       print(topicsJson);
+  //       return topicsJson.map((json) => TopicScreen.fromJson(json)).toList();
+  //     } else {
+  //       throw Exception('Failed to fetch data');
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Error: $e');
+  //   }
+  // }
 
   Future<List<CourseModel>> fetchCourses() async {
     final dio = await DioClient.getDioInstance();

@@ -6,12 +6,13 @@ import 'package:slms/model/course/subcatogary.dart';
 import 'package:slms/model/profilemodel/profilemodel.dart';
 import 'package:slms/services/course/course.dart';
 import 'package:slms/services/course/maincourseservises.dart';
+import 'package:slms/views/courses/topic_screen.dart';
 
 class CourseController extends ChangeNotifier {
   List<CartogaryModel> weekData = [];
   List<CourseModel> allCourse = [];
   List<SubCategory> subcategories = [];
-  List<Topic> topicData = [];
+  List<TopicScreen> topicData = [];
   List<Course> fullcourse = [];
   ReviewServices reviewServices = ReviewServices();
   Maincourseservises servises = Maincourseservises();
@@ -27,7 +28,6 @@ class CourseController extends ChangeNotifier {
   }
 
   Future<void> fullAllcourse() async {
-    log("fetching all courses");
     try {
       fullcourse = await servises.fetchAllCourses();
     } catch (e) {
@@ -53,8 +53,13 @@ class CourseController extends ChangeNotifier {
     required String categoryId,
   }) async {
     try {
-      topicData = await reviewServices.fetchTopics(courseID, categoryId);
+      // topicData = await reviewServices.fetchTopics(courseID, categoryId);
 
+      if (topicData.isNotEmpty) {
+        print(topicData.first);
+      } else {
+        print('No topics available or description is null');
+      }
     } catch (e) {
       log('Error fetching topics: $e');
     }
