@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/view_model/course/course.dart';
+import 'package:slms/view_model/levepagecontroller/leavepagecontroller.dart';
 import 'package:slms/view_model/profilecontroller/profilecontroller.dart';
 import 'package:slms/view_model/auth/auth_controller.dart';
 import 'package:slms/view_model/bottom_bar.dart';
@@ -10,10 +11,12 @@ import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/splash/splash.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -42,7 +45,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DateProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LeavePageController(),
+        ),
       ],
       child: MaterialApp(
         home: SplashScreen(),
@@ -54,5 +60,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
