@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:slms/views/courses/coursess/course_list.dart';
-import 'package:slms/views/courses/weeksub/weeksub.dart';
+import 'package:slms/services/course/course.dart';
 
 class TopicScreen extends StatefulWidget {
   final String topic;
   final String courseId;
   final String catogaryId;
   final String name;
+  final String topicId;
 
   const TopicScreen(
       {super.key,
+      required this.topicId,
       required this.topic,
       required this.courseId,
       required this.catogaryId,
@@ -24,7 +25,7 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Topic Details")),
+      appBar: AppBar(title: Text(widget.catogaryId)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -36,23 +37,13 @@ class _TopicScreenState extends State<TopicScreen> {
             const Gap(500),
             ElevatedButton(
               onPressed: () {
+                ReviewServices().finishTopics(widget.courseId);
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text("Completed!"),
                     content: const Text("You have finished this topic."),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Weeksubpage(
-                                    catogaryId: widget.catogaryId,
-                                    courseId: widget.courseId,
-                                    name: widget.name))),
-                        child: Text("OK"),
-                      ),
-                    ],
+                    actions: [],
                   ),
                 );
               },

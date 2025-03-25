@@ -1,26 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/topic_screen.dart';
-import 'package:slms/views/courses/weektopics/weektopics.dart';
+import 'package:slms/views/widget/widget.dart';
 
-class Weeksubpage extends StatefulWidget {
+class ModernWeekSubpage extends StatefulWidget {
   final String courseId;
   final String name;
   final String catogaryId;
+  final CourseModel courseModel;
 
-  const Weeksubpage({
+  const ModernWeekSubpage({
     super.key,
+    required this.courseModel,
     required this.catogaryId,
     required this.courseId,
     required this.name,
   });
 
   @override
-  State<Weeksubpage> createState() => _WeeksubpageState();
+  State<ModernWeekSubpage> createState() => _ModernWeekSubpageState();
 }
 
-class _WeeksubpageState extends State<Weeksubpage> {
+class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
   @override
   void initState() {
     super.initState();
@@ -33,126 +36,116 @@ class _WeeksubpageState extends State<Weeksubpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: textStyled(
+          text: widget.name,
+          fontSize: 18,
+          fontweight: FontWeight.bold,
+        ),
+        backgroundColor: const Color(0xFFF5F7FA),
+      ),
+      backgroundColor: const Color(0xFFF5F7FA),
       body: Column(
         children: [
-          Container(
-            height: 176,
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(color: Colors.grey, blurRadius: 30, spreadRadius: 3)
-              ],
-              gradient: LinearGradient(
-                colors: [Color.fromARGB(255, 29, 77, 161), Colors.blueAccent],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        )),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Text(
-                      widget.name,
-                      style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 60,
-                    ),
-                    Text(
-                      " Choose your topic",
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
           Expanded(
             child: Consumer<CourseController>(
               builder: (context, value, child) {
                 if (value.subcategories.isEmpty) {
                   return const Center(
-                      child: Text('No subcategories available'));
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.menu_book_outlined,
+                          size: 80,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'No subcategories available',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 }
                 return ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 15,
+                  ),
                   itemCount: value.subcategories.length,
                   itemBuilder: (context, index) {
                     final course = value.subcategories[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
+                    bool isSubcategoryLocked =
+                        index >= widget.courseModel.subcatogaryNumber;
+                    bool isLastUnlockedSubcategory =
+                        index == widget.courseModel.subcatogaryNumber - 1;
+
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade200,
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          dividerColor: Colors.transparent,
+                        ),
+                        child: ExpansionTile(
+                          key: Key(course.id),
+                          tilePadding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 5,
+                          ),
+                          shape: const Border(),
+                          title: Row(
                             children: [
-                              SizedBox(
-                                height: 10,
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Text(
+                                  "${index + 1}",
+                                  style: TextStyle(
+                                    color: Colors.blue.shade700,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                              CircleAvatar(
-                                backgroundColor:
-                                    const Color.fromARGB(255, 246, 246, 246),
-                                child: Text("${index + 1}"),
+                              const SizedBox(width: 15),
+                              Expanded(
+                                child: Text(
+                                  course.title,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
+                              if (isSubcategoryLocked)
+                                Icon(
+                                  Icons.lock_rounded,
+                                  color: Colors.red.shade300,
+                                ),
                             ],
                           ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Expanded(
-                            child: Card(
-                              color: Colors.white,
-                              margin: const EdgeInsets.only(bottom: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: ExpansionTile(
-                                key: Key(course.id),
-                                title: Row(
-                                  children: [
-                                    Text(
-                                      course.title,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onExpansionChanged: (isExpanded) {
+                          onExpansionChanged: isSubcategoryLocked
+                              ? null
+                              : (isExpanded) {
                                   if (isExpanded) {
                                     context.read<CourseController>().getTopics(
                                           categoryId: course.id,
@@ -160,42 +153,95 @@ class _WeeksubpageState extends State<Weeksubpage> {
                                         );
                                   }
                                 },
-                                children: value.topicData.isNotEmpty
-                                    ? value.topicData.map((topic) {
-                                        return ListTile(
-                                          onTap: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TopicScreen(
-                                                        topic: topic.title,
-                                                        catogaryId: course.id,
-                                                        courseId:
-                                                            course.courseId,
-                                                        name: widget.name,
-                                                      ))),
-                                          leading: const Icon(
-                                              Icons.play_circle_outline,
-                                              color: Colors.blue),
-                                          title: Text(
-                                            topic.title,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                          children: isSubcategoryLocked
+                              ? [
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      'Complete previous subcategories to unlock',
+                                      style: TextStyle(
+                                        color: Colors.red.shade300,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              : value.topicData.isEmpty
+                                  ? [
+                                      const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Text(
+                                          'No topics available',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontStyle: FontStyle.italic,
                                           ),
-                                        );
-                                      }).toList()
-                                    : [
-                                        const Padding(
-                                          padding: EdgeInsets.all(16.0),
-                                          child: Text('No topics available'),
                                         ),
-                                      ],
-                              ),
-                            ),
-                          ),
-                        ],
+                                      ),
+                                    ]
+                                  : value.topicData
+                                      .asMap()
+                                      .entries
+                                      .map((entry) {
+                                      int topicIndex = entry.key;
+                                      var topic = entry.value;
+                                      bool isTopicLocked =
+                                          isLastUnlockedSubcategory &&
+                                              (topicIndex >=
+                                                  widget
+                                                      .courseModel.topicNumber);
+
+                                      return ListTile(
+                                        onTap: isTopicLocked
+                                            ? null
+                                            : () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        TopicScreen(
+                                                      topicId: value.topicData[index].id,
+                                                      topic: topic.title,
+                                                      catogaryId: course.id,
+                                                      courseId: widget.courseId,
+                                                      name: widget.name,
+                                                    ),
+                                                  ),
+                                                ),
+                                        leading: Container(
+                                          padding: const EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                            color: isTopicLocked
+                                                ? Colors.grey.shade300
+                                                : Colors.blue.shade50,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Icon(
+                                            Icons.play_circle_outline_rounded,
+                                            color: isTopicLocked
+                                                ? Colors.grey
+                                                : Colors.blue.shade700,
+                                          ),
+                                        ),
+                                        title: Text(
+                                          topic.title,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: isTopicLocked
+                                                ? Colors.grey
+                                                : Colors.black,
+                                          ),
+                                        ),
+                                        trailing: isTopicLocked
+                                            ? Icon(
+                                                Icons.lock,
+                                                color: Colors.red.shade300,
+                                              )
+                                            : null,
+                                      );
+                                    }).toList(),
+                        ),
                       ),
                     );
                   },
