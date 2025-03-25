@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -81,6 +80,20 @@ class ReviewServices {
       }
     } on DioException catch (e) {
       throw Exception(e);
+    }
+  }
+
+  Future<void> finishTopics(String topicId) async {
+    final dio = await DioClient.getDioInstance();
+    final url =
+        'https://www.lms-api.bridgeon.in/api/admin/enrolled/courses/unlock/subcategories/$topicId';
+    try {
+      final response = await dio.post(url);
+      if (response.statusCode == 200) {
+        log('course finish success');
+      }
+    } on DioException catch (e) {
+      log(e.toString());
     }
   }
 }

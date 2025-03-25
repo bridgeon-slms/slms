@@ -49,9 +49,8 @@ class ReviewData {
   num? iV;
   String? updatedBy;
   String? feeRecordId;
- bool? isWeekBAck;
+  bool? isWeekBAck;
   ReviewData(
-
       {this.academic,
       this.others,
       this.sId,
@@ -73,11 +72,9 @@ class ReviewData {
       this.feeRecordId});
 
   ReviewData.fromJson(Map<String, dynamic> json) {
-    academic = json['academic'] != null
-        ? Academic.fromJson(json['academic'])
-        : null;
-    others =
-        json['others'] != null ? Others.fromJson(json['others']) : null;
+    academic =
+        json['academic'] != null ? Academic.fromJson(json['academic']) : null;
+    others = json['others'] != null ? Others.fromJson(json['others']) : null;
     sId = json['_id'];
     studentId = json['studentId'] != null
         ? StudentId.fromJson(json['studentId'])
@@ -270,9 +267,8 @@ class StudentId {
       this.refStudent});
 
   StudentId.fromJson(Map<String, dynamic> json) {
-    guardian = json['guardian'] != null
-        ? Guardian.fromJson(json['guardian'])
-        : null;
+    guardian =
+        json['guardian'] != null ? Guardian.fromJson(json['guardian']) : null;
     socialLinks = json['socialLinks'] != null
         ? SocialLinks.fromJson(json['socialLinks'])
         : null;
@@ -285,8 +281,7 @@ class StudentId {
     batch = json['batch'] != null ? Batch.fromJson(json['batch']) : null;
     image = json['image'];
     mentor = json['mentor'];
-    advisor =
-        json['advisor'] != null ? Batch.fromJson(json['advisor']) : null;
+    advisor = json['advisor'] != null ? Batch.fromJson(json['advisor']) : null;
     joiningDate = json['joiningDate'];
     qualification = json['qualification'];
     branch = json['branch'];

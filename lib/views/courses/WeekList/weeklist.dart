@@ -17,9 +17,11 @@ class _WeeklistPageState extends State<WeeklistPage> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<CourseController>()
-        .getWeekData(courseId: widget.courseModel.id);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context
+          .read<CourseController>()
+          .getWeekData(courseId: widget.courseModel.id);
+    });
   }
 
   @override
@@ -60,6 +62,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
+                        // ignore: deprecated_member_use
                         color: Colors.black.withOpacity(0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
@@ -151,37 +154,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
             child: CircularProgressIndicator(),
           );
         }
-        if (courseController.weekData.isEmpty) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.warning_amber_rounded,
-                  size: 64,
-                  color: Color(0xFFEAB308),
-                ),
-                SizedBox(height: 16),
-                Text(
-                  "No weeks available",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E2B3C),
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "Check back later for course content",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF717F92),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
+  
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,7 +225,8 @@ class _WeeklistPageState extends State<WeeklistPage> {
                       ? () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Weeksubpage(
+                              builder: (context) => ModernWeekSubpage(
+                                courseModel: widget.courseModel,
                                 catogaryId: course.id,
                                 courseId: course.courseId,
                                 name: course.title,
