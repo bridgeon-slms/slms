@@ -10,10 +10,12 @@ import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/views/splash/splash.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -54,5 +56,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

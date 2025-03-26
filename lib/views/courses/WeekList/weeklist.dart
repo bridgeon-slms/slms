@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weeksub/weeksub.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class WeeklistPage extends StatefulWidget {
   final CourseModel courseModel;
@@ -27,135 +29,131 @@ class _WeeklistPageState extends State<WeeklistPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildHeader(context),
-              _buildProgressBar(context),
-              _buildWeeksList(context, screenWidth),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        // ignore: deprecated_member_use
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+    return context.watch<CourseController>().isLodding
+        ? loddingWidget()
+        : AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.dark.copyWith(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
+              statusBarBrightness: Brightness.light,
+            ),
+            child: Scaffold(
+              backgroundColor: const Color(0xFFF5F7FA),
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () => Navigator.pop(context),
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          // ignore: deprecated_member_use
+                                          color: Colors.black.withOpacity(0.05),
+                                          blurRadius: 10,
+                                          offset: const Offset(0, 4),
+                                        ),
+                                      ],
+                                    ),
+                                    child:
+                                        const Icon(Icons.arrow_back, size: 22),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              widget.courseModel.name,
+                              style: const TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF1E2B3C),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                          ],
+                        ),
                       ),
+                      Consumer<CourseController>(
+                        builder: (context, value, child) => Container(
+                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: [
+                              BoxShadow(
+                                // ignore: deprecated_member_use
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Your Progress",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF1E2B3C),
+                                    ),
+                                  ),
+                                  Text(
+                                    "${(value.weekData.first.catogaryNumber / value.weekData.length * 100).toStringAsFixed(0)}%",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF4B7BEC),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: LinearProgressIndicator(
+                                  value: value.weekData.first.catogaryNumber /
+                                      value.weekData.length,
+                                  minHeight: 8,
+                                  backgroundColor: const Color(0xFFEDF1F9),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Color(0xFF4B7BEC)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      _buildWeeksList(context, screenWidth),
                     ],
                   ),
-                  child: const Icon(Icons.arrow_back, size: 22),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            widget.courseModel.name,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1E2B3C),
-            ),
-          ),
-          const SizedBox(height: 6),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProgressBar(BuildContext context) {
-    return Consumer<CourseController>(
-      builder: (context, value, child) => Container(
-        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Your Progress",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E2B3C),
-                  ),
-                ),
-                Text(
-                  "${(value.weekData.first.catogaryNumber / value.weekData.length * 100).toStringAsFixed(0)}%",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF4B7BEC),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: LinearProgressIndicator(
-                value:
-                    value.weekData.first.catogaryNumber / value.weekData.length,
-                minHeight: 8,
-                backgroundColor: const Color(0xFFEDF1F9),
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4B7BEC)),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ));
   }
 
   Widget _buildWeeksList(BuildContext context, double screenWidth) {
     return Consumer<CourseController>(
       builder: (context, courseController, child) {
-        if (courseController.isLodding) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-  
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -178,7 +176,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
                 final course = courseController.weekData[index];
                 bool isUnlocked =
                     course.catogaryNumber <= widget.courseModel.catogaryNumber;
-                return _buildWeekCard(
+                return weekCard(
                     context, course, isUnlocked, index, screenWidth);
               },
             ),
@@ -188,7 +186,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
     );
   }
 
-  Widget _buildWeekCard(BuildContext context, CartogaryModel course,
+  Widget weekCard(BuildContext context, CartogaryModel course,
       bool isUnlocked, int index, double screenWidth) {
     final cardHeight = 120.0;
 
@@ -210,6 +208,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
+                    // ignore: deprecated_member_use
                     color: Colors.black.withOpacity(0.06),
                     blurRadius: 12,
                     offset: const Offset(0, 4),

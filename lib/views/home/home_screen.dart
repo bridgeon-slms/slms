@@ -7,6 +7,7 @@ import 'package:slms/views/ProfilePage/profilepage.dart';
 import 'package:slms/views/error/error.dart';
 import 'package:slms/views/home/home_widgets.dart';
 import 'package:slms/views/home/notifications/notification.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,11 +16,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen> {
   @override
-  bool get wantKeepAlive => true;
-
   @override
   void initState() {
     super.initState();
@@ -30,20 +28,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-
     return Consumer<HomeController>(
       builder: (context, homeController, _) {
         if (homeController.isLoading) {
-          return Container(
-            color: Colors.white,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          );
+          return loddingWidget();
         }
 
         if (homeController.isError) {
@@ -66,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             actions: [
-    
               IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -178,8 +165,6 @@ class _HomeScreenState extends State<HomeScreen>
                       ],
                     ),
                   ),
-
-                  // Score Cards
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -238,108 +223,4 @@ class _HomeScreenState extends State<HomeScreen>
       },
     );
   }
-
-  Widget performanceMetricsSection(HomeController controller) {
-    final academic = controller.score?.data.first.academic;
-    final others = controller.score?.data.first.others;
-
-    return GridView.count(
-      crossAxisCount: 2,
-      crossAxisSpacing: 16,
-      mainAxisSpacing: 16,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        metricCard(
-          icon: Iconsax.document_text,
-          title: 'Review',
-          value: "${academic!.review.toInt() * 10}%",
-          color: const Color(0xFF4338CA),
-        ),
-
-        metricCard(
-          icon: Iconsax.task_square,
-          title: 'Task',
-          value: "${academic.task.toInt() * 10}%",
-          color: const Color(0xFF0EA5E9),
-        ),
-        metricCard(
-          icon: Iconsax.user_tick,
-          title: 'Attendance',
-          value: "${others!.attendance.toInt() * 10}%",
-          color: const Color(0xFF10B981),
-        ),
-
-        metricCard(
-          icon: Iconsax.teacher,
-          title: 'Discipline',
-          value: "${others.discipline.toInt() * 10}%",
-          color: const Color(0xFFF59E0B),
-        ),
-      ],
-    );
-  }
-
-  Widget metricCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    required Color color,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 12,
-            right: 12,
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, color: color, size: 22),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2D3748),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  } 
 }

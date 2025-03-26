@@ -23,5 +23,7 @@ Widget textStyled(
 
 
 Widget loddingWidget(){
-  return Lottie.asset('assets/animation/Animation - 1732086805692.json',width: 300,);
+  return Container(
+    color: Colors.white,
+    child: Center(child: Lottie.asset('assets/animation/Animation - 1732086805692.json',width: 300,)));
 }

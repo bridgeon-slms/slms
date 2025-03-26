@@ -36,6 +36,7 @@ class _CoursePageState extends State<CoursePage> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  fontSize: 20,
                 ),
               ),
               background: Container(
@@ -185,7 +186,7 @@ class _CoursePageState extends State<CoursePage> {
 
   Widget _buildAvailableCourseCard(
       BuildContext context, Course course, CourseController controller) {
-    final Color cardColor = _getRandomColor();
+    final Color cardColor = Colors.blue;
 
     return Container(
       decoration: BoxDecoration(
@@ -223,6 +224,7 @@ class _CoursePageState extends State<CoursePage> {
               Container(
                 height: 90,
                 decoration: BoxDecoration(
+                  // ignore: deprecated_member_use
                   color: cardColor.withOpacity(0.8),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(16),
@@ -380,20 +382,4 @@ class _CoursePageState extends State<CoursePage> {
     );
   }
 
-  Color _getRandomColor() {
-    final List<Color> colors = [
-      Colors.blue,
-      Colors.purple,
-      Colors.teal,
-      Colors.orange,
-      Colors.pink,
-      Colors.deepPurple,
-      Colors.indigo,
-      Colors.cyan,
-    ];
-
-    int index = DateTime.now().millisecondsSinceEpoch.hashCode % colors.length;
-    if (index < 0) index = -index;
-    return colors[index];
-  }
 }
