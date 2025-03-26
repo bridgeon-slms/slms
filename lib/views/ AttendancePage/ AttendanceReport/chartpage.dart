@@ -27,12 +27,12 @@ class _DashboardState extends State<Dashboard> {
   }
 
   final List<Color> colorList = [
-    Color(0XFF90BE6D), // Present (Green)
-    Color(0XFFF9C74F), // Late (Yellow)
-    Color(0XFFF8961D), // Half Day (Orange)
-    Color(0XFFDF582D), // Excused (Dark Orange)
-    Color(0XFFF84144), // Unexcused (Red)
-    Color(0XFF616161), // No Status (Grey)
+    Color(0xFF4CAF50), // Present (Modern Green)
+    Color(0xFFFFC107), // Late (Modern Yellow)
+    Color(0xFFFF9800), // Half Day (Modern Orange)
+    Color(0xFFFF5722), // Excused (Modern Deep Orange)
+    Color(0xFFF44336), // Unexcused (Modern Red)
+    Color(0xFF9E9E9E), // No Status (Modern Grey)
   ];
 
   @override
@@ -42,8 +42,10 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: ColorConstents.bagroundColor,
         title: Text(
           "Attendance Overview",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black87),
         ),
+        elevation: 0,
       ),
       backgroundColor: ColorConstents.bagroundColor,
       body: SingleChildScrollView(
@@ -54,15 +56,16 @@ class _DashboardState extends State<Dashboard> {
             children: [
               Consumer<Attendencecontroller>(
                 builder: (context, value, child) {
-                  var datas = value.attendenceList.map((e) => e.status).toList();
-        
+                  var datas =
+                      value.attendenceList.map((e) => e.status).toList();
+
                   var present = datas.where((e) => e == 1).length;
                   var late = datas.where((e) => e == 2).length;
                   var halfDay = datas.where((e) => e == 3).length;
                   var excused = datas.where((e) => e == 4).length;
                   var unexcused = datas.where((e) => e == 5).length;
                   var noStatus = datas.where((e) => e == 6).length;
-        
+
                   final Map<String, double> dataMap = {
                     "Present": present.toDouble(),
                     "Late": late.toDouble(),
@@ -71,49 +74,59 @@ class _DashboardState extends State<Dashboard> {
                     "Unexcused": unexcused.toDouble(),
                     "No Status": noStatus.toDouble(),
                   };
-        
-                  return Card(
-                    color: ColorConstents.bagroundColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        )
+                      ],
                     ),
-                    elevation: 4,
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          const Text(
+                          Text(
                             "Attendance Summary",
                             style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black87,
                             ),
                           ),
-                          const Gap(15),
+                          const Gap(20),
                           PieChart(
                             dataMap: dataMap,
                             colorList: colorList,
-                            chartRadius: MediaQuery.of(context).size.width / 2,
-                            chartValuesOptions: const ChartValuesOptions(
-                              showChartValuesInPercentage: true,
-                              showChartValuesOutside: true,
+                            chartRadius:
+                                MediaQuery.of(context).size.width / 2.2,
+                            chartValuesOptions: ChartValuesOptions(
+                              showChartValuesInPercentage: false,
+                              showChartValuesOutside: false,
                               decimalPlaces: 1,
                               chartValueStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black, 
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                fontSize: 12,
                               ),
                             ),
-                            legendOptions: const LegendOptions(
+                            legendOptions: LegendOptions(
                               showLegends: true,
                               legendPosition: LegendPosition.bottom,
                               legendShape: BoxShape.circle,
                               legendTextStyle: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
-                                color: Colors.black, 
+                                color: Colors.black87,
                               ),
                             ),
+                            animationDuration: Duration(milliseconds: 800),
+                            chartType: ChartType.ring,
                           ),
                         ],
                       ),

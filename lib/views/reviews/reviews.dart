@@ -35,7 +35,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return context.watch<Reviewcontroller>().isLoding
         ?  Scaffold(
           backgroundColor: Colors.white,
-          body: Center(child: loddingWidget()))
+          body: loddingWidget())
         : context.watch<Reviewcontroller>().isError
             ? Errorpage(
                 onRefresh: context.read<Reviewcontroller>().getAllDataFromReview,

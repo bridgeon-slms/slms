@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/view_model/course/course.dart';
 import 'package:slms/views/courses/weeksub/weeksub.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class WeeklistPage extends StatefulWidget {
   final CourseModel courseModel;
@@ -27,21 +29,26 @@ class _WeeklistPageState extends State<WeeklistPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildHeader(context),
-              _buildProgressBar(context),
-              _buildWeeksList(context, screenWidth),
-            ],
-          ),
+    return context.watch<CourseController>().isLodding? loddingWidget() : AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark.copyWith(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
         ),
-      ),
-    );
+        child: Scaffold(
+          backgroundColor: const Color(0xFFF5F7FA),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(context),
+                  _buildProgressBar(context),
+                  _buildWeeksList(context, screenWidth),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget _buildHeader(BuildContext context) {
@@ -99,6 +106,7 @@ class _WeeklistPageState extends State<WeeklistPage> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
@@ -149,11 +157,6 @@ class _WeeklistPageState extends State<WeeklistPage> {
   Widget _buildWeeksList(BuildContext context, double screenWidth) {
     return Consumer<CourseController>(
       builder: (context, courseController, child) {
-        if (courseController.isLodding) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
   
 
         return Column(
