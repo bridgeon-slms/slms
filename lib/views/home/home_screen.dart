@@ -16,11 +16,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with AutomaticKeepAliveClientMixin {
+class _HomeScreenState extends State<HomeScreen> {
   @override
-  bool get wantKeepAlive => true;
-
   @override
   void initState() {
     super.initState();
@@ -31,9 +28,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-
     return Consumer<HomeController>(
       builder: (context, homeController, _) {
         if (homeController.isLoading) {
@@ -60,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
             actions: [
-    
               IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -172,8 +165,6 @@ class _HomeScreenState extends State<HomeScreen>
                       ],
                     ),
                   ),
-
-                  // Score Cards
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
@@ -232,5 +223,4 @@ class _HomeScreenState extends State<HomeScreen>
       },
     );
   }
-
 }
