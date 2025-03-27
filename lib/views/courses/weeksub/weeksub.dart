@@ -199,6 +199,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         TopicScreen(
+                                                          courseModel: widget.courseModel,
                                                       topicId: value.topicData[index].id,
                                                       topic: topic.title,
                                                       catogaryId: course.id,

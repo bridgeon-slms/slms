@@ -201,7 +201,7 @@ class ProfilePage extends StatelessWidget {
                                 path: 'assets/image/Link.png',
                                 ontap: () async {
                                   final url = Uri.parse(
-                                      'https://leetcode.com/u/${profile.profile!.socialLinks.linkedIn}');
+                                      'https://linkedin.com/u/${profile.profile!.socialLinks.linkedIn}');
                                   if (await canLaunchUrl(url)) {
                                     await launchUrl(url,
                                         mode: LaunchMode.externalApplication);
@@ -215,7 +215,7 @@ class ProfilePage extends StatelessWidget {
                                 path: 'assets/image/git.png',
                                 ontap: () async {
                                   final url = Uri.parse(
-                                      'https://leetcode.com/u/${profile.profile!.socialLinks.github}');
+                                      'https://github.com/${profile.profile!.socialLinks.github}');
                                   if (await canLaunchUrl(url)) {
                                     await launchUrl(url,
                                         mode: LaunchMode.externalApplication);

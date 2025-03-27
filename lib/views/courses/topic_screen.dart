@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:slms/model/course/cartogary.dart';
 import 'package:slms/services/course/course.dart';
+import 'package:slms/views/widget/widget.dart';
 
 class TopicScreen extends StatefulWidget {
   final String topic;
@@ -8,9 +10,11 @@ class TopicScreen extends StatefulWidget {
   final String catogaryId;
   final String name;
   final String topicId;
+  final CourseModel courseModel;
 
   const TopicScreen(
       {super.key,
+      required this.courseModel,
       required this.topicId,
       required this.topic,
       required this.courseId,
@@ -25,7 +29,9 @@ class _TopicScreenState extends State<TopicScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.catogaryId)),
+      appBar: AppBar(
+          title: textStyled(
+              text: 'Topic', fontSize: 18, fontweight: FontWeight.bold)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -37,7 +43,7 @@ class _TopicScreenState extends State<TopicScreen> {
             const Gap(500),
             ElevatedButton(
               onPressed: () {
-                ReviewServices().finishTopics(widget.courseId);
+                ReviewServices().finishTopics(widget.courseModel.mainID);
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
