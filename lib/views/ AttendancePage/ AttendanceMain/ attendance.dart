@@ -317,7 +317,6 @@ class _AttendancePageState extends State<AttendancePage> {
                         )
                       ],
                     ),
-                    MultiDatePickerButton(),
                     Gap(10),
                     TabBar(
                       labelColor: ColorConstents.primeryColor,
