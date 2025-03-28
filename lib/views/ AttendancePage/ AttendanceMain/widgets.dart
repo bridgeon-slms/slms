@@ -289,5 +289,3 @@ Widget containerForAttendts({required Color color, required String text}) {
     child: Center(child: textStyled(text: text, color: Colors.white)),
   );
 }
-
-

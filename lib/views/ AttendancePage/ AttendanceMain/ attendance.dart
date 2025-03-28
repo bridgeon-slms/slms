@@ -8,6 +8,7 @@ import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/attendence/attendencecontroller.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceReport/chartpage.dart';
 import 'package:slms/views/%20AttendancePage/%20AttendanceMain/widgets.dart';
+import 'package:slms/views/leavepage/leavepage.dart';
 import 'package:slms/views/widget/widget.dart';
 
 class AttendancePage extends StatefulWidget {
@@ -52,10 +53,28 @@ class _AttendancePageState extends State<AttendancePage> {
                   children: [
                     textStyled(
                         text: 'Hi ${datas.attendenceList.first.userId?.name}'),
-                    textStyled(
-                        text: 'Attendance Report',
-                        fontweight: FontWeight.bold,
-                        fontSize: 18),
+                    Row(
+                      children: [
+                        textStyled(
+                            text: 'Attendance Report',
+                            fontweight: FontWeight.bold,
+                            fontSize: 18),
+                        SizedBox(
+                          width: 150,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LeavePage()));
+                            },
+                            icon: Icon(
+                              Icons.edit_calendar,
+                              size: 30,
+                            ))
+                      ],
+                    ),
                     Gap(20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -351,39 +370,37 @@ class _AttendancePageState extends State<AttendancePage> {
       ),
     );
   }
+}
 
- 
-  }
-
-  Expanded dateContainer({VoidCallback? ontap}) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: ontap,
-        child: Card(
-          elevation: 2,
-          color: ColorConstents.primeryColor,
-          child: SizedBox(
-            height: 50,
-            // width: 200,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                textStyled(
-                    text: 'Select Date',
-                    fontweight: FontWeight.bold,
-                    color: Colors.white),
-                Gap(5),
-                Icon(
-                  Icons.calendar_month,
-                  color: Colors.white,
-                )
-              ],
-            ),
+Expanded dateContainer({VoidCallback? ontap}) {
+  return Expanded(
+    child: GestureDetector(
+      onTap: ontap,
+      child: Card(
+        elevation: 2,
+        color: ColorConstents.primeryColor,
+        child: SizedBox(
+          height: 50,
+          // width: 200,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              textStyled(
+                  text: 'Select Date',
+                  fontweight: FontWeight.bold,
+                  color: Colors.white),
+              Gap(5),
+              Icon(
+                Icons.calendar_month,
+                color: Colors.white,
+              )
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
 Widget filterDateButton(String text, IconData icon, VoidCallback onTap) {
   return Padding(
