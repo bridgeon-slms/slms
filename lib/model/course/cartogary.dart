@@ -7,9 +7,11 @@ class CourseModel {
   final int catogaryNumber;
   final int subcatogaryNumber;
   final int topicNumber;
+  final String mainID;
 
   CourseModel(
       {required this.name,
+      required this.mainID,
       required this.topicNumber,
       required this.subcatogaryNumber,
       required this.duration,
@@ -20,6 +22,7 @@ class CourseModel {
 
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
+      mainID: json['_id'],
       topicNumber: json['onTopic']['topicNumber'] ?? 0,
       subcatogaryNumber: json['onTopic']['subCategoryId']['subCategoryNumber'],
       id: json['courseId']['_id'] ?? '',
