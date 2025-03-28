@@ -52,7 +52,8 @@ Widget weekCard({required ReviewData data}) {
                     children: [
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
+                              backgroundColor: ColorConstents.primeryColor,
+                              foregroundColor: ColorConstents.bagroundColor,
                               shape: RoundedRectangleBorder(
                                   side: BorderSide(
                                       color: ColorConstents.primeryColor),
@@ -71,7 +72,7 @@ Widget weekCard({required ReviewData data}) {
                             children: [
                               textStyled(
                                   text: 'Show details',
-                                  color: ColorConstents.primeryColor),
+                              ),
                               Icon(Icons.arrow_right)
                             ],
                           ))

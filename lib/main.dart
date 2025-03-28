@@ -31,11 +31,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Reviewcontroller(),
         ),
-        ChangeNotifierProvider(create: (context) => AuthenticationController()),
+        ChangeNotifierProvider(
+          create: (context) => AuthenticationController()),
         ChangeNotifierProvider(
           create: (context) => DateProvider(),
         ),
-        ChangeNotifierProvider(create: (context) => Profilecontroller()),
+        ChangeNotifierProvider(
+          create: (context) => Profilecontroller()),
         ChangeNotifierProvider(
           create: (context) => Attendencecontroller(),
         ),
