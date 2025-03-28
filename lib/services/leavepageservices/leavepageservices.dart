@@ -37,7 +37,7 @@ class LeavePageServices {
 //     }
 //   }
 
-  Future<void> addLeavePage(LeaveModel leavePage) async {
+  addLeavePage(LeaveModel leavePage) async {
     final dio = await DioClient.getDioInstance();
     try {
       await dio.post("$baseUrl/api/admin/leaveRequest/student",

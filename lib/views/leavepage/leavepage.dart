@@ -321,23 +321,71 @@ class _ModernLeavePageState extends State<LeavePage> {
         const SizedBox(width: 16),
         Expanded(
           child: ElevatedButton(
-            onPressed: () {
-              num value = 0;
-              if (durations == 'Half Day') {
-                value = 0.5;
-              } else {
-                value = 1;
+            // onPressed: () {
+            //   num value = 0;
+            //   if (durations == 'Half Day') {
+            //     value = 0.5;
+            //   } else {
+            //     value = 1;
+            //   }
+            //   LeavePageServices().addLeavePage(
+            //     LeaveModel(
+            //       leaveType: leaveTypes.toString(),
+            //       description: descriptionController.toString(),
+            //       dates: [
+            //         {"date": _focusedDay, "value": value}
+            //       ],
+            //     ),
+            //   );
+            // },
+            onPressed: () async {
+              if (selectedLeaveType == null ||
+                  _selectedDaysWithDurations.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          "Please select a leave type and at least one date!")),
+                );
+                return;
               }
-              LeavePageServices().addLeavePage(
-                LeaveModel(
-                  leaveType: leaveTypes.toString(),
-                  description: descriptionController.toString(),
-                  dates: [
-                    {"date": _focusedDay, "value": value}
-                  ],
-                ),
+
+              // Convert selected dates into the required format
+              List<Map<String, dynamic>> formattedDates =
+                  _selectedDaysWithDurations.entries
+                      .map((entry) => {
+                            "date": DateFormat("yyyy-MM-dd").format(entry.key),
+                            "value": entry.value == "Half Day" ? 0.5 : 1
+                          })
+                      .toList();
+
+              // Create a LeaveModel instance
+              LeaveModel leaveRequest = LeaveModel(
+                leaveType: selectedLeaveType!,
+                description: descriptionController.text.trim(),
+                dates: formattedDates,
               );
+
+              // Send request to backend
+              bool success =
+                  // await LeavePageServices().addLeavePage(leaveRequest);
+                  await LeavePageServices().addLeavePage(leaveRequest);
+
+              // Show success or failure message
+              if (success) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text("Leave request submitted successfully!")),
+                );
+                Navigator.pop(context); // Close the page on success
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          "Failed to submit leave request! Please try again.")),
+                );
+              }
             },
+
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue.shade800,
               foregroundColor: Colors.white,
