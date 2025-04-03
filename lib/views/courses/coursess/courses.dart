@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:slms/model/profilemodel/profilemodel.dart';
@@ -56,6 +58,7 @@ class _CoursePageState extends State<CoursePage> {
                         width: 150,
                         height: 150,
                         decoration: BoxDecoration(
+                          // ignore: deprecated_member_use
                           color: Colors.white.withOpacity(0.1),
                           shape: BoxShape.circle,
                         ),
@@ -68,6 +71,7 @@ class _CoursePageState extends State<CoursePage> {
                         width: 180,
                         height: 180,
                         decoration: BoxDecoration(
+                          // ignore: deprecated_member_use
                           color: Colors.white.withOpacity(0.1),
                           shape: BoxShape.circle,
                         ),
@@ -95,6 +99,7 @@ class _CoursePageState extends State<CoursePage> {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
+                                // ignore: deprecated_member_use
                                 color: Colors.white.withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -134,12 +139,10 @@ class _CoursePageState extends State<CoursePage> {
                     lockedCourses.add(course);
                   }
                 }
-
                 List<Course> finalCourses = [
                   ...availableCourses,
                   ...lockedCourses
                 ];
-
                 return SliverList(
                   delegate: SliverChildListDelegate([
                     const Padding(
@@ -170,7 +173,7 @@ class _CoursePageState extends State<CoursePage> {
 
                         return isAvailable
                             ? _buildAvailableCourseCard(
-                                context, course, controller)
+                                context, course, controller, index)
                             : _buildLockedCourseCard(course);
                       },
                     ),
@@ -184,8 +187,8 @@ class _CoursePageState extends State<CoursePage> {
     );
   }
 
-  Widget _buildAvailableCourseCard(
-      BuildContext context, Course course, CourseController controller) {
+  Widget _buildAvailableCourseCard(BuildContext context, Course course,
+      CourseController controller, int index) {
     final Color cardColor = Colors.blue;
 
     return Container(
@@ -193,6 +196,7 @@ class _CoursePageState extends State<CoursePage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: cardColor.withOpacity(0.2),
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -208,7 +212,6 @@ class _CoursePageState extends State<CoursePage> {
             final selectedCourse = controller.allCourse.firstWhere(
               (c) => c.name == course.name,
             );
-
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -261,6 +264,7 @@ class _CoursePageState extends State<CoursePage> {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
+                            // ignore: deprecated_member_use
                             color: Colors.green.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -291,6 +295,7 @@ class _CoursePageState extends State<CoursePage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
+            // ignore: deprecated_member_use
             color: Colors.grey.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
@@ -361,6 +366,7 @@ class _CoursePageState extends State<CoursePage> {
                       vertical: 2,
                     ),
                     decoration: BoxDecoration(
+                      // ignore: deprecated_member_use
                       color: Colors.grey.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -381,5 +387,4 @@ class _CoursePageState extends State<CoursePage> {
       ),
     );
   }
-
 }
