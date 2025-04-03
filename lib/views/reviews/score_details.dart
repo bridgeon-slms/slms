@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:score_progress_pretty_display/score_progress_pretty_display.dart';
 
 import 'package:slms/model/ReviewModel/review.dart';
+import 'package:slms/utils/color/color.dart';
 import 'package:slms/view_model/ReviewController/reviewcontroller.dart';
 import 'package:slms/views/reviews/widgets.dart';
 import 'package:slms/views/widget/widget.dart';
@@ -20,8 +21,8 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
   @override
   void initState() {
     super.initState();
-   // ignore: use_build_context_synchronously
-   Future.microtask(() =>  Provider.of<Reviewcontroller>(context, listen: false)
+    // ignore: use_build_context_synchronously
+    Future.microtask(() => Provider.of<Reviewcontroller>(context, listen: false)
         .getAllDataFromReview());
   }
 
@@ -47,7 +48,7 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
       ),
       body: Column(
         children: [
-          summaryCard(),
+          // summaryCard(),
           Consumer<Reviewcontroller>(
             builder: (context, value, child) => Expanded(
               child: ListView.builder(
@@ -65,61 +66,61 @@ class _ScoreDetailsPageState extends State<ScoreDetailsPage> {
     );
   }
 
-  Widget summaryCard() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blueAccent, Colors.lightBlueAccent],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            // ignore: deprecated_member_use
-            color: Colors.blue.withOpacity(0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 6),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Current Score',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            '85/100',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: 0.85,
-              // ignore: deprecated_member_use
-              backgroundColor: Colors.white.withOpacity(0.3),
-              valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-              minHeight: 10,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget summaryCard() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(20),
+  //     margin: const EdgeInsets.all(16),
+  //     decoration: BoxDecoration(
+  //       gradient: LinearGradient(
+  //         colors: [Colors.blueAccent, Colors.lightBlueAccent],
+  //         begin: Alignment.topLeft,
+  //         end: Alignment.bottomRight,
+  //       ),
+  //       borderRadius: BorderRadius.circular(16),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           // ignore: deprecated_member_use
+  //           color: Colors.blue.withOpacity(0.3),
+  //           blurRadius: 10,
+  //           offset: const Offset(0, 6),
+  //         ),
+  //       ],
+  //     ),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const Text(
+  //           'Current Score',
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 18,
+  //             fontWeight: FontWeight.w500,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 8),
+  //         const Text(
+  //           '85/100',
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 28,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         const SizedBox(height: 12),
+  //         ClipRRect(
+  //           borderRadius: BorderRadius.circular(8),
+  //           child: LinearProgressIndicator(
+  //             value: 0.85,
+  //             // ignore: deprecated_member_use
+  //             backgroundColor: Colors.white.withOpacity(0.3),
+  //             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+  //             minHeight: 10,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 
 void showStudentDetails(BuildContext context, ReviewData data, review, task,
@@ -165,6 +166,7 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
           reviewScore, taskScore, attendanceScore, disciplineScore) -
       0.5;
   showModalBottomSheet(
+    backgroundColor: ColorConstents.bagroundColor,
     context: context,
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
@@ -188,7 +190,7 @@ void showStudentDetails(BuildContext context, ReviewData data, review, task,
                   width: 50,
                   height: 5,
                   decoration: BoxDecoration(
-                    color: Colors.grey[400],
+                    color: ColorConstents.bagroundColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

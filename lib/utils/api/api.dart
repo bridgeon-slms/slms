@@ -24,4 +24,5 @@ class ApiUrls {
 
   static const confirmPAssword =
       'https://www.lms-api.bridgeon.in/api/admin/students/register';
+      static const taskApi = 'https://www.lms-api.bridgeon.in/api/admin/tasks/students/record';
 }

@@ -365,12 +365,10 @@ class _ModernLeavePageState extends State<LeavePage> {
                 dates: formattedDates,
               );
 
-              // Send request to backend
               bool success =
                   // await LeavePageServices().addLeavePage(leaveRequest);
                   await LeavePageServices().addLeavePage(leaveRequest);
 
-              // Show success or failure message
               if (success) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(

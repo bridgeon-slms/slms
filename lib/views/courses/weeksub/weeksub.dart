@@ -84,7 +84,6 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                         index >= widget.courseModel.subcatogaryNumber;
                     bool isLastUnlockedSubcategory =
                         index == widget.courseModel.subcatogaryNumber - 1;
-
                     return Container(
                       margin: const EdgeInsets.only(bottom: 15),
                       decoration: BoxDecoration(
@@ -139,7 +138,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                               if (isSubcategoryLocked)
                                 Icon(
                                   Icons.lock_rounded,
-                                  color: Colors.red.shade300,
+                                  color: Colors.grey.shade300,
                                 ),
                             ],
                           ),
@@ -160,7 +159,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                     child: Text(
                                       'Complete previous subcategories to unlock',
                                       style: TextStyle(
-                                        color: Colors.red.shade300,
+                                        color: Colors.grey,
                                         fontStyle: FontStyle.italic,
                                       ),
                                     ),
@@ -188,6 +187,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                       bool isTopicLocked =
                                           isLastUnlockedSubcategory &&
                                               (topicIndex >=
+                                          
                                                   widget
                                                       .courseModel.topicNumber);
 
@@ -199,8 +199,10 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         TopicScreen(
-                                                          courseModel: widget.courseModel,
-                                                      topicId: value.topicData[index].id,
+                                                      courseModel:
+                                                          widget.courseModel,
+                                                      topicId: value
+                                                          .topicData[index].id,
                                                       topic: topic.title,
                                                       catogaryId: course.id,
                                                       courseId: widget.courseId,
@@ -218,7 +220,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                                 BorderRadius.circular(10),
                                           ),
                                           child: Icon(
-                                            Icons.play_circle_outline_rounded,
+                                            Icons.check_circle,
                                             color: isTopicLocked
                                                 ? Colors.grey
                                                 : Colors.blue.shade700,
@@ -237,7 +239,7 @@ class _ModernWeekSubpageState extends State<ModernWeekSubpage> {
                                         trailing: isTopicLocked
                                             ? Icon(
                                                 Icons.lock,
-                                                color: Colors.red.shade300,
+                                                color: Colors.grey.shade300,
                                               )
                                             : null,
                                       );

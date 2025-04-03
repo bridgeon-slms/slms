@@ -17,6 +17,10 @@ class CourseController extends ChangeNotifier {
   Maincourseservises servises = Maincourseservises();
   bool isLodding = false;
 
+  List<int> catogaryNumber = [];
+  List<int> subCatogaryNumber = [];
+  List<int> topicNumber = [];
+
   void getWeekData({required String courseId}) async {
     isLodding = true;
     notifyListeners();
@@ -72,4 +76,25 @@ class CourseController extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  List<Map<String, dynamic>> getCategoryNumber() {
+    return allCourse
+        // ignore: unnecessary_null_comparison
+        .where((e) => e.catogaryNumber != null)
+        .map((e) => {'catogaryNumber': e.catogaryNumber, 'name': e.name})
+        .toList();
+  }
+
+  List<Map<String, dynamic>> getSubCatogaryNumber() {
+    return allCourse
+        .map((e) => {'subCatogaryNumber': e.subcatogaryNumber, 'name': e.name})
+        .toList();
+  }
+  List<Map<String, dynamic>> getTopicNumber() {
+    return allCourse
+        .map((e) => {'topicNumber': e.topicNumber, 'name': e.name})
+        .toList();
+        
+  }
+
 }

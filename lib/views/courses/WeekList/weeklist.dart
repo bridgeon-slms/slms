@@ -38,43 +38,21 @@ class _WeeklistPageState extends State<WeeklistPage> {
               statusBarBrightness: Brightness.light,
             ),
             child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: const Color(0xFFF5F7FA),
+              ),
               backgroundColor: const Color(0xFFF5F7FA),
-              body: SafeArea(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          // ignore: deprecated_member_use
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 10,
-                                          offset: const Offset(0, 4),
-                                        ),
-                                      ],
-                                    ),
-                                    child:
-                                        const Icon(Icons.arrow_back, size: 22),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Text(
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
                               widget.courseModel.name,
                               style: const TextStyle(
                                 fontSize: 28,
@@ -82,112 +60,108 @@ class _WeeklistPageState extends State<WeeklistPage> {
                                 color: Color(0xFF1E2B3C),
                               ),
                             ),
-                            const SizedBox(height: 6),
+                          ),
+                          const SizedBox(height: 6),
+                        ],
+                      ),
+                    ),
+                    Consumer<CourseController>(
+                      builder: (context, value, child) => Container(
+                        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              // ignore: deprecated_member_use
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Your Progress",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF1E2B3C),
+                                  ),
+                                ),
+                                Text(
+                                  "${(value.weekData.first.catogaryNumber / value.weekData.length * 100).toStringAsFixed(0)}%",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF4B7BEC),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 12),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: LinearProgressIndicator(
+                                value: value.weekData.first.catogaryNumber /
+                                    value.weekData.length,
+                                minHeight: 8,
+                                backgroundColor: const Color(0xFFEDF1F9),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF4B7BEC)),
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      Consumer<CourseController>(
-                        builder: (context, value, child) => Container(
-                          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                // ignore: deprecated_member_use
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 10,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Your Progress",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF1E2B3C),
-                                    ),
-                                  ),
-                                  Text(
-                                    "${(value.weekData.first.catogaryNumber / value.weekData.length * 100).toStringAsFixed(0)}%",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF4B7BEC),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: LinearProgressIndicator(
-                                  value: value.weekData.first.catogaryNumber /
-                                      value.weekData.length,
-                                  minHeight: 8,
-                                  backgroundColor: const Color(0xFFEDF1F9),
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Color(0xFF4B7BEC)),
+                    ),
+                    Consumer<CourseController>(
+                      builder: (context, courseController, child) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20, bottom: 12),
+                              child: Text(
+                                "Course Content",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF1E2B3C),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      _buildWeeksList(context, screenWidth),
-                    ],
-                  ),
+                            ),
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                              itemCount: courseController.weekData.length,
+                              itemBuilder: (context, index) {
+                                final course = courseController.weekData[index];
+                                bool isUnlocked = course.catogaryNumber <=
+                                    widget.courseModel.catogaryNumber;
+                                return weekCard(context, course, isUnlocked,
+                                    index, screenWidth);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ));
   }
 
-  Widget _buildWeeksList(BuildContext context, double screenWidth) {
-    return Consumer<CourseController>(
-      builder: (context, courseController, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 20, bottom: 12),
-              child: Text(
-                "Course Content",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1E2B3C),
-                ),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              itemCount: courseController.weekData.length,
-              itemBuilder: (context, index) {
-                final course = courseController.weekData[index];
-                bool isUnlocked =
-                    course.catogaryNumber <= widget.courseModel.catogaryNumber;
-                return weekCard(
-                    context, course, isUnlocked, index, screenWidth);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget weekCard(BuildContext context, CartogaryModel course,
-      bool isUnlocked, int index, double screenWidth) {
+  Widget weekCard(BuildContext context, CartogaryModel course, bool isUnlocked,
+      int index, double screenWidth) {
     final cardHeight = 120.0;
 
     final color = Colors.blue;
@@ -319,7 +293,9 @@ class _WeeklistPageState extends State<WeeklistPage> {
                 boxShadow: [
                   BoxShadow(
                     color: isUnlocked
+                        // ignore: deprecated_member_use
                         ? color.withOpacity(0.3)
+                        // ignore: deprecated_member_use
                         : Colors.black.withOpacity(0.05),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
