@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:slms/views/widget/widget.dart';
+import 'package:slms/model/task/task_model.dart';
+import 'package:slms/views/task/taskdetails_screen.dart';
 
 Container taskConatiner(
     {required String status,
     required String date,
+    required TaskModel model,
     required String decs,
+    required BuildContext context,
     required String title}) {
   return Container(
-    width: double.infinity,
+      width: double.infinity,
       margin: EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -38,7 +41,6 @@ Container taskConatiner(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     SizedBox(height: 10),
                     Text(
                       title,
@@ -85,7 +87,13 @@ Container taskConatiner(
                       children: [
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TaskDetailsScreen(taskModel: model,)));
+                            },
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.white,
                               side: BorderSide(color: Colors.white70),
@@ -135,17 +143,16 @@ Container taskConatiner(
       ));
 }
 
+class TaskItem {
+  final String title;
+  final String description;
+  final String date;
+  final String status;
 
-  class TaskItem {
-    final String title;
-    final String description;
-    final String date;
-    final String status;
-
-    TaskItem({
-      required this.title,
-      required this.description,
-      required this.date,
-      required this.status,
-    });
-  }
+  TaskItem({
+    required this.title,
+    required this.description,
+    required this.date,
+    required this.status,
+  });
+}

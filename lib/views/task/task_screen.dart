@@ -231,6 +231,8 @@ class _TaskScreenState extends State<TaskScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: taskConatiner(
+                        model: task,
+                        context: context,
                         status: task.status,
                         date: formatDate(DateTime.parse(task.dueDate)),
                         decs: task.task.description,
