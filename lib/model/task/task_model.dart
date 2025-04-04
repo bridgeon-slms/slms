@@ -3,8 +3,9 @@ class TaskModel {
   final TaskID task;
   final String dueDate;
   final String assignedDate;
+  final String submittedDate;
   const TaskModel({
-
+    required this.submittedDate,
     required this.assignedDate,
     required this.dueDate,
     required this.task,
@@ -13,6 +14,7 @@ class TaskModel {
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
+        submittedDate: json['submittedDate'] ?? 'no data',
         assignedDate: json['assignedDate'] ?? 'no data',
         dueDate: json['dueDate'] ?? 'no date',
         status: json['status'] ?? 'no data',
@@ -46,4 +48,3 @@ class TaskID {
         title: json['title'] ?? 'no data');
   }
 }
-

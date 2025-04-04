@@ -36,22 +36,22 @@ class _TaskScreenState extends State<TaskScreen> {
       "status": "progress"
     },
     {
-      "title": "Re-Review",
+      "title": "Re-review",
       "color": const Color(0xFF6C6CE5),
       "iconData": Icons.sync,
-      "status": "Re-Review"
+      "status": "re-review"
     },
     {
       "title": "Submitted",
       "color": const Color(0xFF6C6CE5),
       "iconData": Icons.sync,
-      "status": "Submitted"
+      "status": "submitted"
     },
     {
       "title": "Completed",
       "color": const Color(0xFF49C496),
       "iconData": Icons.check_circle,
-      "status": "Completed"
+      "status": "completed"
     },
   ];
 
@@ -230,6 +230,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
                       child: taskConatiner(
+                        submittedDate: task.submittedDate,
                         model: task,
                         context: context,
                         status: task.status,

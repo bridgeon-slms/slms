@@ -113,7 +113,7 @@ Widget leetcodeStatisticsCard(HomeController controller) {
             onPressed: () async {
               FlutterSecureStorage _storage = FlutterSecureStorage();
               final leetcode = await _storage.read(key: 'leetcode');
-             await   launchUrl(Uri.parse('https://leetcode.com/u/$leetcode'));
+              await launchUrl(Uri.parse('https://leetcode.com/u/$leetcode'));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
