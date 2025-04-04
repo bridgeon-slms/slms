@@ -76,7 +76,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'My Tasks',
+                    'Tasks',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -98,7 +98,6 @@ class _TaskScreenState extends State<TaskScreen> {
                 itemBuilder: (context, categoryIndex) {
                   return Consumer<TaskController>(
                     builder: (context, taskController, child) {
-                      // Get tasks that match the category status
                       List<TaskModel> filteredTasks = taskController.taskmodel
                           .where((task) =>
                               task.status ==

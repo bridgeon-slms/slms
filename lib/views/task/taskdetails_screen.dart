@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as htmlParser;
+import 'package:html/dom.dart' as htmlDom;
+
 import 'package:slms/helpers/helpers.dart';
 import 'package:slms/model/task/task_model.dart';
 import 'package:slms/views/auth/widget/login_widget.dart';
@@ -9,6 +12,9 @@ class TaskDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+htmlDom.Document decs = htmlParser.parse(taskModel.task.description);
+
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -153,7 +159,7 @@ class TaskDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 child:  Text(
-                    taskModel.task.description
+                    decs.body?.text??''
                ,
                   style: TextStyle(
                     color: Color(0xFF2A2D34),

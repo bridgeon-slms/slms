@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as htmlParser;
+import 'package:html/dom.dart' as htmlDom;
 import 'package:slms/model/task/task_model.dart';
 import 'package:slms/views/task/taskdetails_screen.dart';
 
@@ -9,6 +11,7 @@ Container taskConatiner(
     required String decs,
     required BuildContext context,
     required String title}) {
+      htmlDom.Document decsc = htmlParser.parse(decs);
   return Container(
       width: double.infinity,
       margin: EdgeInsets.all(16),
@@ -56,7 +59,7 @@ Container taskConatiner(
                     SizedBox(
                       height: 60,
                       child: Text(
-                        decs,
+                        decsc.body?.text??'',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
