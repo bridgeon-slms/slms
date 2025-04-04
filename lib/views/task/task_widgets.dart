@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart' as htmlParser;
+import 'package:html/dom.dart' as htmlDom;
+import 'package:slms/helpers/helpers.dart';
 import 'package:slms/model/task/task_model.dart';
 import 'package:slms/views/task/taskdetails_screen.dart';
 
 Container taskConatiner(
     {required String status,
     required String date,
+    required String submittedDate,
     required TaskModel model,
     required String decs,
     required BuildContext context,
     required String title}) {
+  htmlDom.Document decsc = htmlParser.parse(decs);
   return Container(
       width: double.infinity,
       margin: EdgeInsets.all(16),
@@ -56,7 +61,7 @@ Container taskConatiner(
                     SizedBox(
                       height: 60,
                       child: Text(
-                        decs,
+                        decsc.body?.text ?? '',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -73,7 +78,9 @@ Container taskConatiner(
                             color: Colors.white70, size: 16),
                         SizedBox(width: 6),
                         Text(
-                          'Next Due Date: $date',
+                          status == 'submitted'
+                              ? 'submitted Date ${formatDate(DateTime.parse(submittedDate))}'
+                              : 'Next Due Date: $date',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
@@ -85,28 +92,32 @@ Container taskConatiner(
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          TaskDetailsScreen(taskModel: model,)));
-                            },
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: Colors.white,
-                              side: BorderSide(color: Colors.white70),
-                              padding: EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                        status == 'submitted'
+                            ? SizedBox()
+                            : Expanded(
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TaskDetailsScreen(
+                                                  taskModel: model,
+                                                )));
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    side: BorderSide(color: Colors.white70),
+                                    padding: EdgeInsets.symmetric(vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: Text(status == "pending"
+                                      ? 'View More'
+                                      : "ATTACH REPO"),
+                                ),
                               ),
-                            ),
-                            child: Text(status == "pending"
-                                ? 'View More'
-                                : "ATTACH REPO"),
-                          ),
-                        ),
                         SizedBox(width: 16),
                         status == "pending"
                             ? Expanded(

@@ -10,6 +10,8 @@ import 'package:slms/view_model/datecontroller.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:slms/view_model/home/home_controller.dart';
 import 'package:slms/view_model/task/task_controller.dart';
+import 'package:slms/views/ProfilePage/profilepage.dart';
+import 'package:slms/views/auth/login/login_screen.dart';
 import 'package:slms/views/splash/splash.dart';
 import 'package:slms/views/task/task_screen.dart';
 
@@ -33,13 +35,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => Reviewcontroller(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthenticationController()),
+        ChangeNotifierProvider(create: (context) => AuthenticationController()),
         ChangeNotifierProvider(
           create: (context) => DateProvider(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => Profilecontroller()),
+        ChangeNotifierProvider(create: (context) => Profilecontroller()),
         ChangeNotifierProvider(
           create: (context) => Attendencecontroller(),
         ),
